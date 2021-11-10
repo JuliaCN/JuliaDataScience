@@ -1,4 +1,4 @@
-## 索引和汇总 {#sec:index and summarize}
+## 索引和汇总
 
 让我们回到之前定义过的例子grades_2020()：
 
