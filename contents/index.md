@@ -11,7 +11,7 @@ You can navigate through the pages of the ebook by using the arrow keys (left/ri
 
 The book is also available as [**PDF**](/juliadatascience.pdf){target="_blank"}.
 
-The source code is available at [GitHub](https://github.com/JuliaDataScience/JuliaDataScience){target="_blank"}.
+The source code for this translated version of the book is available at [GitHub](https://github.com/JuliaCN/JuliaDataScience){target="_blank"}.
 
 This book is also published at [Amazon.com](https://www.amazon.com/dp/B09KMRKQ96/).
 
