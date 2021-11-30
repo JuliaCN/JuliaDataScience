@@ -1,16 +1,16 @@
 ## GLMakie.jl {#sec:glmakie}
 
-`CairoMakie.jl` supplies all our needs for static 2D images.
-But sometimes we want interactivity, especially when we are dealing with 3D images.
-Visualizing data in 3D is also a common practice to gain insight from your data.
-This is where `GLMakie.jl` might be helpful, since it uses [OpenGL](http://www.opengl.org/) as a backend that adds interactivity and responsiveness to plots.
-Like before, a simple plot includes, of course, lines and points. So, we will start with those and since we already know how layouts work, we will put that into practice.
+`CairoMakie.jl` 满足了所有关于静态 2D 图的需求。
+但有时需要考虑交互性，特别是处理 3D 图。
+使用 3D 图可视化数据是 **洞察** 数据的常见做法。
+这就是 `GLMakie.jl` 的用武之地，它使用 [OpenGL](http://www.opengl.org/) 作为添加交互和响应功能的绘图后端。
+与之前一样，一幅简单的图只包括线和点。因此，接下来将从简单图开始。因为已经知道布局如何使用，所以将在例子中应用一些布局。
 
-### Scatters and Lines
+### 散点图和折线图
 
-For scatter plots we have two options, the first one is `scatter(x, y, z)` and the second one is `meshscatter(x, y, z)`.
-In the first one markers don't scale in the axis directions, but in the later they do because they are actual geometries in 3D space.
-See the next example:
+散点图有两种绘制选项，第一种是 `scatter(x, y, z)`，另一种是 `meshscatter(x, y, z)`。
+若使用第一种，标记则不会在轴向缩放，但在使用第二种时标记会缩放， 这是因为此时它们是三维空间的几何实体。
+例子如下：
 
 ```
 using GLMakie
@@ -21,44 +21,43 @@ GLMakie.activate!()
 @sco JDS.scatters_in_3D()
 ```
 
-Note also, that a different geometry can be passed as markers, i.e., a square/rectangle and we can assign a `colormap` for them as well.
-In the middle panel one could get perfect spheres by doing `aspect = :data` as in the right panel.
-
-And doing `lines` or `scatterlines` is also straightforward:
+另请注意，标记可以是不同的几何实体，比如正方形或矩形。另外，也可以为标记设置 `colormap`。
+对于上面位于中间的 3D 图，如果想得到获得完美的球体，那么只需如右侧图那样添加 `aspect = :data` 参数。
+绘制 `lines` 或 `scatterlines` 也很简单：
 
 ```jl
 @sco JDS.lines_in_3D()
 ```
 
-Plotting a `surface` is also easy to do as well as a `wireframe` and `contour` lines in 3D.
+在 3D 图中绘制 `surface`， `wireframe` 和 `contour` 是一项容易的工作。
 
-### Surfaces, wireframe, contour, contourf and contour3d
+### 表面，`wireframe`，`contour`，`contourf` 和 `contour3d`
 
-To show these cases we'll use the following `peaks` function:
+将使用如下的 `peaks` 函数展示这些例子：
 
 ```jl
 @sc JDS.peaks()
 ```
 
-The output for the different plotting functions is
+不同绘图函数的输出如下：
 
 ```jl
 @sco JDS.plot_peaks_function()
 ```
 
-But, it can also be plotted with a `heatmap(x, y, z)`, `contour(x, y, z)` or `contourf(x, y, z)`:
+但是也可以使用 `heatmap(x, y, z)`，`contour(x, y, z)` 或 `contourf(x, y, z)` 绘图：
 
 ```jl
 @sco JDS.heatmap_contour_and_contourf()
 ```
 
-Additionally, by changing `Axis` to an `Axis3`, these plots will be automatically be in the x-y plane:
+另外，只要将`Axis` 更改为 `Axis3`，这些图就会自动位于 x-y 平面：
 
 ```jl
 @sco JDS.heatmap_contour_and_contourf_in_a_3d_plane()
 ```
 
-Something else that is easy to do is to mix all these plotting functions into just one plot, namely:
+将这些绘图函数混合在一起也是非常简单的，如下所示：
 
 ```
 using TestImages
@@ -68,12 +67,12 @@ using TestImages
 @sco JDS.mixing_surface_contour3d_contour_and_contourf()
 ```
 
-Not bad, right? From there is clear that  any `heatmap`'s, `contour`'s, `contourf`'s or `image` can be plotted into any plane.
+还不错，对吧？从这里也可以看出，任何的 `heatmap`， `contour`，`contourf` 和 `image` 都可以绘制在任何平面上。
 
-### Arrows and Streamplots
+### `arrows` 和 `streamplot` 
 
-`arrows` and `streamplot` are plots that might be useful when we want to know the directions that a given variable will follow.
-See a demonstration below^[we are using the `LinearAlgebra` module from Julia's standard library.]:
+当想要知道给定变量的方向时，`arrows` 和 `streamplot` 会变得非常有用。
+参见如下的示例^[此处使用 Julia 标准库中的 `LinearAlgebra`]：
 
 ```
 using LinearAlgebra
@@ -83,13 +82,13 @@ using LinearAlgebra
 @sco JDS.arrows_and_streamplot_in_3d()
 ```
 
-Other interesting examples are a `mesh(obj)`, a `volume(x, y, z, vals)`, and a `contour(x, y, z, vals)`.
+另外一些有趣的例子是 `mesh(obj)`，`volume(x, y, z, vals)` 和 `contour(x, y, z, vals)`。
 
-### Meshes and Volumes
+### `mesh` 和 `volume`
 
-Drawing Meshes comes in handy when you want to plot geometries, like a `Sphere` or a Rectangle, i. e. `FRect3D`.
-Another approach to visualize points in 3D space is by calling the functions `volume` and `contour`, which implements [ray tracing](https://en.wikipedia.org/wiki/Ray_tracing_(graphics)) to simulate a wide variety of optical effects.
-See the next examples:
+绘制网格在想要画出几何实体时很有用，例如 `Sphere` 或矩形这样的几何实体，即 `FRect3D`。
+另一种在 3D 空间中可视化的方法是调用 `volume` 和 `contour` 函数，它们通过实现 [光线追踪](https://en.wikipedia.org/wiki/Ray_tracing_(graphics)) 来模拟各种光学效果。
+例子如下：
 
 ```
 using GeometryBasics
@@ -99,18 +98,18 @@ using GeometryBasics
 @sco JDS.mesh_volume_contour()
 ```
 
-Note that here we are plotting two meshes in the same axis, one transparent sphere and a cube.
-So far, we have covered most of the 3D use-cases.
-Another example is `?linesegments`.
+注意到透明球和立方体绘制在同一个坐标系中。
+截至目前，我们已经包含了 3D 绘图的大多数用例。
+另一个例子是 `?linesegments`。
 
-Taking as reference the previous example one can do the following custom plot with spheres and rectangles:
+参考之前的例子，可以使用球体和矩形平面创建一些自定义图：
 
 ```
 using GeometryBasics, Colors
 ```
 
-For the spheres let's do a rectangular grid. Also, we will use a different color for each one of them.
-Additionally, we can mix spheres and a rectangular plane. Next, we define all the necessary data.
+首先为球体定义一个矩形网格，而且给每个球定义不同的颜色。
+另外，可以将球体和平面混合在一张图里。下面的代码定义了所有必要的数据。
 
 ```jl
 sc("""
@@ -126,15 +125,15 @@ colors = [RGBA(rand(4)...) for v in recmesh.position]
 """)
 ```
 
-Then, the plot is simply done with:
+然后可使用如下方式简单地绘图：
 
 ```jl
 @sco JDS.grid_spheres_and_rectangle_as_plate()
 ```
 
-Here, the rectangle is semi-transparent due to the alpha channel added to the RGB color.
-The rectangle function is quite versatile, for instance  3D boxes are easy do implement which in turn could be used for plotting a 3D histogram.
-See our next example, where we are using again our `peaks` function and some additional definitions:
+注意，右侧图中的矩形平面是半透明的，这是因为颜色函数 `RGBA()` 中定义了 `alpha` 参数。
+矩形函数是通用的，因此很容易用来实现 3D 方块，而它又能用于绘制 3D 直方图。
+参见如下的例子，我们将再次使用 `peaks` 函数并增加一些定义：
 
 ```jl
 sc("""
@@ -149,21 +148,21 @@ ztmp2 = abs.(z) ./ maximum(abs.(z)) .+ 0.15
 """)
 ```
 
-here $\delta x, \delta y$ are used to specified our boxes size. `cmap2` will be the color for each box and `ztmp2` will be used as a transparency parameter. See the output in the next figure.
+其中方块的尺寸由 $\delta x, \delta y$ 指定。 `cmap2` 用于指定每个方块的颜色而 `ztmp2` 用于指定每个方块的透明度。如下图所示。
 
 ```jl
 @sco JDS.histogram_or_bars_in_3d()
 ```
 
-Note, that you can also call `lines` or `wireframe` over a mesh object.
+应注意到，也可以在 `mesh` 对象上调用  `lines` 或 `wireframe`。
 
-### Filled Line and Band
+### 填充的线和带
 
-For our last example we will show how to do a filled curve in 3D with `band` and some `linesegments`:
+在最终的例子中， 我们将展示如何使用 `band`和一些 `linesegments` 填充 3D 图中的曲线：
 
 ```jl
 @sco JDS.filled_line_and_linesegments_in_3D()
 ```
 
-Finally, our journey doing 3D plots has come to an end.
-You can combine everything we exposed here to create amazing 3D images!
+最后，我们的3D绘图之旅到此结束。
+你可以将我们这里展示的一切结合起来，去创造令人惊叹的 3D 图！
