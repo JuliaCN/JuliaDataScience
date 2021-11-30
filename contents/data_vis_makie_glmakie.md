@@ -69,7 +69,7 @@ using TestImages
 
 还不错，对吧？从这里也可以看出，任何的 `heatmap`， `contour`，`contourf` 和 `image` 都可以绘制在任何平面上。
 
-### `arrows` 和 `streamplot` 
+### `arrows` 和 `streamplot`
 
 当想要知道给定变量的方向时，`arrows` 和 `streamplot` 会变得非常有用。
 参见如下的示例^[此处使用 Julia 标准库中的 `LinearAlgebra`]：
