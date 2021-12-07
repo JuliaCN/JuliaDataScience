@@ -75,7 +75,8 @@ collect(zip(df.name, df.grade_2020))
 
 ## Filter 和 Subset {#sec:filter_subset}
 
-有两种方式可以移除 `DataFrame` 的行， 一种是 `filter` (@sec:filter) 而另一种是 `subset` (@sec:subset)。
+有两种方式可以选取 `DataFrame` 中的某些行， 一种是 `filter` (@sec:filter) 而另一种是 `subset` (@sec:subset)。
+
 `DataFrames.jl` 较早地添加了 `filter` 函数, 它更强大且与 Julia `Base` 库的语法保持一致，因此我们先讨论 `filter`。
 `subset` 是较新的函数，但它通常更简便。
 
