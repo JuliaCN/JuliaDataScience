@@ -112,7 +112,8 @@ sco("grades_2020()"; process=without_caption_label)
 sco("equals_alice(\"Alice\")"; post=output_block)
 ```
 
-通过结合该函数， 可以使用 `f` 筛选出所有 `name` 等于 "Alice" 的行：
+结合该函数， 可以使用 `f` 筛选出所有 `name` 等于 "Alice" 的行：
+
 
 ```jl
 s = "filter(:name => equals_alice, grades_2020())"
