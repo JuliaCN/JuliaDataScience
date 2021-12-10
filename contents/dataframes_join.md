@@ -1,7 +1,7 @@
 ## Join {#sec:join}
 
 本章主要展示和讨论关于多张表的操作。
-目前为止，我们还未进行过合并多张表，因此本节就将实现它。
+目前为止，我们仅探讨了单张表的操作，接下来将探讨如何合并多张表。
 `DataFrames.jl` 通过 `join` 函数合并多张表。
 `join` 函数非常强大，但可能需要花些时间才能理解。
 然而，你不需要记住下面所有的 `join` 函数，因为 [`DataFrames.jl` 文档](https://DataFrames.juliadata.org/stable/man/joins/) 和本书将会列出它们。
