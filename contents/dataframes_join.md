@@ -46,7 +46,7 @@ sco(s; process=without_caption_label)
 
 ### outerjoin {#sec:outerjoin}
 
-也许你在想 “aha，如果我们有`inner`，那我们可能也会有 `outer`”。
+也许你在想， “aha，如果我们有`inner`，那我们可能也会有 `outer`”。
 是的，你猜对了！
 
 **`outerjoin`** 没有 `innerjoin` 那么严格，只要在 **至少一个数据集中**发现包含的 `name`，就会将相应的列合并到结果中：
