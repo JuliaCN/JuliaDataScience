@@ -1,27 +1,27 @@
-## Variable Transformations
+## 变量变换
 
 ```{=comment}
 We need to cover `ifelse` and `case_when`
 ```
 
-In @sec:filter, we saw that `filter` works by taking one or more source columns and filtering it by applying a "filtering" function.
-To recap, here's an example of filter using the `source => f::Function` syntax: `filter(:name => name -> name == "Alice", df)`.
+在 @sec:filter 中，我们使用 `filter` 函数筛选一列或多列数据。
+回忆一下， `filter` 函数使用 `source => f::Function` 这样的语法：`filter(:name => name -> name == "Alice", df)`。
 
-In @sec:select, we saw that `select` can take one or more source columns and put it into one or more target columns `source => target`.
-Also to recap here's an example: `select(df, :name => :people_names)`.
+在 @sec:select 中， 我们使用 `select` 函数选择一列或多列源数据， 并传入一个或多个目标列 `source => target`。
+同样也有例子帮助回忆： `select(df, :name => :people_names)`。
 
-In this section, we discuss how to **transform** variables, that is, how to **modify data**.
-In `DataFrames.jl`, the syntax is `source => transformation => target`.
+本节将讨论如何 **变换** 变量，即如何 **更改数据**。
+ `DataFrames.jl` 中对应的语法是 `source => transformation => target`。
 
-Like before, we use the `grades_2020` dataset:
+与之前一样，使用 `grades_2020` 数据集：
 
 ```jl
 @sco process=without_caption_label grades_2020()
 ```
 
-Suppose we want to increase all the grades in `grades_2020` by 1.
-First, we define a function that takes as argument a vector of data and returns all of its elements increased by 1.
-Then we use the `transform` function from `DataFrames.jl` that, like all native `DataFrames.jl`'s functions, takes a `DataFrame` as first argument followed by the transformation syntax:
+假设想要 `grades_2020` 中的所有成绩加 1。
+首先，需要定义一个接收向量数据并使所有元素加 1 的函数。
+然后使用 `DataFrames.jl` 中的 `transform` 函数。与其他原生 `DataFrames.jl` 函数一样，按照其语法，它接收 `DataFrame` 作为第一个参数：
 
 ```jl
 s = """
@@ -31,12 +31,12 @@ s = """
 sco(s; process=without_caption_label)
 ```
 
-Here, the `plus_one` function receives the whole `:grade_2020` column.
-That is the reason why we've added the broadcasting "dot" `.` before the plus `+` operator.
-For a recap on broadcasting please see @sec:broadcasting.
+如上， `plus_one` 函数接收了 `:grade_2020` 整列。
+这就是为什么要在加 `+` 运算符前添加 `.` 广播运算符。
+可以查阅 @sec:broadcasting 回顾有关广播的操作。
 
-Like we said above, the `DataFrames.jl` minilanguage is always `source => transformation => target`.
-So, if we want to keep the naming of the `target` column in the output, we can do:
+如之前所说， `DataFrames.jl` 总是支持 `source => transformation => target` 这样的短语法。
+所以，如果想在输出中保留 `target` 列的命名，操作如下：
 
 ```jl
 s = """
@@ -45,7 +45,7 @@ s = """
 sco(s; process=without_caption_label)
 ```
 
-We can also use the keyword argument `renamecols=false`:
+也可以使用关键字参数 `renamecols=false`：
 
 ```jl
 s = """
@@ -54,7 +54,7 @@ s = """
 sco(s; process=without_caption_label)
 ```
 
-The same transformation can also be written with `select` as follows:
+还可以使用 `select` 实现相同的转换，具体如下：
 
 ```jl
 s = """
@@ -63,8 +63,8 @@ s = """
 sco(s; process=without_caption_label)
 ```
 
-where the `:` means "select all the columns" as described in @sec:select.
-Alternatively, you can also use Julia's broadcasting and modify the column `grade_2020` by accessing it with `df.grade_2020`:
+其中 `:` 表明 "选择所有列" ，正如在 @sec:select 讨论的那样。
+另外，还可以使用 Julia 广播更改 `grade_2020` 列，即直接访问 `df.grade_2020`：
 
 ```jl
 s = """
@@ -75,11 +75,12 @@ s = """
 sco(s; process=without_caption_label)
 ```
 
-But, although the last example is easier since it builds on more native Julia operations, **we strongly advise to use the functions provided by `DataFrames.jl` in most cases because they are more capable and easier to work with.**
+但是，尽管很容易使用 Julia 原生操作构建最后的例子，**我们仍然强烈建议使用在大多数例子中提到的 `DataFrames.jl` 函数，
+因为它们更加强大并且更容易与其他代码组织**。
 
-### Multiple Transformations {#sec:multiple_transform}
+### 多条件变换 {#sec:multiple_transform}
 
-To show how to transform two columns at the same time, we use the left joined data from @sec:join:
+为了展示如何同时更改两列， 我们使用 @sec:join 中的左合并数据：
 
 ```jl
 s = """
@@ -88,7 +89,7 @@ s = """
 sco(s; process=without_caption_label)
 ```
 
-With this, we can add a column saying whether someone was approved by the criterion that all of their grades were above 5.5:
+结合此数据集，我们增加一列来判断每位同学是否都有一门课的成绩大于 5.5：
 
 ```jl
 s = """
@@ -103,7 +104,7 @@ I don't think you have covered vector of symbols as col selector...
 You might have to do this in the `dataframes_select.md`
 ```
 
-We can clean up the outcome and put the logic in a function to get a list of all the approved students:
+可以清理下结果，并将上述逻辑整合到一个函数中，然后最终得到符合标准学生的名单：
 
 ```jl
 @sco only_pass()
