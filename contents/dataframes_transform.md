@@ -75,8 +75,7 @@ s = """
 sco(s; process=without_caption_label)
 ```
 
-但是，尽管很容易使用 Julia 原生操作构建最后的例子，**我们仍然强烈建议使用在大多数例子中提到的 `DataFrames.jl` 函数，
-因为它们更加强大并且更容易与其他代码组织**。
+但是，尽管很容易使用 Julia 原生操作构建最后的例子，**我们仍然强烈建议使用在大多数例子中提到的 `DataFrames.jl` 函数，因为它们更加强大并且更容易与其他代码组织**。
 
 ### 多条件变换 {#sec:multiple_transform}
 
