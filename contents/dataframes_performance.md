@@ -9,7 +9,7 @@
 如在 @sec:function_bang 讨论的那样，如果函数结尾带有叹号 `!`，那么这表明该函数会更改传入的参数。
 在 Julia 高性能代码的语境中，这**表明** 带有 `!`的函数将会原地（in-place）修改我们传入的参数对象。
 
-几乎所有的 `DataFrames.jl` 函数都有一个 \"`!` 双生子\"。
+几乎所有的 `DataFrames.jl` 函数都有一个带 `!` 的版本。
 例如， `filter` 有 _in-place_ 的 `filter!`， `select` 有 `select!`， `subset` 有 `subset!` 等等。
 注意，这些函数都 **没有** 返回新的 `DataFrame`，而是直接 **更新** 传入的 `DataFrame` 。
 另外， `DataFrames.jl` (从版本 1.3 开始)支持 in-place 的 `leftjoin` ，即 `leftjoin!` 函数。
