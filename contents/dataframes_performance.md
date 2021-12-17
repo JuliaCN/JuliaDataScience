@@ -1,6 +1,6 @@
 ## 性能 {#sec:df_performance}
 
-截至目前，我们还没有让 `DataFrames.jl` 代码变得 **快些**。
+截至目前，我们还没有尝试让 `DataFrames.jl` 代码变得 **快些**。
 就像 Julia 中的一切， `DataFrames.jl` 实际上也可以变得非常快。
 本节将给出一些性能建议和技巧。
 
