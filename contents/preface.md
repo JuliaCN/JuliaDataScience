@@ -1,115 +1,114 @@
-# Preface {#sec:preface}
+# 前言 {#sec:preface}
 
-There are many programming languages and each and every one of them has its strengths and weaknesses.
-Some languages are very quick, but verbose.
-Other languages are very easy to write in, but slow. This is known as the *two-language* problem and Julia aims at circumventing this problem.
-Even though all three of us come from different fields, we all found the Julia language more effective for our research than languages that we've used before.
-We discuss some of our arguments in @sec:why_julia.
-However, compared to other languages, Julia is one of the newest languages around.
-This means that the ecosystem around the language is sometimes difficult to navigate through.
-It's difficult to figure out where to start and how all the different packages fit together.
-That is why we decided to create this book!
-We wanted to make it easier for researchers, and especially our colleagues, to start using this awesome language.
+每一种编程语言都有其优势和劣势。
+某种语言可能非常快，但代码冗长。
+另一种语言可能很容易编写代码，但运行较慢。 这就是所谓的 **两语言问题**，Julia 的目标就是避免此问题。
+尽管我们三位作者来自不同的领域，但我们都发现，与之前使用的编程语言相比，使用 Julia 进行研究更加高效。
+我们将在 @sec:why_julia 讨论一些关于 Julia 的观点。
+不过，与其他语言相比，Julia 还是最新颖的语言之一。
+这意味着有时很难驾驭该语言的生态。
+比如，很难弄清楚从哪里开始，也不明白如何组合不同的软件包。
+这就是我们决定写这本书的原因！
+我们想让研究者，特别是我们的同事，更加容易地开始使用这门超酷的语言。
 
-As discussed above, each language has its strengths and weaknesses.
-In our opinion, data science is definitely a strength of Julia.
-At the same time, all three of us used data science tools in our day to day life.
-And, probably, you want to use data science too!
-That is why this book has a focus on data science.
+如前面所说，每一门语言都有其优势和劣势。
+我们认为，数据科学无疑是 Julia 的优势。
+同时，我们三个都使用 Julia 作为日常的数据科学工具。
+另外，你可能使用 Julia 研究数据科学！
+这就是为什么这本书聚焦在数据科学上。
 
-In the next part of this section, we emphasize the **"data" part of data science** and why data skills are, and will remain, in **high demand** in industry as well as in academia.
-We make an argument for **incorporating software engineering practices into data science** which should reduce friction when updating and sharing code with collaborators.
-Most data analyses are collaborative endeavors; that is why these software practices will help you.
+在本节的下一部分，我们将强调 **数据科学的“数据”部分**，并将讨论为什么目前工业界和学术界一直需要数据技能。
+我们还认为，**将软件工程实践引入数据科学** 将有利于减少与合作者更新和共享代码时的冲突。
+大多数数据分析都是合作的结果，因此软件工程实践能够起到很大的帮助。
+### 数据无处不在 {#sec:data_everywhere}
 
-### Data is Everywhere {#sec:data_everywhere}
+目前来看，**数据很丰富**，在不久的未来还将产生更多的数据。
+一份 2012 年底的报告总结说，从 2005 年到 2020 年，数字化存储的数据量将增长 300 倍，**从 130 EB^[1 EB = 1,000,000 TB]增加到 40000 EB**[@gantz2012digital]。
+这个数字相当于 40 万亿 GB，更确切地说，这相当于**地球上的每个人创建了 5.2 TB 的数据！**
+目前，在 2020 年，每人平均 **每秒创建 1.7 MB 的数据** [@domo2018data]。
+一份最近的报告指出大约 **在2022年，三分之二（65%）的国家其 GDP 正在实现数字化** [@fitzgerald2020idc]。
 
-**Data is abundant** and will be even more so in the near future.
-A report from late 2012 concluded that, from 2005 to 2020, the amount of data stored digitally will **grow by a factor of 300, from 130 exabytes^[1 exabyte (EB) = 1,000,000 terabyte (TB).] to a whopping 40,000 exabytes** [@gantz2012digital].
-This is equal to 40 trillion gigabytes and, to put it into perspective, more than **5.2 terabytes for every living human currently on this planet!**
-In 2020, on average, every person created **1.7 MB of data per second** [@domo2018data].
-A recent report predicted that almost **two thirds (65%) of national GDPs will have undergone digitization by 2022** [@fitzgerald2020idc].
+每份职业都将受到越来越多的数据可用性和数据重要性的影响[@chen2014big; @khan2014big]。
+数据用于沟通交流和构建知识，以及制定决策。
+这也就是为什么数据技能很重要。
+如果能自如地处理数据，那么你就会成为一名有价值的研究人员或专业人士。
+换句话说，你将成为 **具有数字素养的人**。
 
-Every profession will be impacted by the increasing availability of data and data's increased importance [@chen2014big; @khan2014big].
-Data is used to communicate and build knowledge, and to make decisions.
-This is why data skills are important.
-If you become comfortable with handling data, you will become a valuable researcher or professional.
-In other words, you will become **data literate**.
+## 什么是数据科学？ {#sec:why_data_science}
 
-## What is Data Science? {#sec:why_data_science}
+数据科学不仅仅是机器学习和统计学，而且也不全是关于预测。
+它甚至不是一门完全包含 STEM（科学，技术，工程，和数学）所有领域的学科 [@Meng2019Data]。
+但有一件事我们可以非常自信地断言，那就是数据科学始终与 **数据** 有关。
+我们写这本书有两重目标：
 
-Data science is not only machine learning and statistics, and it's not all about prediction.
-Alas, it is not even a discipline fully contained within STEM (Science, Technology, Engineering, and Mathematics) fields [@Meng2019Data].
-But one thing that we can assert with high confidence is that data science is always about **data**.
-Our aims of this book are twofold:
+* 专注讨论数据科学的主干： **数据**。
+* 使用 **Julia** 编程语言来处理数据。
 
-* We focus on the backbone of data science: **data**.
-* We use the **Julia** programming language to process the data.
+我们将在 @sec:why_julia 章节讨论为什么 Julia 对于数据科学来说是一门相当高效的语言。
+现在将注意力继续转向数据。
 
-We cover why Julia is an extremely effective language for data science in @sec:why_julia.
-For now, let's turn our attention towards data.
+### 数字素养 {#sec:data_literacy}
 
-### Data Literacy {#sec:data_literacy}
+根据 [维基百科](https://en.wikipedia.org/wiki/Data_literacy)，数字素养的正式定义是 **阅读、理解、创建和使用数据进行信息交流的能力**。
+我们也喜欢这个非正式的理解，即作为一个具有数字素养的人，你不会对大量数据感到不知所措，相反地可以使用它来做出正确的决策。
+因此，数字素养可以被视为一种具有高度竞争力的技能。
+本书将讨论 数字素养的两个方面：
 
-According to [Wikipedia](https://en.wikipedia.org/wiki/Data_literacy), the formal definition of **data literacy is "the ability to read, understand, create, and communicate data as information."**.
-We also like the informal idea that, being data literate, you won't feel overwhelmed by data, but instead can use it to make the right decisions.
-Data literacy can be seen as a highly competitive skill to possess.
-In this book we'll cover two aspects of data literacy:
+1. 使用 `DataFrames.jl` **操作数据** (@sec:dataframes)。
+你将在本章学到如何：
+    1. 读取 CSV 和 Excel 数据到 Julia 。
+    2. 使用 Julia 处理数据，即学习如何回答数据问题。
+    3. 使用 `filter` 和 `subset` 筛选数据。
+    4. 处理缺失数据。
+    5. 连接多个数据源。
+    6. 分组和汇总数据。
+    7. 从 Julia 导出数据到 CSV 和 Excel 文件。
+2. 使用 `Makie.jl` **可视化数据**  (@sec:DataVisualizationMakie)。
+你将在本章学到如何：
+    1. 使用不同的 `Makie.jl` 后端绘制数据图。
+    2. 将可视化数据图保存为多种格式，例如 PNG 或 PDF。
+    3. 使用不同的绘图函数实现多样化的数据可视化。
+    4. 结合属性自定义可视化图。
+    5. 使用和创建新的绘图主题。
+    6. 向图中增加 $\LaTeX$ 元素。
+    7. 改变颜色和颜色图。
+    8. 创建复杂的图布局。
 
-1. **Data Manipulation** with `DataFrames.jl` (@sec:dataframes).
-In this chapter you will learn how to:
-    1. Read CSV and Excel data into Julia.
-    2. Process data in Julia, that is, learn how to answer data questions.
-    3. Filter and subset data.
-    4. Handle missing data.
-    5. Join multiple data sources together.
-    6. Group and summarize data.
-    7. Export data out of Julia to CSV and Excel files.
-2. **Data Visualization** with `Makie.jl` (@sec:DataVisualizationMakie).
-In these chapter you will learn how to:
-    1. Plot data with different `Makie.jl` backends.
-    2. Save visualizations in several formats such as PNG or PDF.
-    3. Use different plotting functions to make diverse data visualizations.
-    4. Customize visualizations with attributes.
-    5. Use and create new plotting themes.
-    6. Add $\LaTeX$ elements to plots.
-    7. Manipulate color and palettes.
-    8. Create complex figure layouts.
+## 软件工程 {#sec:engineering}
 
-## Software Engineering {#sec:engineering}
+不像大多数据数据科学书籍，这本书将更多地强调 **组织代码**。
+这是因为，我们了解到很多数据科学家仅是将他们的代码放在一个大文件中，然后按顺序运行所有语句。
+你可以想象这种情况：强迫读者从头读到尾，而不允许重新回顾之前的部分或立即跳转到感兴趣的部分。
+这适用于小型和简单的项目。但是，随着项目变得更大或更复杂，这将开始出现更多的新问题。
+例如，对于一本写得很好的书，它应被分为不同标题的章和节，其中包含对书中其他部分的引用。
+与此相对应的软件工程实践是**将代码分解为函数**。
+每个函数都有一项名称和一些内容。
+在代码中的任何地方，你可以使用函数告诉计算机应从此处跳转到另一处，然后在那里继续。
+这使你可以更容易地在项目间重用代码、更新代码、共享代码、以及协作并查看全局。
+因此，使用函数可以**节省时间**。
 
-Unlike most books on data science, this book lays more emphasis on properly **structuring code**.
-The reason for this is that we noticed that many data scientists simply place their code into one large file and run all the statements sequentially.
-You can think of this like forcing book readers to always read it from beginning to end, without being allowed to revisit earlier sections or jump to interesting sections right away.
-This works fine for small and simple projects, but, as the project becomes bigger or more complex, more problems will start to arise.
-For example, in a well-written book, the book is split into distinctly-named chapters and sections which contain several references to other parts in the book.
-The software equivalent of this is **splitting code into functions**.
-Each function has a name and some contents.
-By using functions, you can tell the computer at any point in your code to jump to some other place and continue from there.
-This allows you to more easily re-use code between projects, update code, share code, collaborate, and see the big picture.
-Hence, with functions, you can **save time**.
+所以，在阅读本书时，你最终要习惯阅读和使用函数。
+拥有软件工程技能的另一个优点是，它使得你可以更容易地阅读正在使用的软件包的源码。当你在调试代码或者想准确地理解正在使用的软件包时，这项技能会变得尤为有用。
+最后，你可以放心，我们没有自己发明这项关于函数的强调。
+在行业中，鼓励开发者 **使用函数而不是注释** 是一种常见的做法。
+这意味着，开发者既不单是为人类编写注释，也不单是为计算机编写代码，而是编写一个既能被人类也能被计算机阅读的函数。
 
-So, while reading this book, you will eventually get used to reading and using functions.
-Another benefit of having good software engineering skills is that it will allow you to more easily read the source code of the packages that you're using, which could be greatly beneficial when you are debugging your code or wondering how exactly the package that you're using works.
-Finally, you can rest assured that we did not invent this emphasis on functions ourselves.
-In industry, it is common practice to encourage developers to use **"functions instead of comments"**.
-This means that, instead of writing a comment for humans and some code for the computer, the developers write a function which is read by both humans and computers.
+此外，我们还努力坚持一致的风格指南。
+编程风格指南为编写代码提供指导；比如，哪里应该有空格，哪些命名应该大写。
+坚持严格的风格指南可能听起来有点古板，有时也确实如此。
+然而，代码风格越一致，就越容易阅读和理解代码。
+要阅读我们的代码，你不需要知道我们的风格指南。
+阅读的时候你就会明白了。
+如果您想了解我们风格指南的详细内容，请查阅 @sec:notation。
 
-Also, we've put much effort into sticking to a consistent style guide.
-Programming style guides provide guidelines for writing code; for example, about where there should be whitespace and what names should be capitalized or not.
-Sticking to a strict style guide might sound pedantic and it sometimes is.
-However, the more consistent the code is, the easier it is to read and understand the code.
-To read our code, you don't need to know our style guide.
-You'll figure it out when reading.
-If you do want to see the details of our style guide, check out @sec:notation.
+## 致谢
 
-## Acknowledgements
+许多人对这本书有直接或间接的贡献。
 
-Many people have contributed directly and indirectly to this book.
+Jose Storopoli 要感谢他的家人，特别是他的妻子，他们在写作和评审过程中给予了支持和爱。
+他也感谢他的同事，特别是 [Fernando Serra](https://orcid.org/0000-0002-8178-7313)， [Wonder Alexandre Luz Alves](https://orcid.org/0000-0003-0430-950X) 和 [André Librantz](https://orcid.org/0000-0001-8599-9009)， 感谢他们的鼓励。
 
-Jose Storopoli would like to thank his family, especially his wife for the support and love during the writing and reviewing process.
-He would also like to thank his colleagues, especially [Fernando Serra](https://orcid.org/0000-0002-8178-7313), [Wonder Alexandre Luz Alves](https://orcid.org/0000-0003-0430-950X) and [André Librantz](https://orcid.org/0000-0001-8599-9009), for their encouragement.
+Rik Huijzer 首先要感谢他格罗宁根大学的博士导师， [Peter de Jonge](https://www.rug.nl/staff/peter.de.jonge/)、[Ruud den Hartigh](https://www.rug.nl/staff/j.r.den.hartigh/) 和 [Frank Blaauw](https://frankblaauw.nl/) ，感谢他们的支持。
+其次，他要感谢他的父母和女朋友，在撰写这本书的假期、周末和晚上，他们提供了巨大的支持。
 
-Rik Huijzer would first like to thank his PhD supervisors at the University of Groningen, [Peter de Jonge](https://www.rug.nl/staff/peter.de.jonge/), [Ruud den Hartigh](https://www.rug.nl/staff/j.r.den.hartigh/) and [Frank Blaauw](https://frankblaauw.nl/) for their support.
-Second, he would like to thank his parents and girlfriend for being hugely supportive during the holiday and all the weekends and evenings that were involved in this book.
-
-Lazaro Alonso would like to thank his wife and daughters for their encouragement to get involved in this project.
+Lazaro Alonso 要感谢他的妻子和女儿们鼓励他参与这个项目。
