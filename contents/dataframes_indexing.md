@@ -1,4 +1,4 @@
-## Index 和 Summarize
+## Index 和 Summarize {#sec:index_summarize}
 
 回顾之前定义的 `grades_2020()` 数据集：
 
@@ -113,7 +113,6 @@ sco("equals_alice(\"Alice\")"; post=output_block)
 ```
 
 结合该函数， 可以使用 `f` 筛选出所有 `name` 等于 "Alice" 的行：
-
 
 ```jl
 s = "filter(:name => equals_alice, grades_2020())"

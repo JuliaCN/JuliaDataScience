@@ -1,4 +1,4 @@
-## 使用 LaTeXStrings.jl
+## 使用 LaTeXStrings.jl {#sec:using_latex}
 
 通过调用 `LaTeXStrings.jl`，`Makie.jl` 实现了对 LaTeX 的支持：
 

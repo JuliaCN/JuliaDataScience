@@ -1,4 +1,4 @@
-## 变量变换
+## 变量变换 {#sec:df_transform}
 
 ```{=comment}
 We need to cover `ifelse` and `case_when`
