@@ -32,6 +32,20 @@ function write_thanks_page()
     return path
 end
 
+function build_all(; project="default", extra_head="", fail_on_error=false)
+    mkpath(BUILD_DIR)
+    filename = "favicon.png"
+    from_path = joinpath("pandoc", filename)
+    if isfile(from_path)
+        cp(from_path, joinpath(BUILD_DIR, filename); force=true)
+    end
+    build_sitemap = true
+    html(; project, extra_head, fail_on_error, build_sitemap)
+    write_extra_html_files(project)
+    # pdf(; project)
+    # docx(; project)
+end
+
 """
     build()
 

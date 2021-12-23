@@ -10,7 +10,6 @@ using Reexport: @reexport
         @sc,
         @sco,
         Options,
-        build_all,
         catch_show,
         clean_stacktrace,
         code_block,
@@ -21,7 +20,9 @@ using Reexport: @reexport
         sco,
         scob,
         serve,
-        without_caption_label
+        without_caption_label,
+        html,
+        write_extra_html_files
     using CSV
     using CairoMakie
     using CategoricalArrays
