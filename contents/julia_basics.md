@@ -1,30 +1,28 @@
-# Julia Basics {#sec:julia_basics}
+# Julia 基础 {#sec:julia_basics}
 
 > **_NOTE:_**
-> In this chapter we cover the basics of Julia as a programming language.
-> Please note that this is not *strictly necessary* for you to use Julia as a tool for data manipulation and data visualization.
-> Having a basic understanding of Julia will definitely make you more *effective* and *efficient* in using Julia.
-> However, if you prefer to get started straight away, you can jump to @sec:dataframes to learn about tabular data with `DataFrames.jl`.
+> 本章介绍 Julia 编程语言的基础。
+> 请注意，使用 Julia 语言作为数据分析和数据可视化工具不是 **严格必须** 的。
+> 对 Julia 的基本了解定会让 Julia 的使用更加 **有效** 且 **高效** 。
+> 但是，如果希望直接开始，可以跳转到 @sec:dataframes ，学习使用 `DataFrames.jl` 操作表格数据。
 
-This is going to be a very brief and *not* an in-depth overview of the Julia language.
-If you are already familiar and comfortable with other programming languages, we highly encourage you to read Julia's documentation (<https://docs.julialang.org/>).
-The docs are an excellent resource for taking a deep dive into Julia.
-It covers all the basics and corner cases, but it can be cumbersome, especially if you aren't familiar with software documentation.
+本章是一个简明且不深入的 Julia 语言概述。
+如果您已经熟悉其他编程语言，我们强烈建议您阅读 Julia 文档 (<https://docs.julialang.org/>)。
+ Julia 文档是深入理解 Julia 的绝佳资源。
+它包含了所有的基础和特殊案例，但在你并不熟悉软件文档时会变得很复杂。
 
-We'll cover the basics of Julia.
-Imagine that Julia is a fancy feature-loaded car, such as a brand-new Tesla.
-We'll just explain to you how to "drive the car, park it, and how to navigate in traffic".
-If you want to know what "all the buttons in the steering wheel and dashboard do", this is not the resource you are looking for.
+接下来将介绍 Julia 的基本知识。
+想象一下，若把Julia 比作一辆功能丰富的奇特汽车，比如一辆全新的特斯拉，那么本章只会向您介绍如何“驾驶汽车、停车和在道路上导航”。
+若你想知道“方向盘和仪表盘上的所有按钮的作用”，那本章不是您要找的资源。
 
-## Development Environments {#sec:ide}
+## 开发环境 {#sec:ide}
 
-Before we can dive into the language syntax, we need to answer how to run code.
-Going into details about the various options is out of scope for this book.
-Instead, we will provide you with some pointers to various solutions.
+在深入研究语法前，我们需要了解如何运行代码。
+详细介绍各种运行方案超出本书讨论的范围。因此，本节只对每种方案作简要介绍。
 
-The simplest way is to use the Julia REPL.
-This means starting the Julia executable (`julia` or `julia.exe`) and running code there.
-For example, we can start the REPL and execute some code:
+最简单的方案是使用 Julia REPL。
+这指的是启动 Julia 可执行文件 (`julia` or `julia.exe`) 并且在其中运行代码。
+例如，启动 REPL 并执行一些代码：
 
 ```julia
 julia> x = 2
@@ -34,16 +32,16 @@ julia> x + 1
 3
 ```
 
-This works all very well, but what if we want to save the code that we wrote?
-To save our code, one can write ".jl" files such as "script.jl" and load these into Julia.
-Say, that "script.jl" contains:
+代码都运行正常，但是如果我们想保存编写的代码，该怎么办？
+我们可以通过编写 “.jl” 文件来保存代码，例如 “script.jl” ，并将它加载到 Julia 中。
+“script.jl” 包含:
 
 ```
 x = 3
 y = 4
 ```
 
-We can load this into Julia:
+将它加载到 Julia:
 
 ```julia
 julia> include("script.jl")
@@ -52,60 +50,58 @@ julia> y
 4
 ```
 
-Now the problem becomes that we would like Julia to re-read our script every time before executing code.
-This can be done via [Revise.jl](https://github.com/timholy/Revise.jl).
-Because compilation time in Julia is often long, `Revise.jl` is a must-have for Julia development.
-For more information, see the `Revise.jl` documentation or simply Google a bit if you have specific questions.
+现在的问题是，如何使 Julia 在每次执行代码前重新读取我们的脚本。
+[Revise.jl](https://github.com/timholy/Revise.jl) 实现了这一功能。
+因为 Julia 中的编译时间通常很长，所以 `Revise.jl` 是 Julia 开发的必备工具。
+有关更多信息，请阅读 `Revise.jl` 文档或者在 Google 上搜索具体的问题。
 
-We are aware that `Revise.jl` and the REPL requires some manual actions which aren't super clearly documented.
-Luckily, there is [Pluto.jl](https://github.com/fonsp/Pluto.jl).
-`Pluto.jl` automatically manages dependencies, runs code, and **reacts** to changes.
-For people who are new to programming, `Pluto.jl` is by far the easiest way to get started.
-The main drawback of the package is that it is less suitable for larger projects.
+我们还发现 `Revise.jl` 和 REPL 需要一些手动操作，但文档并没有将这些操作写清楚。
+幸运的是，还有 [Pluto.jl](https://github.com/fonsp/Pluto.jl)。
+`Pluto.jl` 能够自动管理依赖， 运行代码， 和 **交互式** 地更改代码。
+对于刚接触编程的人来说， `Pluto.jl` 是最简单的入门方案。
+此软件包的主要缺点是不够适合大型项目。
 
-Other options are to use Visual Studio Code with various Julia extensions or manage your own IDE.
-If you **don't** know what an IDE is, but do want to manage large projects choose Visual Studio Code.
-If you **do** know what an IDE is, then you might like building your own IDE with Vim or Emacs and the REPL.
+一些其他选项是使用安装了多种 Julia 插件 的 Visual Studio Code 或定制你自己的 IDE。
+如果你 **不知道** 什么是 IDE，但又想管理大型项目，请选择 Visual Studio Code 。
+如果你 **知道** 什么是 IDE，那你可以使用 Vim 或者Emacs 结合 REPL 来构建自己的 IDE。
 
-So, to summarize:
+综上所述：
 
-- Easiest way to get started -> `Pluto.jl`
-- Larger projects -> Visual Studio Code
-- Advanced users -> Vim, Emacs and the REPL
+- 最简单的入门方案 -> `Pluto.jl`
+- 大型项目 -> Visual Studio Code
+- 高级用户 -> Vim, Emacs and the REPL
 
-## Language Syntax {#sec:syntax}
+## 语法 {#sec:syntax}
 
-Julia is a **dynamic-typed language** with a just-in-time compiler.
-This means that you don't need to compile your program before you run it, like you would do in C++ or FORTRAN.
-Instead, Julia will take your code, guess types where necessary, and compile parts of code just before running it.
-Also, you don't need to explicitly specify each type.
-Julia will guess types for you on the go.
+Julia 是一种即时编译的**动态类型语言**。
+这意味着不像 C++ 或 FORTRAN 那样，需要在运行之前编译程序。
+相反，Julia 会读取你的代码，并在运行前编译部分程序。
+同时，你不需要为每一处代码显式地指定类型，Julia会在运行时推断类型。
 
-The main differences between Julia and other dynamic languages such as R and Python are the following.
-First, Julia **allows the user to specify type declarations**.
-You already saw some types declarations in *Why Julia?* (@sec:why_julia): they are those double colons `::` that sometimes come after variables.
-However, if you don't want to specify the type of your variables or functions, Julia will gladly infer (guess) them for you.
+Julia 与其他动态语言（如 R 和 Python）之间的主要区别如下。
+首先，Julia **允许用户进行类型声明** 。你应该在 **为什么选择 Julia?** (@sec:why_julia): 一节已经见过类型声明，就是一些跟在变量后的双冒号 `::` 。
+但是，如果你不想指定变量或函数的类型，Julia 将会很乐意推断（猜测）它们。
 
-Second, Julia allows users to define function behavior across many combinations of argument types via multiple dispatch.
-We also covered multiple dispatch in @sec:julia_accomplish.
-We defined a different type behavior by defining new function signatures for argument types while using the same function name.
+其次，Julia 允许用户通过多重派发定义不同参数类型组合的函数行为。
+本书将会在 @sec:julia_accomplish 讨论多重派发。
+定义不同函数行为的方法是使用相同的函数名称定义新的函数，但将这些函数用于不同的参数类型。
 
-### Variables {#sec:variable}
+### 变量 {#sec:variable}
 
-Variables are values that you tell the computer to store with a specific name, so that you can later recover or change its value.
-Julia has several types of variables but, in data science, we mostly use:
+变量是在计算机中以特定名称存储的值，以便后面读取或更改此值。
+Julia 有很多数据类型，但在数据科学中主要使用:
 
-* Integers: `Int64`
-* Real Numbers: `Float64`
-* Boolean: `Bool`
-* Strings: `String`
+* 整数： `Int64`
+* 实数： `Float64`
+* 布尔型： `Bool`
+* 字符串： `String`
 
-Integers and real numbers are stored by using 64 bits by default, that's why they have the `64` suffix in the name of the type.
-If you need more or less precision, there are `Int8` or `Int128` types, for example, where higher means more precision.
-Most of the time, this won't be an issue so you can just stick to the defaults.
+整数和实数默认使用 64 位存储，这就是为什么它们的类型名称带有“64”后缀。
+如果需要更高或更低的精度，Julia 还有“Int8”类型和“Int128”类型，其中“Int8”类型用于低精度，“Int128”类型用于高精度。
+多数情况下，用户不需要关心精度问题，使用默认值即可。
 
-We create new variables by writing the variable name on the left and its value in the right, and in the middle we use the `=` assignment operator.
-For example:
+创建新变量的方法是在左侧写变量名并在右侧写其值，并在中间插入`=` 赋值运算符。
+例如：
 
 ```jl
 s = """
@@ -115,24 +111,23 @@ s = """
 scob(s)
 ```
 
-Note that the return output of the last statement (`age`) was printed to the console.
-Here, we are defining two new variables: `name` and `age`.
-We can recover their values by typing the names given in the assignment:
+请注意，最后一行代码 (`age`) 的值已打印到控制台。
+上面的代码定义了两个变量 `name` 和 `age`。
+将变量名称输入可重新得到变量的值：
 
 ```jl
 scob("name")
 ```
 
-If you want to define new values for an existing variable, you can repeat the steps in the assignment.
-Note that Julia will now override the previous value with the new one.
-Supposed, Julia's birthday has passed and now it has turned 10:
+如果要为现有变量定义新值，可以重复赋值中的步骤。
+请注意，Julia 现在将使用新值覆盖旧值。
+假设 Julia 已经过了生日，现在是 10 岁：
 
 ```jl
 scob("age = 10")
 ```
 
-We can do the same with its `name`. Suppose that Julia has earned some titles due to its blazing speed.
-We would change the variable `name` to the new value:
+我们可以对 `name` 进行同样的操作。假设 Julia 因为惊人的速度获得了一些头衔。那么，我们可以更改 `name` 的值：
 
 ```jl
 s = """
@@ -141,24 +136,24 @@ s = """
 scob(s)
 ```
 
-We can also do operations on variables such as addition or division.
-Let's see how old Julia is, in months, by multiplying `age` by 12:
+
+也可以对变量进行乘除法等运算。
+将 `age` 乘以 12，可以得到 Julia 以月为单位的年龄：
 
 ```jl
 s = "12 * age"
 scob(s)
 ```
 
-We can inspect the types of variables by using the `typeof` function:
+使用 `typeof` 函数可以查看变量的类型：
 
 ```jl
 sco("typeof(age)")
 ```
 
-The next question then becomes:
-"What else can I do with integers?"
-There is a nice handy function `methodswith` that spits out every function available, along with its signature, for a certain type.
-Here, I will restrict the output to the first 5 rows:
+接下来的问题是：“我还能对整数做什么？”
+Julia 中 有一个非常好用的函数 `methodswith` ，它可以为输出所有可用于指定类型的函数。
+此处限制代码只显示前五行：
 
 ```jl
 s = """
@@ -167,16 +162,16 @@ s = """
 sco(s; process=catch_show)
 ```
 
-### User-defined Types {#sec:struct}
+### 用户定义类型 {#sec:struct}
 
-Having variables around without any sort of hierarchy or relationships is not ideal.
-In Julia, we can define that kind of structured data with a `struct` (also known as a composite type).
-Inside each `struct`, you can specify a set of fields.
-They differ from the primitive types (e.g. integer and floats) that are by default defined already inside the core of Julia language.
-Since most `struct`s are user-defined, they are known as user-defined types.
+不凭借任何依赖关系或层次结构来组织多个变量是不现实的。
+在 Julia 中，我们可以使用 `struct`（也称为复合类型）来定义结构化数据。
+在每个 `struct` 中都可以定义一组字段。
+它们不同于 Julia 语言内核中已经默认定义的原始类型（例如 `Integer` 和 `Float`）。
+由于大多数 `struct` 都是用户定义的，因此它们也被称为用户定义类型。
 
-For example, let's create a `struct` to represent scientific open source programming languages.
-We'll also define a set of fields along with the corresponding types inside the `struct`:
+例如，创建 `struct` 表示用于科学计算的开源编程语言。
+在 `struct` 中定义一组相应类型的字段：
 
 ```jl
 s = """
@@ -190,14 +185,14 @@ s = """
 sco(s; post=x -> "")
 ```
 
-To inspect the field names you can use the `fieldnames` and pass the desired `struct` as an argument:
+可以通过将 `struct` 作为参数传递给 `fieldnames`检查字段名称列表：
 
 ```jl
 sco("fieldnames(Language)")
 ```
 
-To use `struct`s, we must instantiate individual instances (or "objects"), each with its own specific values for the fields defined inside the `struct`.
-Let's instantiate two instances, one for Julia and one for Python:
+要使用 `struct`，必须创建单个实例（或“对象”），每个`struct`实例的字段值都是特定的。
+如下所示，创建两个实例 Julia 和 Python：
 
 ```jl
 s = """
@@ -207,11 +202,11 @@ s = """
 sco(s)
 ```
 
-One thing to note with `struct`s is that we can't change their values once they are instantiated.
-We can solve this with a `mutable struct`.
-Also, note that mutable objects will, generally, be slower and more error prone.
-Whenever possible, make everything *immutable*.
-Let's create a `mutable struct`.
+`struct` 实例的值在构造后无法修改。
+如果需要，可以创建 `mutable struct`。
+但请注意，可变对象一般来说更慢且更容易出现错误。
+因此，尽可能确保所有类型都是 **不可变的**。
+接下来创建一个 `mutable struct`：
 
 ```jl
 s = """
@@ -227,8 +222,8 @@ s = """
 sco(s)
 ```
 
-Suppose that we want to change `julia_mutable`'s title.
-Now, we can do this since `julia_mutable` is an instantiated `mutable struct`:
+假设想要改变 `julia_mutable` 的标题。
+因为 `julia_mutable` 是 `mutable struct` 的实例，所以该操作可行：
 
 ```jl
 s = """
@@ -239,17 +234,17 @@ s = """
 sco(s)
 ```
 
-### Boolean Operators and Numeric Comparisons
+### 布尔运算和数值比较
 
-Now that we've covered types, we can move to boolean operators and numeric comparison.
+上节讨论了类型，本节讨论布尔运算和数值比较。
 
-We have three boolean operators in Julia:
+Julia 中有三种布尔运算符：
 
-* `!`: **NOT**
-* `&&`: **AND**
-* `||`: **OR**
+* `!` &nbsp;： **NOT**
+* `&&`： **AND**
+* `||`： **OR**
 
-Here are a few examples with some of them:
+一些例子如下：
 
 ```jl
 scob("!true")
@@ -263,19 +258,19 @@ scob("(false && true) || (!false)")
 scob("(6 isa Int64) && (6 isa Real)")
 ```
 
-Regarding numeric comparison, Julia has three major types of comparisons:
+关于数值比较，Julia有三种主要的比较类型：
 
-1. **Equality**: either something is *equal* or *not equal* another
-    * == "equal"
-    * != or ≠ "not equal"
-1. **Less than**: either something is *less than* or *less than or equal to*
-    * <  "less than"
-    * <= or ≤ "less than or equal to"
-1. **Greater than**: either something is *greater than* or *greater than or equal to*
-    * \> "greater than"
-    * \>= or ≥ "greater than or equal to"
+1. **相等**：两者的关系为 **相等** 或 **不等** 
+    * == "相等"
+    * != 或 ≠ "不等"
+1. **小于**: 两者的关系为 **小于** 或 **小于等于**
+    * <  "小于"
+    * <= 或 ≤ "小于等于"
+1. **大于**: 两者的关系为 **大于** 或 **大于等于**
+    * \> "大于"
+    * \>= 或 ≥ "大于等于"
 
-Here are some examples:
+下面是一些例子：
 
 ```jl
 scob("1 == 1")
@@ -285,23 +280,23 @@ scob("1 == 1")
 scob("1 >= 10")
 ```
 
-It evens works between different types:
+甚至可以比较不同类型：
 
 ```jl
 scob("1 == 1.0")
 ```
 
-We can also mix and match boolean operators with numeric comparisons:
+还可以将布尔运算与数值比较：
 
 ```jl
 scob("(1 != 10) || (3.14 <= 2.71)")
 ```
 
-### Functions {#sec:function}
+### 函数 {#sec:function}
 
-Now that we already know how to define variables and custom types as `struct`s, let's turn our attention to **functions**.
-In Julia, a function **maps argument's values to one or more return values**.
-The basic syntax goes like this:
+上节学习了如何定义变量和自定义类型 `struct`，本节讨论 **函数**。
+在 Julia 里，函数是 **一组参数值到一个或多个返回值的映射**。
+基础语法如下所示：
 
 ```julia
 function function_name(arg1, arg2)
@@ -310,27 +305,27 @@ function function_name(arg1, arg2)
 end
 ```
 
-The function declaration begins with the keyword `function` followed by the function name.
-Then, inside parentheses `()`, we define the arguments separated by a comma `,`.
-Inside the function, we specify what we want Julia to do with the parameters that we supplied.
-All variables that we define inside a function are deleted after the function returns. This is nice because it is like an automatic cleanup.
-After all the operations in the function body are finished, we instruct Julia to return the final result with the `return` statement.
-Finally, we let Julia know that the function definition is finished with the `end` keyword.
+函数声明以关键字 `function` 开始，后接函数名称。
+然后在 `()` 里定义参数， 这些参数由 `,` 分隔。
+接着在函数体内部定义我们希望 Julia 对传入参数执行的操作。
+函数里定义的所有变量都会在函数返回后删除。这很不错，因为有点像自动垃圾回收。
+在函数体内的所有操作完成后，Julia 使用 `return` 关键字返回最终结果。
+最后，Julia 以 `end` 关键字结束函数定义。
 
-There is also the compact **assignment form**:
+还有一种紧凑的 **赋值形式**：
 
 ```julia
 f_name(arg1, arg2) = stuff with the arg1 and arg2
 ```
 
-It is the **same function** as before but with a different, more compact, form.
-As a rule of thumb, when your code can fit easily on one line of up to 92 characters, then the compact form is suitable.
-Otherwise, just use the longer form with the `function` keyword.
-Let's dive into some examples.
+这种形式更加紧凑，但 **等效于** 前面的同名函数。
+根据经验，当代码符合一行最多只有92字符时，紧凑形式更加合适。
+否则，只需使用带 `function` 关键字的较长形式。
+接下来深入讨论一些例子。
 
-#### Creating new Functions {#sec:function_example}
+#### 创建函数 {#sec:function_example}
 
-Let's create a new function that adds numbers together:
+下面是一个将传入数字相加的函数：
 
 ```jl
 s = """
@@ -341,20 +336,20 @@ s = """
 sco(s)
 ```
 
-Now, we can use our `add_numbers` function:
+接下来调用 `add_numbers` 函数：
 
 ```jl
 scob("add_numbers(17, 29)")
 ```
 
-And it works also with floats:
+它也适用于浮点数：
 
 ```jl
 scob("add_numbers(3.14, 2.72)")
 ```
 
-Also, we can define custom behavior by specifying type declarations.
-Suppose that we want to have a `round_number` function that behaves differently if its argument is either a `Float64` or `Int64`:
+另外，还可以通过制定类型声明来创建自定义函数行为。
+假设创建一个 `round_number` 函数， 它在传入参数类型是 `Float64` 或 `Int64` 时进行不同的操作：
 
 ```jl
 s = """
@@ -369,16 +364,15 @@ s = """
 sco(s)
 ```
 
-We can see that it is a function with multiple methods:
+可以看到，它是具有多种方法的函数：
 
 ```jl
 sco("methods(round_number)")
 ```
 
-There is one issue: what happens if we want to round a 32-bit float `Float32`?
-Or a 8-bit integer `Int8`?
+但问题是：如果想对 32 位浮点数 `Float32` 或者 8 位整数 `Int8` 作四舍五入，该怎么办？
 
-If you want something to function on all float and integer types, you can use an **abstract type** as the type signature, such as `AbstractFloat` or `Integer`:
+如果想定义关于所有浮点数和整数类型的函数，那么需要使用 **abstract type** 作为函数签名， 例如 `AbstractFloat` 或 `Integer`：
 
 ```jl
 s = """
@@ -389,7 +383,7 @@ s = """
 sco(s)
 ```
 
-Now, it works as expected with any float type:
+现在该函数适用于任何的浮点数类型：
 
 ```jl
 s = """
@@ -400,38 +394,38 @@ scob(s)
 ```
 
 > **_NOTE:_**
-> We can inspect types with the `supertypes` and `subtypes` functions.
+> 可以使用 `supertypes` 和 `subtypes` 函数查看类型间的关系。
 
-Let's go back to our `Language` `struct` that we defined above.
-This is an example of multiple dispatch.
-We will extend the `Base.show` function that prints the output of instantiated types and `struct`s.
+接下来回到之前定义的 `Language` `struct`。 
+这就是一个多重派发的例子。
+下面将扩展 `Base.show` 函数，该函数打印实例的类型和 `struct` 的内容。
 
-By default, a `struct` has a basic output, which you saw above in the `python` case.
-We can define a new `Base.show` method to our `Language` type, so that we have some nice printing for our programming languages instances.
-We want to clearly communicate programming languages' names, titles, and ages in years.
-The function `Base.show` accepts as arguments a `IO` type named `io` followed by the type you want to define custom behavior:
+默认情况下， `struct` 有基本的输出样式，正如在 `python` 例子中看到的那样。
+可以为 `Language` 类型定义新的 `Base.show` 方法， 以便为编程语言实例提供更漂亮的输出。
+该方法将更清晰地打印编程语言的姓名，称号和年龄。
+函数 `Base.show` 接收两个参数，第一个是 `IO` 类型的 `io` ，另一个是 `Language` 类型的 `l`：
 
 ```jl
 s = """
     Base.show(io::IO, l::Language) = print(
-        io, l.name, " ",
-        2021 - l.year_of_birth, ", years old, ",
+        io, l.name, ", ",
+        2021 - l.year_of_birth, " years old, ",
         "has the following titles: ", l.title
     )
     """
 sco(s; post=x -> "")
 ```
 
-Now, let's see how `python` will output:
+现在查看 `python` 如何输出：
 
 ```jl
 sco("python")
 ```
 
-#### Multiple Return Values {#sec:function_multiple}
+#### 多返回值 {#sec:function_multiple}
 
-A function can, also, return two or more values.
-See the new function `add_multiply` below:
+一个函数可以返回两个以上的值。
+下面看一个新函数 `add_multiply`：
 
 ```jl
 s = """
@@ -444,9 +438,9 @@ s = """
 sco(s)
 ```
 
-In that case, we can do two things:
+再接收返回值时，有两种写法：
 
-1. We can, analogously as the return values, define two variables to hold the function return values, one for each return value:
+1. 与返回值的形式类似，依次为每个返回值定义一个变量，在本例中则需要两个变量：
 
    ```jl
    s = """
@@ -456,7 +450,7 @@ In that case, we can do two things:
    scob(s)
    ```
 
-2. Or we can define just one variable to hold the function's return values and access them with either `first` or `last`:
+2. 也可以定义一个变量来接受所有的返回值，然后通过  `first` 或 `last` 访问每个返回值：
 
    ```jl
    s = """
@@ -466,12 +460,12 @@ In that case, we can do two things:
    scob(s)
    ```
 
-#### Keyword Arguments {#sec:function_keyword_arguments}
+#### 关键字参数 {#sec:function_keyword_arguments}
 
-Some functions can accept keyword arguments instead of positional arguments.
-These arguments are just like regular arguments, except that they are defined after the regular function's arguments and separated by a semicolon `;`.
-For example, let's define a `logarithm` function that by default uses base $e$ (2.718281828459045) as a keyword argument.
-Note that, here, we are using the abstract type `Real` so that we cover all types derived from `Integer` and `AbstractFloat`, being both themselves subtypes of `Real`:
+某些函数可以接受关键字参数而不是位置参数。
+这些参数与常规参数类似，只是定义在常规函数参数之后且使用分号 `;` 分隔。
+例如，定义 `logarithm` 函数，该函数默认使用基 $e$ (2.718281828459045)作为关键字参数。
+注意，此处使用抽象类型 `Real`，以便于覆盖从 `Integer` 和 `AbstractFloat` 派生的所有类型，这两种类型本身也都是 `Real` 的子类型：
 
 ```jl
 scob("AbstractFloat <: Real && Integer <: Real")
@@ -486,13 +480,13 @@ s = """
 sco(s)
 ```
 
-It works without specifying the `base` argument as we supplied a **default argument value** in the function declaration:
+当未指定 `base` 参数时函数正常运行，这是因为函数声明中提供了 **默认参数** ：
 
 ```jl
 scob("logarithm(10)")
 ```
 
-And also with the keyword argument `base` different from its default value:
+同时也可以指定与默认值不同的 `base` 值：
 
 ```jl
 s = """
@@ -501,43 +495,43 @@ s = """
 scob(s)
 ```
 
-#### Anonymous Functions {#sec:function_anonymous}
+#### 匿名函数 {#sec:function_anonymous}
 
-Often we don't care about the name of the function and want to quickly make one.
-What we need are **anonymous functions**.
-They are used a lot in Julia's data science workflow.
-For example, when using `DataFrames.jl` (@sec:dataframes) or `Makie.jl` (@sec:DataVisualizationMakie), sometimes we need a temporary function to filter data or format plot labels.
-That's when we use anonymous functions.
-They are especially useful when we don't want to create a function, and a simple in-place statement would be enough.
+很多情况下，我们不关心函数名称，只想快速创建函数。
+因此我们需要 **匿名函数** 。
+Julia 数据科学工作流中经常会用到它。
+例如，在使用 `DataFrames.jl` (@sec:dataframes) 或 `Makie.jl` (@sec:DataVisualizationMakie) 时，时常需要一个临时函数来筛选数据或者格式化图标签。
+这就是使用匿名函数的时机。
+当我们不想创建函数时它特别有用，因为一个简单的 in-place 语句就够用了。
 
-The syntax is simple.
-We use the `->` operator.
-On the left of `->` we define the parameter name.
-And on the right of `->` we define what operations we want to perform on the parameter that we defined on the left of `->`.
-Here is an example.
-Suppose that we want to undo the log transformation by using an exponentiation:
+它的语法特别简单，
+只需使用 `->` 。
+`->` 的左侧定义参数名称。
+ `->` 的右侧定义了想对左侧参数进行的操作。
+考虑这样一个例子，
+假设想通过指数函数来抵消对数运算：
 
 ```jl
 scob("map(x -> 2.7182818284590^x, logarithm(2))")
 ```
 
-Here, we are using the `map` function to conveniently map the anonymous function (first argument) to `logarithm(2)` (the second argument).
-As a result, we get back the same number, because logarithm and exponentiation are inverse (at least in the base that we've chosen -- 2.7182818284590)
+这里使用 `map` 函数方便地将匿名函数（第一个参数）映射到了 `logarithm(2)` （第二个参数）。
+因此，我们得到了相同的数字，因为指数运算和对数运算是互逆的（在选择相同的基 -- 2.7182818284590 时）。
 
-### Conditional If-Else-Elseif {#sec:conditionals}
+### 条件表达式 If-Elseif-Else {#sec:conditionals}
 
-In most programming languages, the user is allowed to control the computer's flow of execution.
-Depending on the situation, we want the computer to do one thing or another.
-In Julia we can control the flow of execution with `if`, `elseif`, and `else` keywords.
-These are known as conditional statements.
+在大多数语言中，用户可以控制程序的执行流。
+我们可依据情况使计算机做这一件或另外一件事。
+Julia 使用 `if`，`elseif` 和 `else` 关键字进行流程控制。
+它们也被称为条件语句。
 
-The `if` keyword prompts Julia to evaluate an expression and, depending on whether it's `true` or `false`, execute certain portions of code.
-We can compound several `if` conditions with the `elseif` keyword for complex control flow.
-Finally, we can define an alternative portion to be executed if anything inside the `if` or `elseif`s is evaluated to `true`.
-This is the purpose of the `else` keyword.
-Finally, like all the previous keyword operators that we saw, we must tell Julia when the conditional statement is finished with the `end` keyword.
+`if` 关键字执行一个表达式，,然后根据表达式的结果为 `true` 还是 `false` 执行相应分支的代码。
+在复杂的控制流中，可以使用 `elseif` 组合多个 `if` 条件。
+最后，如果 `if` 或 `elseif` 分支的语句都被执行为 `true`，那么我们可以定义另外的分支。
+这就是 `else` 关键字的作用。
+与之前见到的关键字运算符一样，我们必须告诉 Julia 条件语句以 `end` 关键字结束。
 
-Here's an example with all the `if`-`elseif`-`else` keywords:
+下面是一个包含所有 `if`-`elseif`-`else` 关键字的例子：
 
 ```jl
 s = """
@@ -555,7 +549,7 @@ s = """
 scob(s)
 ```
 
-We can even wrap this in a function called `compare`:
+我们甚至可将其包装成函数 `compare`:
 
 ```jl
 s = """
@@ -575,15 +569,14 @@ sco(s)
 ```
 
 
-### For Loop {#sec:for}
+### For 循环 {#sec:for}
 
-The classical for loop in Julia follows a similar syntax as the conditional statements.
-You begin with a keyword, in this case `for`.
-Then, you specify what Julia should "loop" for, i.e., a sequence.
-Also, like everything else, you must finish with the `end` keyword.
+Julia 中的经典 for 循环遵循与条件语句类似的语法。
+它以 `for` 关键字开始。
+然后，向 Julia 指定一组要 “循环” 的语句。
+另外，与其他一样，它也以 `end` 关键字结束。
 
-So, to make Julia print every number from 1 to 10, you can use the following for loop:
-
+比如使用如下的 for 循环使 Julia 打印 1-10 的数字：
 ```jl
 s = """
     for i in 1:10
@@ -593,15 +586,15 @@ s = """
 sco(s; post=x -> "")
 ```
 
-### While Loop {#sec:while}
+### while 循环 {#sec:while}
 
-The while loop is a mix of the previous conditional statements and for loops.
-Here, the loop is executed every time the condition is `true`.
-The syntax follows the same form as the previous one.
-We begin with the keyword `while`, followed by a statement that evaluates to `true` or `false`.
-As usual, you must end with the `end` keyword.
+while 循环是前面的条件语句和 for 循环的结合体。
+在 while 循环中，当条件为 `true` 时将一直执行循环体。
+语法与之前的语句相同。
+以 `while` 开始，紧跟计算结果为 `true` 或 `false` 的条件表达式。
+它仍以 `end` 关键字结束。
 
-Here's an example:
+例子如下：
 
 ```jl
 s = """
@@ -616,41 +609,39 @@ s = """
 scob(s)
 ```
 
-As you can see, we have to use the `global` keyword.
-This is because of **variable scope**.
-Variables defined inside conditional statements, loops, and functions exist only inside them.
-This is known as the *scope* of the variable.
-Here, we had to tell Julia that the `n` inside `while` loop is in the global scope with the `global` keyword.
+可以看到，我们不得不使用 `global` 关键字。
+这是因为，
+在条件语句中，循环和函数内定义的变量仅存在于其内部。
+这就是变量的 **作用域** 。
+我们需要通过 `global` 关键字告诉 Julia `while` 循环中的 `n` 是全局作用域中的 `n`。
+最后，循环体使用的 `+=` 运算符是 `n = n + 1` 的缩写。
 
-Finally, we also used the `+=` operator which is a nice shorthand for `n = n + 1`.
+## 原生数据结构 {#sec:data_structures}
 
-## Native Data Structures {#sec:data_structures}
+Julia 有多种原生数据结构。
+它们都是某种结构化数据形式的抽象。
+本书将讨论最常用的数据结构。
+它们都能够保存同类型或异构的数据。
+因为它们都是集合， 所以都能通过 `for` 循环进行 **遍历** 。
+接下来的讨论包括 `String`， `Tuple`， `NamedTuple`， `UnitRange`， `Arrays`， `Pair`， `Dict`, `Symbol`。
 
-Julia has several native data structures.
-They are abstractions of data that represent some form of structured data.
-We will cover the most used ones.
-They hold homogeneous or heterogeneous data.
-Since they are collections, they can be *looped* over with the `for` loops.
-
-We will cover `String`, `Tuple`, `NamedTuple`, `UnitRange`, `Arrays`, `Pair`, `Dict`, `Symbol`.
-
-When you stumble across a data structure in Julia, you can find methods that accept it as an argument with the `methodswith` function.
-In Julia, the distinction between methods and functions is as follows.
-Every function can have multiple methods like we have shown earlier.
-The `methodswith` function is nice to have in your bag of tricks.
-Let's see what we can do with a `String` for example:
+当在 Julia 中偶然发现某种数据结构时，可以使用 `methodswith` 函数查看能接收该数据结构作为参数的方法。
+Julia 中方法和函数的区别如下。
+如前面讨论的那样，每一个函数对应多种方法。
+因此值得将 `methodswith` 函数收藏到你的技巧包里。
+例如，让我们看看当对 `String` 应用该函数时会发生什么： 
 
 ```jl
 s = "first(methodswith(String), 5)"
 sco(s; process=catch_show)
 ```
 
-### Broadcasting Operators and Functions {#sec:broadcasting}
+### 对运算符和函数进行广播 {#sec:broadcasting}
 
-Before we dive into data structures, we need to talk about broadcasting (also known as *vectorization*) and the "dot" operator `.`.
+在深入研究数据结构前，我们需要先讨论广播（也被称为 **向量化**）和 `.` 点运算符。
 
-We can broadcast mathematical operations like `*` (multiplication) or `+` (addition) using the dot operator.
-For example, broadcasted addition would imply a change from `+` to `.+`:
+可以使用点运算符广播像 `*` （乘）或 `+`（加）这样的数学运算。
+例如，添加广播只需将 `+` 改为 `.+`：
 
 ```jl
 sco(
@@ -660,21 +651,21 @@ sco(
 )
 ```
 
-It also works automatically with functions.
-(Technically, the mathematical operations, or infix operators, are also functions, but that is not so important to know.)
-Remember our `logarithm` function?
+函数也能通过这种操作实现广播。
+（技术上讲，数学运算或中缀运算符也是函数，但这不重要。）
+还记得 `logarithm` 函数吗？
 
 ```jl
 sco("logarithm.([1, 2, 3])")
 ```
 
-#### Functions with a bang `!` {#sec:function_bang}
+### 带感叹号 `!` 的函数 {#sec:function_bang}
 
-It is a Julia convention to append a bang `!` to names of functions that modify one or more of their arguments.
-This convention warns the user that the function is **not pure**, i.e., that it has *side effects*.
-A function with side effects is useful when you want to update a large data structure or variable container without having all the overhead from creating a new instance.
+当函数改变了一个或多个它们的参数时， 按照 Julia 惯例，应该在函数名后追加 `!` 。
+这个惯例警告用户该函数 **并不单纯**，它具有 **副作用**。
+当想要更新大型数据结构或变量容器时，具有 **副作用** 的 Julia 函数非常有用，因为它不存在创建新实例的所有开销。
 
-For example, we can create a function that adds 1 to each element in a vector `V`:
+例如，可以定义一个函数，它将向量 `V` 的每个元素加1：
 
 ```jl
 s = """
@@ -699,9 +690,9 @@ s = """
 sco(s)
 ```
 
-### String {#sec:string}
+### 字符串 {#sec:string}
 
-**Strings** are represented delimited by double quotes:
+Julia 中使用双引号分隔符表示 **字符串** :
 
 ```jl
 s = """
@@ -710,7 +701,7 @@ s = """
 sco(s)
 ```
 
-We can also write a multiline string:
+也可以定义一个多行字符串：
 
 ```jl
 s = """
@@ -723,7 +714,7 @@ s = """
 sco(s; post=output_block)
 ```
 
-But it is usually clearer to use triple quotation marks:
+但使用三引号通常更清晰：
 
 ```jl
 sco("""
@@ -735,17 +726,17 @@ s = \"\"\"
 """; post=output_block)
 ```
 
-When using triple-backticks, the indentation and newline at the start is ignored by Julia.
-This improves code readability because you can indent the block in your source code without those spaces ending up in your string.
+当使用三引号时，Julia 会忽略开头的缩进和换行。
+这提升了代码可读性，因为你需要缩进代码，但这些空格不能截断字符串。
 
-#### String Concatenation {#sec:string_concatenation}
+#### 字符串连接 {#sec:string_concatenation}
 
-A common string operation is **string concatenation**.
-Suppose that you want to construct a new string that is the concatenation of two or more strings.
-This is accomplished in Julia either with the `*` operator or the `join` function.
-This symbol might sound like a weird choice and it actually is.
-For now, many Julia codebases are using this symbol, so it will stay in the language.
-If you're interested, you can read a discussion from 2015 about it at
+一个常见的字符串操作就是 **字符串连接**。
+假设你想通过连接两个或多个字符串来创建一个新的字符串。
+这在 Julia 中可以通过 `*` 运算符或 `join` 函数实现。
+这个符号看起来是一个令人费解的选择，事实上也确实费解。
+现在，许多 Julia 基础库都在使用该符号，因此它也被保留在 Julia 语言中。 
+如果你感兴趣，可以阅读 2015 年 GitHub 上关于它的讨论：
 <https://github.com/JuliaLang/julia/issues/11030>.
 
 ```jl
@@ -758,21 +749,21 @@ s = """
 scob(s)
 ```
 
-As you can see, we are missing a space between `hello` and `goodbye`.
-We could concatenate an additional `" "` string with the `*`, but that would be cumbersome for more than two strings.
-That's where the `join` function comes in handy.
-We just pass as arguments the strings inside the brackets `[]` and the separator:
+如上所示，代码将会自动忽略 `hello` 和 `goodbye` 之间的空格。
+可以使用 `*` 连接额外的字符串 `" "`以添加空格，但当连接两个以上字符串时会变得很笨重。
+此时就是 `join` 的用武之地。
+仅仅需要将 `[]` 中的字符串和分隔符作为参数传递：
 
 ```jl
 scob("""join([hello, goodbye], " ")""")
 ```
 
-#### String Interpolation {#sec:string_interpolation}
+#### 字符串插值 {#sec:string_interpolation}
 
-Concatenating strings can be convoluted.
-We can be much more expressive with **string interpolation**.
-It works like this: you specify whatever you want to be included in your string with the dollar sign `$`.
-Here's the example before but now using interpolation:
+连接字符串可能会变得很复杂。
+我们也可以使用 **字符串插值** 更直观地实现某些功能。
+它看来就是：使用美元符号 `$` 在字符串中插入你想包含的内容。
+以下是之前的例子，改为使用字符串插值:
 
 ```jl
 s = """
@@ -781,8 +772,8 @@ s = """
 scob(s)
 ```
 
-It even works inside functions.
-Let's revisit our `test` function from @sec:conditionals:
+甚至也支持在函数中进行字符串插值。
+回到 @sec:conditionals 中的 `test` 函数，并用插值重新实现：
 
 ```jl
 s = """
@@ -801,43 +792,43 @@ s = """
 scob(s)
 ```
 
-#### String Manipulations {#sec:string_manipulations}
+#### 字符串处理 {#sec:string_manipulations}
 
-There are several functions to manipulate strings in Julia.
-We will demonstrate the most common ones.
-Also, note that most of these functions accept a [Regular Expression (RegEx)](https://docs.julialang.org/en/v1/manual/strings/#Regular-Expressions) as arguments.
-We won't cover RegEx in this book, but you are encouraged to learn about them, especially if most of your work uses textual data.
+Julia 中有多个函数处理字符串。
+接下来将讨论那些最常用的函数。
+另外注意，这些函数大多数都支持 [正则表达式 (RegEx)](https://docs.julialang.org/en/v1/manual/strings/#Regular-Expressions) 作为参数。
+本书不包含 RegEx，但可以自主学习，尤其是如果你的大多数工作都需要处理文本数据。
 
-First, let us define a string for us to play around with:
+首先，定义一个供后续使用的字符串：
 
 ```jl
 s = """
-    julia_string = "Julia is an amazing opensource programming language"
+    julia_string = "Julia is an amazing open source programming language"
     """
 scob(s)
 ```
 
 
-1. `occursin`, `startswith` and `endswith`: A conditional (returns either `true` or `false`) if the first argument is a:
-    * **substring** of the second argument
+1. `contains`， `startswith` 和 `endswith`： 条件函数 （返回 `true` 或 `false`） 如果第二个参数是：
+    * 第一个参数的 **子串**
 
        ```jl
-       scob("""occursin("Julia", julia_string)""")
+       scob("""contains(julia_string, "Julia")""")
        ```
 
-    * **prefix** of the second argument
+    * 第一个参数的 **前缀**
 
        ```jl
-       scob("""startswith("Julia", julia_string)""")
+       scob("""startswith(julia_string, "Julia")""")
        ```
 
-    * **suffix** of the second argument
+    * 第一个参数的 **后缀**
 
        ```jl
-       scob("""endswith("Julia", julia_string)""")
+       scob("""endswith(julia_string, "Julia")""")
        ```
 
-2. `lowercase`, `uppercase`, `titlecase` and `lowercasefirst`:
+2. `lowercase`， `uppercase`， `titlecase` 和 `lowercasefirst`：
 
      ```jl
      scob("lowercase(julia_string)")
@@ -855,22 +846,22 @@ scob(s)
      scob("lowercasefirst(julia_string)")
      ```
 
-3. `replace`: introduces a new syntax, called the `Pair`
+3. `replace`：介绍一种称为 `Pair` 的新语法：
 
      ```jl
      scob("""replace(julia_string, "amazing" => "awesome")""")
      ```
 
-4. `split`: breaks up a string by a delimiter:
+4. `split`：使用分隔符分隔字符串：
 
      ```jl
      sco("""split(julia_string, " ")""")
      ```
 
-#### String Conversions {#sec:string_conversions}
+#### 字符串转换 {#sec:string_conversions}
 
-Often, we need to **convert** between types in Julia.
-To convert a number to a string we can use the `string` function:
+我们经常需要在 Julia 中 **转换** 类型。
+可以使用 `string` 函数将数字转为字符串：
 
 ```jl
 s = """
@@ -880,52 +871,51 @@ s = """
 sco(s)
 ```
 
-Sometimes, we want the opposite: convert a string to a number.
-Julia has a handy function for that: `parse`.
+有时需要逆向操作：将字符串转为数字。
+Julia 中有个方便的函数 `parse`。
 
 ```jl
 sco("""typeof(parse(Int64, "123"))""")
 ```
 
-Sometimes, we want to play safe with these conversions.
-That's when `tryparse` function steps in.
-It has the same functionality as `parse` but returns either a value of the requested type, or `nothing`.
-That makes `tryparse` handy when we want to avoid errors.
-Of course, you would need to deal with all those `nothing` values afterwards.
+时常希望能够安全地进行这些转换。
+此时就需要介绍 `tryparse` 函数。
+它具有与 `parse` 相同的功能，但只会返回请求类型的值或者`nothing`。
+当我们想要避免错误时 `tryparse` 会变得很有用。
+当然，你需要之后手动处理这些 `nothing` 值。
 
 ```jl
 sco("""tryparse(Int64, "A very non-numeric string")""")
 ```
 
-### Tuple {#sec:tuple}
+### 元组（Tuple） {#sec:tuple}
 
-Julia has a data structure called **tuple**.
-They are really *special* in Julia because they are often used in relation to functions.
-Since functions are a important feature in Julia, every Julia user should know the basics of tuples.
+Julia 中有一类名为 **元组** 的**特殊**数据类型。
+它们经常用在函数中，而函数又是 Julia 的重要组成部分，因此每一个 Julia 用户都应该了解元组的基础。
 
-A tuple is a **fixed-length container that can hold multiple different types**.
-A tuple is an **immutable object**, meaning that it cannot be modified after instantiation.
-To construct a tuple, use parentheses `()` to delimit the beginning and end, along with commas `,` as delimiters between values:
+元组是**包含多种不同类型的固定长度容器**.
+同时元组是 **不可变对象**，这意味着实例化后不能更改。
+创建元组的方法是：使用 `()` 作为开头和结尾，并使用 `,` 作为值间的分隔符：
 
 ```jl
 sco("""my_tuple = (1, 3.14, "Julia")""")
 ```
 
-Here, we are creating a tuple with three values.
-Each one of the values is a different type.
-We can access them via indexing.
-Like this:
+这里创建了包含三个值的元组。
+每一个值都是不同的类型。
+可以使用索引访问每一个元素。
+如下所示：
 
 ```jl
 scob("my_tuple[2]")
 ```
 
-We can also loop over tuples with the `for` keyword.
-And even apply functions to tuples.
-But we can **never change any value of a tuple** since they are **immutable**.
+也可以使用 `for` 关键字遍历元组。
+还将函数作用于元组。
+但 **永远不能改变元组的每一个值** ， 因为它们是 **不可变的**。
 
-Remember functions that return multiple values back in @sec:function_multiple?
-Let's inspect what our `add_multiply` function returns:
+还记得 @sec:function_multiple 中返回多个值的函数吗？
+查看 `add_multiply` 函数返回值的类型：
 
 ```jl
 s = """
@@ -935,52 +925,52 @@ s = """
 sco(s)
 ```
 
-This is because `return a, b` is the same as `return (a, b)`:
+这是因为 `return a, b` 与 `return (a, b)` 等价：
 
 ```jl
 sco("1, 2")
 ```
 
-So, now you can see why they are often related.
+现在就可以发现它们之间的联系了。
 
-One more thing about tuples.
-**When you want to pass more than one variable to an anonymous function, guess what you would need to use? Once again: tuples!**
+关于元组还有一种用法。
+**当想给匿名函数传递多个变量时，猜猜你需要用什么？ 当然还是元组！**
 
 ```jl
 scob("map((x, y) -> x^y, 2, 3)")
 ```
 
-Or, even more than two arguments:
+或两个以上参数：
 
 ```jl
 scob("map((x, y, z) -> x^y + z, 2, 3, 1)")
 ```
 
-### Named Tuple {#sec:namedtuple}
+### 命名元组 {#sec:namedtuple}
 
-Sometimes, you want to name the values in tuples.
-That's when **named tuples** comes in.
-Their functionality is pretty much same as tuples:
-they are **immutable** and can hold **any type of value**.
+有时需要给元组中的值命名。
+这就是需要用 **命名元组 (named tuple)** 的地方。
+它的功能基本与元组一致：
+它是 **不可变的**，并且能够接收 **任意类型的值**。
 
-The construction of named tuples is slightly different from that of tuples.
-You have the familiar parentheses `()` and the comma `,` value separator.
-But now you **name the values**:
+命名元组的构造与元组的构造稍有不同。
+你已经熟悉使用括号 `()` 和逗号 `,` 分隔符。
+但现在你需要 **给值命名**：
 
 ```jl
 sco("""my_namedtuple = (i=1, f=3.14, s="Julia")""")
 ```
 
-We can access a named tuple's values via indexing like regular tuples or, alternatively, **access by their names** with the `.`:
+可以向元组那样通过索引访问命名元组的元素。另外，还可以使用 `.` **结合名称访问**。
 
 ```jl
 scob("my_namedtuple.s")
 ```
 
-To finish our discussion of named tuples, there is one important *quick* syntax that you'll see a lot in Julia code.
-Often Julia users create a named tuple by using the familiar parenthesis `()` and commas `,`, but without naming the values.
-To do so you **begin the named tuple construction by specifying first a semicolon `;` before the values**.
-This is especially useful when the values that would compose the named tuple are already defined in variables or when you want to avoid long lines:
+为了完成命名元组的讨论，下面介绍一种 Julia 代码中常见的 **快捷** 语法。
+Julia 用户通常使用括号 `()` 和逗号 `,` 创建命名元组，但并没有命名值。
+为了给值命名，**在命名元组的构造开始时，首先在值之前添加 `;`**。
+当组成命名元组的值已经在变量中定义，或者你想避免过长的行时，这一语法非常有用：
 
 ```jl
 s = """
@@ -995,94 +985,94 @@ sco(s)
 
 ### Ranges {#sec:ranges}
 
-A **range** in Julia represents an interval between start and stop boundaries.
-The syntax is `start:stop`:
+Julia 中的 **range** 表示一段开始和结束边界之间的序列。
+语法是 `start:stop`：
 
 ```jl
 sco("1:10")
 ```
 
-As you can see, our instantiated range is of type `UnitRange{T}` where `T` is the type inside the `UnitRange`:
+如下所示， range 实例的类型是 `UnitRange{T}` ，其中 `T` 是 `UnitRange` 中元素的类型：
 
 ```jl
 sco("typeof(1:10)")
 ```
 
-And, if we gather all the values, we get:
+如果收集所有值将得到：
 
 ```jl
 sco("[x for x in 1:10]")
 ```
 
-We can also construct ranges for other types:
+也可以构造其它类型的 range：
 
 ```jl
 sco("typeof(1.0:10.0)")
 ```
 
-Sometimes, we want to change the default interval stepsize behavior.
-We can do that by adding a stepsize in the range syntax `start:step:stop`.
-For example, suppose we want a range of `Float64` from 0 to 1 with steps of size 0.2:
+有时希望改变序列默认的步长。
+这可以通过在 range 语法中添加步长实现，即 `start:step:stop`。
+例如，假设想要得到从 0 到 1，步长为 0.2 的  `Float64` range ：
 
 ```jl
 sco("0.0:0.2:1.0")
 ```
 
-If you want to "materialize" a range into a collection, you can use the function `collect`:
+如果要将 range “实体化” 到集合中， 可以使用函数 `collect`：
 
 ```jl
 sco("collect(1:10)")
 ```
 
-We have an array of the type specified in the range between the boundaries that we've set.
-Speaking of arrays, let's talk about them.
+这将得到一个边界范围内的指定类型数组。
+既然提到数组，那接下来就讨论它。
 
-### Array {#sec:array}
+### 数组 {#sec:array}
 
-In its most basic form, **array**s hold multiple objects.
-For example, they can hold multiple numbers in one-dimension:
+在最基本的形式中， **数组**能够包含多种对象。
+例如，一维数组可以包含多个数。
 
 ```jl
 sco("myarray = [1, 2, 3]")
 ```
 
-Most of the time you would want **arrays of a single type for performance issues**, but note that they can also hold objects of different types:
+大多数情况下，**由于性能原因需要构造单一类型的数组**，但请注意它们也可以包含不同类型的对象：
 
 ```jl
 sco("myarray = [\"text\", 1, :symbol]"; process=output_block)
 ```
 
-They are the "bread and butter" of data scientist, because arrays are what underlies most of **data manipulation** and **data visualization** workflows.
+数组是数据科学家的生计之道，因为它们是大多数 **数据操作** 和 **数据可视化** 工作流的基础。
 
-Therefore, **Arrays are an essential data structure**.
+因此，**数组是非常重要的数据结构**。
 
-#### Array Types {#sec:array_types}
+#### 数组类型 {#sec:array_types}
 
-Let's start with **array types**.
-There are several, but we will focus on the two most used in data science:
+首先以 **数组类型** 开始。
+这里有很多中类型，但本节主要关注数据科学中两种最常用的类型：
 
-* `Vector{T}`: **one-dimensional** array. Alias for `Array{T, 1}`.
-* `Matrix{T}`: **two-dimensional** array. Alias for `Array{T, 2}`.
+* `Vector{T}`: **一维** 数组。 `Array{T, 1}` 的别名。
+* `Matrix{T}`: **二维** 数组。 `Array{T, 2}` 的别名。
 
-Note here that `T` is the type of the underlying array.
-So, for example, `Vector{Int64}` is a `Vector` in which all elements are `Int64`s, and `Matrix{AbstractFloat}` is a `Matrix` in which all elements are subtypes of `AbstractFloat`.
+注意这里的 `T` 是数组元素的类型。
+例如， `Vector{Int64}` 表示所有元素的类型都是 `Int64` 的 `Vector`。另外 `Matrix{AbstractFloat}` 表示一个`Matrix`，其中所有元素的类型都是 `AbstractFloat` 的子类型。
 
-Most of the time, especially when dealing with tabular data, we are using either one- or two-dimensional arrays.
-They are both `Array` types for Julia.
-But, we can use the handy aliases `Vector` and `Matrix` for clear and concise syntax.
+大多数情况下，特别是在处理表格数据时，我们使用的是一维或二维数组。
+它们都是 Julia 中的 `Array` 类型。
+但是，可以使用简洁清晰的语法操作 `Vector` 和 `Matrix`。
 
-#### Array Construction {#sec:array_construction}
+#### 数组构造 {#sec:array_construction}
 
-How do we **construct** an array?
-In this section, we start by constructing arrays in a low-level way.
-This can be necessary to write high performing code in some situations.
-However, in most situations, this is not necessary, and we can safely use more convenient methods to create arrays.
-These more convenient methods will be described later in this section.
+如何 **构造** 数组呢？
+本届的开始，我们使用低级的方式构造数组。
+在某些情况下，编写高性能代码就需要这样的做法。
+然而，在大多数情况下，这不是必需的。同时可以安全地使用更简便的方法创建数组。
+本节稍后讨论这些更简便的方法。
 
-The low-level constructor for Julia arrays is the **default constructor**.
-It accepts the element type as the type parameter inside the `{}` brackets and inside the constructor you'll pass the element type followed by the desired dimensions.
-It is common to initialize vector and matrices with undefined elements by using the `undef` argument for type.
-A vector of 10 `undef` `Float64` elements can be constructed as:
+用于 Julia 数组的低级构造器是 **默认构造器**。
+它接手元素类型作为 `{}` 括号内的类型参数，并将元素类型传递到构造器里，构造器后跟需要的维度。 
+通常使用未定义元素初始化向量和矩阵，即将 `undef` 参数作为传递到构造器里的类型。
+如下构造一个含 10 个 `undef` `Float64`元素的向量：
 
 ```jl
 s = """
@@ -1091,8 +1081,8 @@ s = """
 sco(s)
 ```
 
-For matrices, since we are dealing with two-dimensional objects, we need to pass two dimension arguments inside the constructor: one for **rows** and another for **columns**.
-For example, a matrix with 10 rows and 2 columns of `undef` elements can be instantiated as:
+矩阵的构造方式是，向构造器传递两个维度参数：一个用于 **行** ，另一个用于 **列**。
+例如，具有 10 行 2列 `undef` 元素的矩阵以如下方式实例化：
 
 ```jl
 s = """
@@ -1101,10 +1091,10 @@ s = """
 sco(s)
 ```
 
-We also have some **syntax aliases** for the most common elements in array construction:
+对于构造最常见元素类型的数组，Julia 中有一些**语法别名** ：
 
-* `zeros` for all elements being initialized to zero.
-  Note that the default type is `Float64` which can be changed if necessary:
+* `zeros` 将所有元素初始化为 0。
+  注意默认类型为 `Float64`，如果需要可以更改类型：
 
      ```jl
      s = """
@@ -1120,7 +1110,7 @@ We also have some **syntax aliases** for the most common elements in array const
      sco(s)
      ```
 
-* `ones` for all elements being initialized to one:
+* `ones` 将所有元素初始化为 1。
 
      ```jl
      s = """
@@ -1136,8 +1126,8 @@ We also have some **syntax aliases** for the most common elements in array const
      sco(s)
      ```
 
-For other elements, we can first instantiate an array with `undef` elements and use the `fill!` function to fill all elements of an array with the desired element.
-Here's an example with `3.14` ($\pi$):
+对于其他的元素，可以先创建全为 `undef` 元素的数组，然后使用 `fill!` 函数将想要的元素填充到数组的每一个元素上。
+下面是一个关于 `3.14`（$\pi$） 的例子：
 
 ```jl
 s = """
@@ -1147,8 +1137,8 @@ s = """
 sco(s)
 ```
 
-We can also create arrays with **array literals**.
-For example, here's a 2x2 matrix of integers:
+也可以使用 **数组字面量** 创建数组：
+例如，这是 2x2 的整数数组：
 
 ```jl
 s = """
@@ -1158,8 +1148,8 @@ s = """
 sco(s)
 ```
 
-Array literals also accept a type specification before the `[]` brackets.
-So, if we want the same 2x2 array as before but now as floats, we can do so:
+数组字面量能在 `[]` 括号前接收指定的类型。
+所以，如果想得到与之前相同的数组，但类型应是浮点数，那么应按如下定义：
 
 ```jl
 s = """
@@ -1169,7 +1159,7 @@ s = """
 sco(s)
 ```
 
-It also works for vectors:
+这也能够用于向量：
 
 ```jl
 s = """
@@ -1178,7 +1168,7 @@ s = """
 sco(s)
 ```
 
-You can even **mix and match** array literals with the constructors:
+甚至可以使用数组构造器 **组合和匹配** 数组字面量：
 
 ```jl
 s = """
@@ -1204,10 +1194,10 @@ s = """
 sco(s)
 ```
 
-Another powerful way to create an array is to write an **array comprehension**.
-This way of creating arrays is better in most cases: it avoids loops, indexing, and other error-prone operations.
-You specify what you want to do inside the `[]` brackets.
-For example, say we want to create a vector of squares from 1 to 10:
+另一种创建数组的强大方法是 **数组推断**。
+这种创建数组的方式在大多数情况下更好：因为它能够避免循环，索引以及其他容易出错的操作。
+你可以在 `[]` 括号内编写要执行的语句。
+例如，你想创建一个包含 1 到 10 的平方的向量：
 
 ```jl
 s = """
@@ -1216,7 +1206,7 @@ s = """
 sco(s)
 ```
 
-They also support multiple inputs:
+它也支持多个输入：
 
 ```jl
 s = """
@@ -1225,7 +1215,7 @@ s = """
 sco(s)
 ```
 
-And conditionals:
+另外还能使用条件语句：
 
 ```jl
 s = """
@@ -1234,7 +1224,7 @@ s = """
 sco(s)
 ```
 
-As with array literals, you can specify your desired type before the `[]` brackets:
+结合数组字面量，你还可以在 `[]` 括号前指定需要的类型：
 
 ```jl
 s = """
@@ -1243,9 +1233,9 @@ s = """
 sco(s)
 ```
 
-Finally, we can also create arrays with **concatenation functions**.
-Concatenation is a standard term in computer programming and means "to chain together".
-For example, we can concatenate strings with "aa" and "bb" to get "aabb":
+最后，还可以使用 **串联函数** 创建数组。
+串联是计算机编程中的标准术语，意为 “连接在一起”。
+例如， 将字符串 `"aa"` 和 `"bb"` 串联并得到 `"aabb"`：
 
 ```jl
 s = """
@@ -1254,9 +1244,9 @@ s = """
 sco(s)
 ```
 
-And, we can concatenate arrays to create new arrays:
+因此，也可以通过串联数组来创建数组：
 
-* `cat`: concatenate input arrays along a specific dimension `dims`
+* `cat`：沿着指定的 `dims` 串联输入的数组
 
      ```jl
      sco("cat(ones(2), zeros(2), dims=1)")
@@ -1266,66 +1256,66 @@ And, we can concatenate arrays to create new arrays:
      sco("cat(ones(2), zeros(2), dims=2)")
      ```
 
-* `vcat`: vertical concatenation, a shorthand for `cat(...; dims=1)`
+* `vcat`: 垂直串联， `cat(...; dims=1)` 的缩写
 
      ```jl
      sco("vcat(ones(2), zeros(2))")
      ```
 
-* `hcat`: horizontal concatenation, a shorthand for `cat(...; dims=2)`
+* `hcat`: 水平串联， `cat(...; dims=2)` 的缩写
 
      ```jl
      sco("hcat(ones(2), zeros(2))")
      ```
 
-#### Array Inspection {#sec:array_inspection}
+#### 数组检测 {#sec:array_inspection}
 
-Once we have arrays, the next logical step is to **inspect** them.
-There are a lot of handy functions that allow the user to have an insight into any array.
+当拥有一些数组时，下一步应是对它们进行 **检测** 。
+Julia 中提供了许多方便的函数，这使得用户能够检测任何数组。
 
-It is most useful to know what **type of elements** are inside an array.
-We can do this with `eltype`:
+知道数组中的 **元素类型** 是非常有用的。
+这会用到 `eltype` 函数：
 
 ```jl
 sco("eltype(my_matrix_π)")
 ```
 
-After knowing its types, one might be interested in **array dimensions**.
-Julia has several functions to inspect array dimensions:
+了解到类型后，可能还会对 **数组的维度** 感兴趣。
+Julia 中有多个用于检测数组维度的函数：
 
-* `length`: total number of elements
+* `length`: 元素的总数
 
      ```jl
      scob("length(my_matrix_π)")
      ```
 
-* `ndims`: number of dimensions
+* `ndims`: 维度的个数
 
      ```jl
      scob("ndims(my_matrix_π)")
      ```
 
-* `size`: this one is a little tricky.
-    By default it will return a tuple containing the array's dimensions.
+* `size`: 此例有一些复杂。
+    默认情况下将返回包含所有数组维度的元组。
 
      ```jl
      sco("size(my_matrix_π)")
      ```
 
-    You can get a specific dimension with a second argument to `size`.
-    Here, the the second axis is columns
+    你可以在`size`的第二个参数指定想要的维度。
+    如下，第二个轴为列：
 
      ```jl
      scob("size(my_matrix_π, 2)")
      ```
 
-#### Array Indexing and Slicing {#sec:array_indexing}
+#### 数组索引和切片 {#sec:array_indexing}
 
-Sometimes, we want to inspect only certain parts of an array.
-This is called **indexing** and **slicing**.
-If you want a particular observation of a vector, or a row or column of a matrix, you'll probably need to **index an array**.
+有时希望仅仅检测数组的一部分。
+这就需要 **索引** 和 **切片**。
+如果想要考察向量的某一部分，或者矩阵的某一行或某一列，那么你可能需要 **索引数组**。
 
-First, I will create an example vector and matrix to play around:
+首先创建一个向量和矩阵作为示例：
 
 ```jl
 s = """
@@ -1338,66 +1328,66 @@ s = """
 sc(s)
 ```
 
-Let's start with vectors.
-Suppose that you want the second element of a vector.
-You append `[]` brackets with the desired **index** inside:
+首先考虑向量。
+假设要访问向量的第二个元素。
+你只需要在 `[]` 括号内添加对应**索引**：
 
 ```jl
 scob("my_example_vector[2]")
 ```
 
-The same syntax follows with matrices.
-But, since matrices are 2-dimensional arrays, we have to specify *both* rows and columns.
-Let's retrieve the element from the second row (first dimension) and first column (second dimension):
+关于矩阵的语法也是如此。
+但因为矩阵是二维数组，需要 **同时** 指定行和列。
+接下来检索位于第二行（第一维）、第一列（第二维）的元素：
 
 ```jl
 scob("my_example_matrix[2, 1]")
 ```
 
-Julia also has conventional keywords for the **first** and **last** elements of an array: `begin` and `end`.
-For example, the second to last element of a vector can be retrieved as:
+Julia 也为数组的 **第一个** 和 **最后一个** 元素定义了特殊的关键字： `begin` 和 `end`。
+例如，可以如下方式检索向量的倒数第二个元素：
 
 ```jl
 scob("my_example_vector[end-1]")
 ```
 
-This also works for matrices.
-Let's retrieve the element of the last row and second column:
+这也适用于矩阵。
+可以如下方式检索位于最后一行、第二列的元素。
 
 ```jl
 scob("my_example_matrix[end, begin+1]")
 ```
 
-Often, we are not only interested in just one array element, but in a whole **subset of array elements**.
-We can accomplish this by **slicing** an array.
-It uses the same index syntax, but with the added colon `:` to denote the boundaries that we are slicing through the array.
-For example, suppose we want to get the 2nd to 4th element of a vector:
+通常我们不仅对单个数组元素感兴趣，还想获得 **数组的子集**。
+这可以通过数组 **切片** 实现。
+它使用与索引相同的语法，但需要添加冒号 `:` 来表示数组切片的边界。
+例如，假设想要获得向量的第二个到第四个元素：
 
 ```jl
 sco("my_example_vector[2:4]")
 ```
 
-We could do the same with matrices.
-Particularly with matrices if we want to select **all elements** in a following dimension we can do so with just a colon `:`.
-For example, to get all the elements in the second row:
+可以对矩阵作同样的事。
+特别地，对于矩阵，仅使用冒号 `:` 就可以获得指定维度的所有元素。
+例如，想要获得第二行的所有元素。
 
 ```jl
 sco("my_example_matrix[2, :]")
 ```
 
-You can interpret this with something like "take the 2nd row and all the columns".
+上面这段代码可被解释为 “获取第二行的所有列”。
 
-It also supports `begin` and `end`:
+矩阵同样支持 `begin` 和 `end`：
 
 ```jl
 sco("my_example_matrix[begin+1:end, end]")
 ```
 
-#### Array Manipulations {#sec:array_manipulation}
+#### 数组操作 {#sec:array_manipulation}
 
-There are several ways we could **manipulate** an array.
-The first would be to manipulate a **singular element of the array**.
-We just index the array by the desired element and proceed with an assignment `=`:
+我们有多种 **操作** 数组的方式。
+第一种操作数组的方式是 **数组的单个元素**。
+只需索引数组的单个元素，则使用等号 `=` 赋值：
 
 ```jl
 s = """
@@ -1407,9 +1397,8 @@ s = """
 sco(s)
 ```
 
-Or, you can manipulate a certain **subset of elements of the array**.
-In this case, we need to slice the array and then assign with `=`:
-
+另外，也可以操作**数组的子集**。
+在此例中，对数组进行切片并使用 `=` 赋值：
 ```jl
 s = """
     my_example_matrix[3, :] = [17, 16, 15]
@@ -1418,7 +1407,7 @@ s = """
 sco(s)
 ```
 
-Note that we had to assign a vector because our sliced array is of type `Vector`:
+注意，此处使用向量赋值，这是因为数组切片的类型就是 `Vector`：
 
 ```jl
 s = """
@@ -1427,71 +1416,71 @@ s = """
 sco(s)
 ```
 
-The second way we could manipulate an array is to **alter its shape**.
-Suppose that you have a 6-element vector and you want to make it a 3x2 matrix.
-You can do this with `reshape`, by using the array as the first argument and a tuple of dimensions as the second argument:
+第二种操作数组的方式是 **改变形状**。
+假设你有 6 个元素的向量，但想将其变成 3x2 的矩阵。
+这可以通过 `reshape` 实现，具体操作是将数组传递给第一个参数，并将维度构成的元组传递给第二个参数。
 
 ```jl
 s = """
     six_vector = [1, 2, 3, 4, 5, 6]
-    tree_two_matrix = reshape(six_vector, (3, 2))
-    tree_two_matrix
+    three_two_matrix = reshape(six_vector, (3, 2))
+    three_two_matrix
     """
 sco(s)
 ```
 
-You can convert it back to a vector by specifying a tuple with only one dimension as the second argument:
+通过指定只有 1 维的维度元组，你可以将其变回向量：
 
 ```jl
 sco("reshape(tree_two_matrix, (6, ))")
 ```
 
-The third way we could manipulate an array is to **apply a function over every array element**.
-This is where the "dot" operator `.`, also known as _broadcasting_, comes in.
+第三种操作数组的方式是 **按元素应用函数**。
+这会用到点运算符 `.`，其也被称为 **广播**。
 
 ```jl
 sco("logarithm.(my_example_matrix)")
 ```
 
-The dot operator in Julia is extremely versatile.
-You can even use it to broadcast infix operators:
+Julia中的点运算符非常通用。
+可以使用它广播中缀运算符：
 
 ```jl
 sco("my_example_matrix .+ 100")
 ```
 
-An alternative to broadcasting a function over a vector is to use `map`:
+另一种在向量中广播函数的方法是使用 `map`：
 
 ```jl
 sco("map(logarithm, my_example_matrix)")
 ```
 
-For anonymous functions, `map` is usually more readable.
-For example,
+对于匿名函数， `map` 通常可读性更好。
+例如，
 
 ```jl
 sco("map(x -> 3x, my_example_matrix)")
 ```
 
-is quite clear.
-However, the same broadcast looks as follows:
+上面的例子看起来相当清晰。
+不过，如下的广播代码也能实现相同功能：
 
 ```jl
 sco("(x -> 3x).(my_example_matrix)")
 ```
 
-Next, `map` works with slicing:
+其次，`map` 也适用于数组切片：
 
 ```jl
 sco("map(x -> x + 100, my_example_matrix[:, 3])")
 ```
 
-Finally, sometimes, and specially when dealing with tabular data, we want to apply a **function over all elements in a specific array dimension**.
-This can be done with the `mapslices` function.
-Similar to `map`, the first argument is the function and the second argument is the array.
-The only change is that we need to specify the `dims` argument to flag what dimension we want to transform the elements.
+最后，在某些情况下，特别是处理表格数据时，我们想要 **沿着特定的数组维度应用函数**。
+这可以通过 `mapslices` 函数实现。
+与 `map` 类似，第一个元素是函数而第二个元素是数组。
+唯一的变化是，需要传入 `dims` 参数指定操作数组元素的维度。
 
-For example, let's use `mapslice` with the `sum` function on both rows (`dims=1`) and columns (`dims=2`):
+例如，将 `sum` 函数传给 `mapslices`，维度参数分别指定为行（`dims=1`）和列（`dims=2`）：
 
 ```jl
 sco(
@@ -1511,12 +1500,12 @@ mapslices(sum, my_example_matrix; dims=2)
 )
 ```
 
-#### Array Iteration {#sec:array_iteration}
+#### 数组迭代 {#sec:array_iteration}
 
-One common operation is to **iterate over an array with a `for` loop**.
-The **regular `for` loop over an array returns each element**.
+常见的操作是 **使用 `for` 循环迭代数组**。
+**应用于数组的 `for` 循环会逐个返回元素**。
 
-The simplest example is with a vector.
+最简单的例子是迭代向量。
 
 ```jl
 sco(
@@ -1534,10 +1523,10 @@ empty_vector
 )
 ```
 
-Sometimes, you don't want to loop over each element, but actually over each array index.
-**We can use the `eachindex` function combined with a `for` loop to iterate over each array index**.
+有时，你不想要迭代数组的每个元素，而是迭代每个数组索引。
+**可以使用 `eachindex` 函数结合 `for` 循环来迭代每个数组索引**。
 
-Again, let's show an example with a vector:
+然后，此处也展示一个向量的例子：
 
 ```jl
 sco(
@@ -1555,20 +1544,20 @@ empty_vector
 )
 ```
 
-In this example, the `eachindex(forty_twos)` returns the indices of `forty_twos`, namely `[1, 2, 3]`.
+在上例中，`eachindex(forty_twos)` 函数返回的是 `forty_twos`的索引，即 `[1, 2, 3]`。
 
-Similarly, we can iterate over matrices.
-The standard `for` loop goes first over columns then over rows.
-It will first traverse all elements in column 1, from the first row to the last row, then it will move to column 2 in a similar fashion until it has covered all columns.
+类似地，也可以迭代矩阵。
+标准 `for` 循环的迭代顺序是先列后行。
+它首先遍历第 1 列的所有元素，从第一行和最后一行，然后对第2列进行同样的遍历，直到循环完所有列。
 
-For those familiar with other programming languages:
-Julia, like most scientific programming languages, is "column-major".
-Column-major means that the elements in the column are stored next to each other in memory[^pointers].
-This also means that iterating over elements in a column is much quicker than over elements in a row.
+对于熟悉其他编程语言的用户：
+与大多数科学计算编程语言一样，Julia 是“列优先存储”。
+列优先存储意味着每一列的元素在内存中的存储位置是相邻的[^pointers]。
+这也意味着，沿列遍历会比沿行遍历更快。
 
-[^pointers]: or, that the memory address pointers to the elements in the column are stored next to each other
+[^pointers]: 或者说，指向每一列元素的内存地址指针相邻存储。
 
-Ok, let's show this in an example:
+所以，查看如下的例子：
 
 ```jl
 sc(
@@ -1582,7 +1571,7 @@ row_major = [[1 2]
 )
 ```
 
-If we loop over the vector stored in column-major order, then the output is sorted:
+如果遍历的是以列主元方式存储的向量，那么结果将是有序的：
 
 ```jl
 sco(
@@ -1598,7 +1587,7 @@ indexes
 )
 ```
 
-However, the output isn't sorted when looping over the other matrix:
+然而，如果遍历的是以其他方式存储的向量，那么结果将不是有序的：
 
 ```jl
 sco(
@@ -1614,15 +1603,15 @@ indexes
 )
 ```
 
-It is often better to use specialized functions for these loops:
+通常更好的做法是，在进行这些循环时使用特定的函数：
 
-* `eachcol`: iterates over an array column first
+* `eachcol`: 先沿着列方向迭代
 
      ```jl
      sco("first(eachcol(column_major))")
      ```
 
-* `eachrow`: iterates over an array row first
+* `eachrow`: 先沿着行方向迭代
 
      ```jl
      sco("first(eachrow(column_major))")
@@ -1630,15 +1619,15 @@ It is often better to use specialized functions for these loops:
 
 ### Pair {#sec:pair}
 
-Compared to the huge section on arrays, this section on pairs will be brief.
-**`Pair` is a data structure that holds two objects** (which typically belong to each other).
-We construct a pair in Julia using the following syntax:
+与有关数组的超长章节相比，关于 Pair 的章节将是简短的。
+**`Pair` 是一种包含两个对象的数据结构** （一般属于彼此）。
+在 Julia 中，可以使用如下的语法构造 `Pair`：
 
 ```jl
 sco("""my_pair = "Julia" => 42""")
 ```
 
-The elements are stored in the fields `first` and `second`.
+这两个元素分别存储在字段 `first` 和 `second`。
 
 ```jl
 scob("my_pair.first")
@@ -1648,7 +1637,7 @@ scob("my_pair.first")
 scob("my_pair.second")
 ```
 
-But, in most cases, it's easier use `first` and `last`[^easier]:
+但，在大多数情况下，使用 `first` 和 `last` 更简单[^easier]：
 
 ```jl
 scob("first(my_pair)")
@@ -1658,20 +1647,20 @@ scob("first(my_pair)")
 scob("last(my_pair)")
 ```
 
-[^easier]: it is easier because `first` and `last` also work on many other collections, so you need to remember less.
+[^easier]: 更简单的原因是 `first` 和 `last` 也适用于其他集合，所以需要记住的就更少。
 
-Pairs will be used a lot in data manipulation and data visualization since both `DataFrames.jl` (@sec:dataframes) or `Makie.jl` (@sec:DataVisualizationMakie) take objects of type `Pair` in their main functions.
-For example, with `DataFrames.jl` we're going to see that `:a => :b` can be used to rename the column `:a` to `:b`.
+`Pair` 广泛应用于数组操作和数据可视化。本书的 `DataFrames.jl` (@sec:dataframes) 和 `Makie.jl` (@sec:DataVisualizationMakie) 章节将会在主要程序函数中用到由各种对象构成的 `Pair`。
+例如，在 `DataFrames.jl` 这一章，可以看到 `:a => :b` 的用途是将 `:a` 重命名为 `:b`。
 
-### Dict {#sec:dict}
+### 字典 {#sec:dict}
 
-If you understood what a `Pair` is, then `Dict` won't be a problem.
-For all practical purposes, **`Dict`s are mappings from keys to values**.
-By mapping, we mean that if you give a `Dict` some key, then the `Dict` can tell you which value belongs to that key.
-`key`s and `value`s can be of any type, but usually `key`s are strings.
+如何你理解什么是 `Pair`， 那么理解 `Dict` 也不会成为问题。
+实际上，**`Dict`是从键 (key) 到值 (values) 的映射**。
+映射的意思是说，如果你向 `Dict` 提供一些键，然后 `Dict` 能够告诉你哪些值属于这些键。
+`key` 和 `value` 可以是任何类型，但 `key` 通常是字符串。
 
-There are two ways to construct `Dict`s in Julia.
-The first is by passing a vector of tuples as `(key, value)` to the `Dict` constructor:
+Julia 中有两种构造 `Dict` 的方法。
+第一种是向 `Dict` 构造器传递由 `(key, value)` 元组构成的向量：
 
 ```jl
 sco(
@@ -1682,8 +1671,8 @@ name2number_map = Dict([("one", 1), ("two", 2)])
 )
 ```
 
-There is a more readable syntax based on the `Pair` type described above.
-You can also pass `Pair`s of `key => value`s to the `Dict` constructor:
+还有一种可读性更高的写法，其基于上节中提到的 `Pair` 类型。
+即也可以向 `Dict` 构造器传递多组 `key => value` 这样的 `Pair`：
 
 ```jl
 sco(
@@ -1694,13 +1683,13 @@ name2number_map = Dict("one" => 1, "two" => 2)
 )
 ```
 
-You can retrieve a `Dict`s `value` by indexing it by the corresponding `key`:
+使用相应的 `key` 作为索引即可检索到 `Dict` 的 `value`：
 
 ```jl
 scob("""name2number_map["one"]""")
 ```
 
-To add a new entry, you index the `Dict` by the desired `key` and assign a `value` with the assignment `=` operator:
+如果要增加新的条目，可使用所需的 `key` 作为 `Dict` 的索引，并使用赋值运算符为其赋值 `value` ：
 
 ```jl
 scob(
@@ -1710,13 +1699,13 @@ name2number_map["three"] = 3
 )
 ```
 
-If you want to check if a `Dict` has a certain `key` you can use `keys` and `in`:
+可以使用 `keys` 和 `in` 检查一个 `Dict` 是否有特定的 `key`：
 
 ```jl
 scob("\"two\" in keys(name2number_map)")
 ```
 
-To delete a `key` you can use either the `delete!` function:
+可以使用 `delete!` 函数删除 `key`：
 
 ```jl
 sco(
@@ -1726,24 +1715,24 @@ delete!(name2number_map, "three")
 )
 ```
 
-Or, to delete a key while returning its value, you can use `pop!`:
+或者，可以使用 `pop!` 函数在返回值时删除键:
 
 ```jl
 scob("""popped_value = pop!(name2number_map, "two")""")
 ```
 
-Now, our `name2number_map` has only one `key`:
+现在， `name2number_map` 仅有一个 `key`：
 
 ```jl
 sco("name2number_map")
 ```
 
-`Dict`s are also used for data manipulation by `DataFrames.jl` (@sec:dataframes) and for data visualization by `Makie.jl` (@sec:DataVisualizationMakie).
-So, it is important to know their basic functionality.
+`DataFrames.jl` (@sec:dataframes) 中的数据操作和 `Makie.jl` (@sec:DataVisualizationMakie) 中的数据可视化也用到了很多 `Dict`。
+因此，了解它们的基本功能十分重要。
 
-There is another useful way of constructing `Dict`s.
-Suppose that you have two vectors and you want to construct a `Dict` with one of them as `key`s and the other as `value`s.
-You can do that with the `zip` function which "glues" together two objects (just like a zipper):
+另外还有一种非常有用的 `Dict` 构造方法。
+假设有两个向量，然后想用它们要构造一个 `Dict`，即其中一个作为 `key`，另一个作为 `value`。
+那么可以使用 `zip` 函数将两个对象 “粘合” 起来（就像拉链那样）：
 
 ```jl
 sco(
@@ -1756,7 +1745,7 @@ name2number_map = Dict(zip(A, B))
 )
 ```
 
-For instance, we can now get the number 3 via:
+例如，获得数字 3 的方式为：
 
 ```jl
 scob("""name2number_map["three"]""")
@@ -1764,15 +1753,15 @@ scob("""name2number_map["three"]""")
 
 ### Symbol {#sec:symbol}
 
-`Symbol` is actually *not* a data structure.
-It is a type and behaves a lot like a string.
-Instead of surrounding the text by quotation marks, a symbol starts with a colon (:) and can contain underscores:
+`Symbol` 实际上 **并不是** 一种数据结构。
+它是一种类型，并且其行为类似于字符串。
+与引号包围文本的字符串不同，`Symbol` 以冒号 (:) 开始并且可以包含下划线：
 
 ```jl
 sco("sym = :some_text")
 ```
 
-We can easily convert a symbol to string and vice versa:
+可以轻松地将 `Symbol` 转换为字符串，反之亦然：
 
 ```jl
 scob("s = string(sym)")
@@ -1782,23 +1771,23 @@ scob("s = string(sym)")
 sco("sym = Symbol(s)")
 ```
 
-One simple benefit of symbols is that you have to type one character less, that is, `:some_text` versus `"some text"`.
-We use `Symbol`s a lot in data manipulations with the `DataFrames.jl` package (@sec:dataframes) and data visualizations with the `Makie.jl` package (@sec:DataVisualizationMakie).
+使用 `Symbol` 的好处是会少键入一个字符，即 `:some_text` 相对于 `"some text"` 。
+`DataFrames.jl` (@sec:dataframes) 中的数据操作和 `Makie.jl` (@sec:DataVisualizationMakie) 中的数据可视化将会多次用到 `Symbol`。 
 
-### Splat Operator {#sec:splat}
+### Splat 运算符 {#sec:splat}
 
-In Julia we have the "splat" operator `...` which is used in function calls as a **sequence of arguments**.
-We will occasionally use splatting in some function calls in the **data manipulation** and **data visualization** chapters.
+Julia 中有一种 `splatting` 运算符 `...`，它被用于在函数调用时转换 **参数序列**。
+在 **数据操作** 和 **数据可视化** 章节中，我们偶尔会在调用某些函数时使用 `splatting` 。
 
-The most intuitive way to learn about splatting is with an example.
-The `add_elements` function below takes three arguments to be added together:
+结合例子学习 `splatting`是最直观的方法。
+如下的 `add_elements` 函数将传入的三个参数相加：
 
 ```jl
 sco("add_elements(a, b, c) = a + b + c")
 ```
 
-Now, suppose that we have a collection with three elements.
-The naïve way to this would be to supply the function with all three elements as function arguments like this:
+现在，假设有一个三个元素构成的集合。
+一种普通的方法是，将集合的三个元素逐个传递为函数参数，如下所示：
 
 ```jl
 scob("""
@@ -1808,14 +1797,14 @@ add_elements(my_collection[1], my_collection[2], my_collection[3])
 """)
 ```
 
-Here is where we use the "splat" operator `...` which takes a collection (often an array, vector, tuple, or range) and converts it into a sequence of arguments:
+接下来使用 `splatting` 运算符 `...`，它将接收一个集合（通常是数组，向量，元组，或 `range`）并将其转化为参数序列：
 
 ```jl
 scob("add_elements(my_collection...)")
 ```
 
-The `...` is included after the collection that we want to "splat" into a sequence of arguments.
-In the example above, the following are the same:
+集合后的 `...` 用于将集合转化为参数序列。
+对于上述例子，两种传入参数的方式等价：
 
 ```jl
 scob("""
@@ -1823,91 +1812,92 @@ add_elements(my_collection...) == add_elements(my_collection[1], my_collection[2
 """)
 ```
 
-Anytime Julia sees a splatting operator inside a function call, it will be converted on a sequence of arguments for all elements of the collection separated by commas.
+任何时候，若 Julia 在函数调用中发现了 `splatting` 运算符，那么它会将运算符前的集合转化为一组逗号分隔的参数序列。
 
-It also works for ranges:
+这也适用于 range 类型：
 
 ```jl
 scob("add_elements(1:3...)")
 ```
 
-## Filesystem {#sec:filesystem}
+## 文件系统 {#sec:filesystem}
 
-In data science, most projects are undertaken in a collaborative effort.
-We share code, data, tables, figures and so on.
-Behind everything, there is the **operating system (OS) filesystem**.
-In a perfect world, the same program would give the **same** output when running on **different** operating systems.
-Unfortunately, that is not always the case.
-One instance of this is the difference between Windows paths, such as `C:\\user\john\`, and Linux paths, such as `/home/john`.
-This is why it is important to discuss **filesystem best practices**.
+在数据科学中，大多数项目都是协作完成的。
+开发者会共享代码，数据，表格，图像等等。
+这一切的背后都是 **操作系统 (OS) 和文件系统**。
+在完美的世界中，当运行在 **不同** 的操作系统时，相同的程序会给出 **相同** 的输出。
+不幸的是，世界并不总是如此。
+一个常见的差异是不同系统的用户目录，对于 Windows 是 `C:\Users\john\`，而对于 Linux 是  `/home/john`。
+这就是为什么讨论 **文件系统最佳实践** 很重要。
 
-Julia has native filesystem capabilities that **handle the differences between operating systems**.
-They are located in the [`Filesystem`](https://docs.julialang.org/en/v1/base/file/) module from the core `Base` Julia library.
+Julia 中内置了 **处理不同操作系统差异** 的功能。
+这一部分位于 Julia 核心库 `Base` 的 [`Filesystem`](https://docs.julialang.org/en/v1/base/file/) 模块。
 
-Whenever you are dealing with files such as CSV, Excel files or other Julia scripts, make sure that your code **works on different OS filesystems**.
-This is easily accomplished with the `joinpath`, `@__FILE__` and `pkgdir` functions.
+每当需要处理 CSV，Excel 文件或其他 Julia 脚本时，请确保代码能够运行 **在不同操作系统的文件系统** 上。
+这可以通过 `joinpath`， `@__FILE__` 和 `pkgdir` 函数轻松实现。
 
-If you write your code in a package, you can use `pkgdir` to get the root directory of the package.
-For example, for the Julia Data Science (JDS) package that we use to produce this book:
+当在包中开发代码时，可以使用 `pkgdir` 获取包的根目录。
+例如，对于用来生成本书的 Julia Data Science (JDS) 包： 
 
 ```jl
 root = pkgdir(JDS)
 ```
 
-as you can see, the code to produce this book was running on a Linux computer.
-If you're using a script, you can get the location of the script file via
+如上所示，用来生成本书的代码运行在 Linux 电脑上。
+在使用脚本时，可以使用如下方式获得脚本文件的路径：
 
 ```julia
 root = dirname(@__FILE__)
 ```
 
-The nice thing about these two commands is that they are independent of how the user started Julia.
-In other words, it doesn't matter whether the user started the program with `julia scripts/script.jl` or `julia script.jl`, in both cases the paths are the same.
+这两条命令的优点是它们与启动 Julia 的方式无关。
+换句话说，无论以 `julia scripts/script.jl` 还是 `julia script.jl` 方式启动程序，两种方式每次返回的路径都是相同的。
 
-The next step would be to include the relative path from `root` to our desired file.
-Since different OS have different ways to construct relative paths with subfolders (some use forward slashes `/` while other might use backslashes `\`), we cannot simply concatenate the  file's relative path with the `root` string.
-For that, we have the `joinpath` function, which will join different relative paths and filenames according to your specific OS filesystem implementation.
+接下来建立从 `root` 到脚本文件的相对路径。
+因为不同的操作系统采用不同的方式组织子文件夹的相对路径（一些采用斜杠 `/`，而另一些使用反斜杠 `\`），所以不能简单地通过字符串连接组合 `root` 路径与文件的相对路径。
+因此需要使用 `joinpath` 函数，它将根据特定的文件系统实现，采用相应的方式连接不同的相对路径和文件名。
 
-Suppose that you have a script named `my_script.jl` inside your project's directory.
-You can have a robust representation of the filepath to `my_script.jl` as:
+假设项目目录中存在一个名为 `my_script.jl` 的脚本。
+`my_script.jl` 文件路径的健壮实现如下所示：
 
 ```jl
 scob("""joinpath(root, "my_script.jl")""")
 ```
 
-`joinpath` also handles **subfolders**.
-Let's now imagine a common situation where you have a folder named `data/` in your project's directory.
-Inside this folder there is a CSV file named `my_data.csv`.
-You can have the same robust representation of the filepath to `my_data.csv` as:
+`joinpath` 也能处理 **子目录**。
+接下来考虑一种普遍的情形，项目目录中有一个名为 `data/` 的子文件夹。
+此文件夹中有一个名为 `my_data.csv` 的 CSV 文件。
+同样地，此 `my_script.jl` 文件路径的健壮实现如下所示：
 
 ```jl
 scob("""joinpath(root, "data", "my_data.csv")""")
 ```
 
-It's a good habit to pick up, because it's very likely to save problems for you or other people later.
+这是一个好习惯，因为它能为你或后来者避免问题。
 
-## Julia Standard Library {#sec:standardlibrary}
+## Julia 标准库 {#sec:standardlibrary}
 
-Julia has a **rich standard library** that is available with *every* Julia installation.
-Contrary to everything that we have seen so far, e.g. types, data structures and filesystem; you **must load standard library modules into your environment** to use a particular module or function.
+Julia 拥有 **丰富的标准库**，每个 Julia 发行版都可以使用这些库。
+与截至目前提到的一切相反，例如类型，数据结构和文件系统；在使用特定的模块或函数前， **需要将标准库模块导入到环境中**。
 
-This is done via `using` or `import`.
-In this book, we will load code via `using`:
+
+这可以通过 `using` 或 `import`实现。
+本书将使用 `using` 导入代码：
 
 ```julia
 using ModuleName
 ```
 
-After doing this, you can access all functions and types inside `ModuleName`.
+在执行上述操作后，就可以使用 `ModuleName` 中所有的函数和类型。
 
-### Dates {#sec:dates}
+### 日期 {#sec:dates}
 
-Knowing how to handle dates and timestamps is important in data science.
-As we said in *Why Julia?* (@sec:why_julia) section, Python's `pandas` uses its own `datetime` type to handle dates.
-The same is true in the R tidyverse's `lubridate` package, which also defines its own `datetime` type to handle dates.
-In Julia packages don't need to write their own dates logic, because Julia has a dates module in its standard library called `Dates`.
+了解如何处理日期和时间戳在数据科学中很重要。
+正如在 **为什么选择 Julia?** (@sec:why_julia) 节讨论的那样，Python 中的 `pandas` 使用它自己的 `datetime` 类型处理日期。
+R 语言中 TidyVerse 的 `lubridate` 包中也是如此，它也定义了自己的 `datetime` 类型来处理日期。
+在 Julia 软件包中，不需要编写自己的日期逻辑，因为 Julia 标准库中有一个名为 `Dates` 的日期处理模块。
 
-To begin, let's load the `Dates` module:
+首先加载 `Dates` 模块到工作空间中：
 
 ```julia
 using Dates
@@ -1915,12 +1905,12 @@ using Dates
 
 #### `Date` and `DateTime` Types {#sec:dates_types}
 
-The `Dates` standard library module has **two types for working with dates**:
+`Dates` 标准库模块有 **两种处理日期的类型**:
 
-1. `Date`: representing time in days and
-2. `DateTime`: representing time in millisecond precision.
+1. `Date`: 表示以天为单位的时间和
+2. `DateTime`: 表示以毫秒为单位的时间。
 
-We can construct `Date` and `DateTime` with the default constructor either by specifying an integer to represent year, month, day, hours and so on:
+构造 `Date` 和 `DateTime` 的方法是，向默认构造器传递表示年，月，日，小时等等的整数：
 
 ```jl
 sco(
@@ -1962,17 +1952,17 @@ DateTime(1987, 9, 13, 21, 21) # year, month, day, hour, minute
 )
 ```
 
-For the curious, September 13th 1987, 21:21 is the official time of birth of the first author, Jose.
+好奇的人会发现，1987 年 9 月 13 日 21 点 21 分正是第一作者 Jose 的官方出生时间。
 
-We can also pass `Period` types to the default constructor.
-**`Period` types are the human-equivalent representation of time** for the computer.
-Julia's `Dates` have the following `Period` abstract subtypes:
+也可以向默认构造器传递 `Period` 类型。
+对于计算机来说，**`Period` 类型是时间的等价表示**。
+Julia 的 `Dates` 具有如下的 `Period` 抽象类型：
 
 ```jl
 sco("subtypes(Period)")
 ```
 
-which divide into the following concrete types, and they are pretty much self-explanatory:
+它被划分为如下的具体类型，并且它们的用法都是不言自明的：
 
 ```jl
 sco("subtypes(DatePeriod)")
@@ -1982,39 +1972,39 @@ sco("subtypes(DatePeriod)")
 sco("subtypes(TimePeriod)")
 ```
 
-So, we could alternatively construct Jose's official time of birth as:
+因此，也能以如下方式构造 Jose 的官方出生时间：
 
 ```jl
 sco("DateTime(Year(1987), Month(9), Day(13), Hour(21), Minute(21))")
 ```
 
-#### Parsing Dates {#sec:dates_parsing}
+#### 序列化 Dates {#sec:dates_parsing}
 
-Most of the time, we won't be constructing `Date` or `DateTime` instances from scratch.
-Actually, we will probably be **parsing strings as `Date` or `DateTime` types**.
+多数情况下，我们不会从零开始构造 `Date` 或 `DateTime` 示例。
+实际上更可能是 **将字符串序列化为 `Date` 或 `DateTime` 类型**。
 
-The `Date` and `DateTime` constructors can be fed a string and a format string.
-For example, the string `"19870913"` representing September 13th 1987 can be parsed with:
+ `Date` 和 `DateTime` 构造器可以接收一个数字字符串和格式字符串。
+例如，表示 1987 年 9 月 13 日的字符串 `"19870913"` 可被序列化为：
 
 ```jl
 sco("""Date("19870913", "yyyymmdd")""")
 ```
 
-Notice that the second argument is a string representation of the format.
-We have the first four digits representing year `y`, followed by two digits for month `m` and finally two digits for day `d`.
+注意第二个参数是日期格式的字符串表示。
+前四位表示年 `y`，后接着的两位表示月 `m`， 而最后两位数字表示日 `d`.
 
-It also works for timestamps with `DateTime`:
+这也适用于 `DateTime` 的时间戳：
 
 ```jl
 sco("""DateTime("1987-09-13T21:21:00", "yyyy-mm-ddTHH:MM:SS")""")
 ```
 
-You can find more on how to specify different date formats in the [Julia `Dates`' documentation](https://docs.julialang.org/en/v1/stdlib/Dates/#Dates.DateFormat).
-Don't worry if you have to revisit it all the time, we ourselves do that too when working with dates and timestamps.
+可以在 [Julia `Dates`' documentation](https://docs.julialang.org/en/v1/stdlib/Dates/#Dates.DateFormat) 了解到更多的日期格式。
+不同担心需要时常浏览文档，我们在处理日期和时间戳时也是这样。
 
-According to [Julia `Dates`' documentation](https://docs.julialang.org/en/v1/stdlib/Dates/#Constructors), using the `Date(date_string, format_string)` method is fine if it's only called a few times.
-If there are many similarly formatted date strings to parse, however, it is much more efficient to first create a `DateFormat` type, and then pass it instead of a raw format string.
-Then, our previous example becomes:
+根据 [Julia `Dates`' documentation](https://docs.julialang.org/en/v1/stdlib/Dates/#Constructors)，当只需调用几次时，使用 `Date(date_string, format_string)` 方法也是可以的。
+然而，如果需要处理大量相同格式的日期字符串，那么更高效的方法是先创建 `DateFormat` 类型，然后传递该类型而不是原始的格式字符串。
+然后，先前的例子改为：
 
 ```jl
 s = """
@@ -2024,22 +2014,21 @@ s = """
 sco(s)
 ```
 
-Alternatively, without loss of performance, you can use the string literal prefix `dateformat"..."`:
+或者，在不损失性能的情况下，使用字符串字面量前缀 `dateformat"..."`：
 
 ```jl
 sco("""Date("19870913", dateformat"yyyymmdd")""")
 ```
 
-#### Extracting Date Information {#sec:dates_information}
+#### 提取日期信息 {#sec:dates_information}
 
-It is easy to **extract desired information from `Date` and `DateTime` objects**.
-First, let's create an instance of a very special date:
-
+很容易 **从 `Date` 和 `DateTime` 对象中提取想要的信息**。
+首先，创建一个具体日期的实例：
 ```jl
 sco("""my_birthday = Date("1987-09-13")""")
 ```
 
-We can extract anything we want from `my_birthday`:
+然后可以从 `my_birthday` 中提取任何想要的信息：
 
 ```jl
 scob("year(my_birthday)")
@@ -2053,7 +2042,7 @@ scob("month(my_birthday)")
 scob("day(my_birthday)")
 ```
 
-Julia's `Dates` module also has **compound functions that return a tuple of values**:
+Julia 的 `Dates` 模块也提供了 **返回值元组的复合函数**：
 
 ```jl
 sco("yearmonth(my_birthday)")
@@ -2067,7 +2056,7 @@ sco("monthday(my_birthday)")
 sco("yearmonthday(my_birthday)")
 ```
 
-We can also see the day of the week and other handy stuff:
+也能了解该日期是一周的第几天和其他方便的应用：
 
 ```jl
 scob("dayofweek(my_birthday)")
@@ -2081,79 +2070,79 @@ scob("dayname(my_birthday)")
 scob("dayofweekofmonth(my_birthday)")
 ```
 
-Yep, Jose was born on the second Sunday of September.
+是的，Jose 出生在 9 月的第 2 个星期日。
 
 > **_NOTE:_**
-> Here's a handy tip to just recover weekdays from `Dates` instances.
-> Just use a `filter` on `dayofweek(your_date) <= 5`.
-> For business day you can checkout the [`BusinessDays.jl`](https://github.com/JuliaFinance/BusinessDays.jl) package.
+> 如下是一个从 `Dates` 实例中提取工作日的便捷提示。
+> 对 `dayofweek(your_date) <= 5` 使用 `filter`。
+> 也可以使用 [`BusinessDays.jl`](https://github.com/JuliaFinance/BusinessDays.jl) 包进行工作日相关的操作。
 
-#### Date Operations {#sec:dates_operations}
+#### 日期操作 {#sec:dates_operations}
 
-We can perform **operations** in `Dates` instances.
-For example, we can add days to a `Date` or `DateTime` instance.
-Notice that Julia's `Dates` will automatically perform the adjustments necessary for leap years, and for months with 30 or 31 days (this is known as *calendrical* arithmetic).
+可以对 `Dates` 实例进行多种 **操作** 。
+例如，可以对一个 `Date` 或 `DateTime` 实例增加天数。
+请注意，Julia 的 `Dates` 将自动地对闰年以及 30 天或 31 天的月份执行必要的调整(这称为 **日历** 算术)。
 
 ```jl
 sco("my_birthday + Day(90)")
 ```
 
-We can add as many as we like:
+我们想加多少天就加多少天：
 
 ```jl
 sco("my_birthday + Day(90) + Month(2) + Year(1)")
 ```
 
-In case you're ever wondering: "What can I do with dates again? What is available?", then you can use `methodswith` to check it out.
-We show only the first 20 results here:
+可能你想知道：“还能用 `Dates` 做些什么？还有哪些可用的方法？”，则可以使用 `methodswith` 检索这些方法。
+这里只展示前 20 条结果：
 
 ```jl
 s = "first(methodswith(Date), 20)"
 sco(s; process=catch_show)
 ```
 
-From this, we can conclude that we can also use the plus `+` and minus `-` operator.
-Let's see how old Jose is, in days:
+由上可知，也能使用加 `+` 和减 `-` 运算符。
+让我们看看 Jose 的年龄， 以天为单位：
 
 ```jl
 sco("today() - my_birthday")
 ```
 
-The **default duration** of `Date` types is a `Day` instance.
-For the `DateTime`, the default duration is `Millisecond` instance:
+`Date` 类型的 **默认持续时间** 是 `Day` 实例。
+而对于 `DateTime` 类型，默认持续时间是 `Millisecond` 实例。
 
 ```jl
 sco("DateTime(today()) - DateTime(my_birthday)")
 ```
 
-#### Date Intervals {#sec:dates_intervals}
+#### 日期区间 {#sec:dates_intervals}
 
-One nice thing about `Dates` module is that we can also easily construct **date and time intervals**.
-Julia is clever enough to not have to define the whole interval types and operations that we covered in @sec:ranges.
-It just extends the functions and operations defined for range to `Date`'s types.
-This is known as multiple dispatch and we already covered this in *Why Julia?* (@sec:why_julia).
+关于 `Dates` 模块的一个好处是，可以轻松地构造 **日期和时间区间**。
+Julia 足够聪明，因此不用去定义在 @sec:ranges 中讨论的整个区间类型和操作。
+它只需将为 `range` 定义的函数和操作扩展到 `Date` 类型。
+这就是在 **为什么选择 Julia?** (@sec:why_julia) 中讨论过的多重派发。
 
-For example, suppose that you want to create a `Day` interval.
-This is easy done with the colon `:` operator:
+例如，假设想要创建一个 `Day` 区间。
+这可以轻松地通过冒号 `:` 运算符实现：
 
 ```jl
 sco("""Date("2021-01-01"):Day(1):Date("2021-01-07")""")
 ```
 
-There is nothing special in using `Day(1)` as the interval, we can **use whatever `Period` type** as interval.
-For example, using 3 days as the interval:
+使用 `Day(1)` 作为间隔没有什么特别的， 可以使用 **任意的 `Period` 类型** 作为间隔。
+比如，使用 3 天作为间隔：
 
 ```jl
 sco("""Date("2021-01-01"):Day(3):Date("2021-01-07")""")
 ```
 
-Or even months:
+又或者是月份：
 
 ```jl
 sco("""Date("2021-01-01"):Month(1):Date("2021-03-01")""")
 ```
 
-Note that the **type of this interval is a `StepRange` with the `Date` and concrete `Period` type** we used as interval inside the colon `:` operator:
+注意， **这个区间的类型是内含 `Date` 和具体 `Period` 类型的`StepRange`**，其中 `Period` 用于作为间隔：
 
 ```jl
 s = """
@@ -2163,104 +2152,100 @@ s = """
 sco(s)
 ```
 
-We can convert this to a **vector** with the `collect` function:
+可以使用 `collect` 函数将它转换为 **向量** ：
 
 ```jl
 sco("collected_date_interval = collect(date_interval)")
 ```
 
-And have all the **array functionalities available**, like, for example, indexing:
+并具有全部的**可用数组功能**，例如索引：
 
 ```jl
 sco("collected_date_interval[end]")
 ```
 
-We can also **broadcast date operations** to our vector of `Date`s:
+也可以在 `Date` 向量中实现 **日期操作的广播** ：
 
 ```jl
 sco("collected_date_interval .+ Day(10)")
 ```
 
-Similarly, these examples work for `DateTime` types too.
+同理，这些例子也适用于 `DateTime` 类型。
 
-### Random Numbers {#sec:random}
+### 随机数 {#sec:random}
 
-Another important module in Julia's standard library is the `Random` module.
-This module deals with **random number generation**.
-`Random` is a rich library and, if you're interested, you should consult [Julia's `Random` documentation](https://docs.julialang.org/en/v1/stdlib/Random/).
-We will cover *only* three functions: `rand`, `randn` and `seed!`.
+`Random` 模块是另一重要的 Julia 标准库模块。
+这个模块的用途是 **生成随机数**。
+`Random` 是功能丰富的库，如果感兴趣，可以阅读查看 [Julia's `Random` documentation](https://docs.julialang.org/en/v1/stdlib/Random/) 了解更多信息。
+接下来 **只** 讨论三个函数： `rand`， `randn` 和 `seed!`。
 
-To begin, we first load the `Random` module.
-Since we know exactly what we want to load, we can just as well explicitly load the methods that we want to use:
+在开始前，首先导入 `Random` 模块。
+先精确地导入想使用的方法：
 
 ```julia
-using Random: rand, randn, seed!
+using Random: seed!
 ```
 
-We have **two main functions that generate random numbers**:
+主要有 **两个生成随机数的函数**：
 
-* `rand`: samples a **random element** of a data structure or type.
-* `randn`: generates a random number that follows a **standard normal distribution** (mean 0 and standard deviation 1) of a specific type.
-
-> **_NOTE:_**
-> Note that those two functions are already in the Julia `Base` module.
-> So, you don't need to import `Random` if you're planning to use them.
+* `rand`: 在某种数据结构或类型的 **元素** 中做随机抽样。
+* `randn`: 在**标准正态分布**（平均值 0 和标准差 1）中做随机抽样。
 
 #### `rand` {#sec:random_rand}
 
-By default, if you call `rand` without arguments it will return a `Float64` in the interval $[0, 1)$, which means between 0 inclusive to 1 exclusive:
+默认情况下，可以不带参数地调用 `rand` ，那么它就会返回一个位于区间 $[0, 1)$ 的 `Float64` 随机数，该区间表示随机数的范围是 0 （包含）到 1 （排除）之间：
 
 ```jl
 scob("rand()")
 ```
 
-You can modify `rand` arguments in several ways.
-For example, suppose you want more than 1 random number:
+可以使用多种方式更新 `rand` 的参数。
+假设，想要获得多个随机数：
 
 ```jl
 sco("rand(3)")
 ```
 
-Or, you want a different interval:
+或者，想在不同的区间抽样：
 
 ```jl
 scob("rand(1.0:10.0)")
 ```
 
-You can also specify a different step size inside the interval and a different type.
-Here we are using numbers without the dot `.` so Julia will interpret them as `Int64`:
+也可以给区间指定步长，甚至可以在不同的类型间抽样。
+这里使用不带点 `.` 的数字，所以 Julia 会将它们解释为 `Int64` 而不是  `Float64`： 
 
 ```jl
 scob("rand(2:2:20)")
 ```
 
-You can also mix and match arguments:
+还可以组合和匹配参数：
 
 ```jl
 sco("rand(2:2:20, 3)")
 ```
 
-It also supports a collection of elements as a tuple:
+它还支持元素集构成的元组：
 
 ```jl
 scob("""rand((42, "Julia", 3.14))""")
 ```
 
-And also arrays:
+也支持数组：
 
 ```jl
 scob("rand([1, 2, 3])")
 ```
 
-`Dict`s:
+还可以是 `Dict`：
 
 ```jl
 sco("rand(Dict(:one => 1, :two => 2))")
 ```
 
-To finish off all the `rand` arguments options, you can specify the desired random number dimensions in a tuple.
-If you do this, the returned type will be an array.
-For example, here's a 2x2 matrix of `Float64` numbers between 1.0 and 3.0:
+最后要讨论的 `rand` 参数选项是，使用数字元组指定随机数的维度。
+如果执行此操作，那么返回类型将会变为数组。
+例如，如下是由 1.0-3.0 间的 `Float64` 随机数构成的 2x2 矩阵：
 
 ```jl
 sco("rand(1.0:3.0, (2, 2))")
@@ -2268,15 +2253,15 @@ sco("rand(1.0:3.0, (2, 2))")
 
 #### `randn` {#sec:random_randn}
 
-`randn` follows the same general principle from `rand` but now it only returns numbers generated from the **standard normal distribution**.
-The standard normal distribution is the normal distribution with mean 0 and standard deviation 1.
-The default type is `Float64` and it only allows for subtypes of `AbstractFloat` or `Complex`:
+`randn` 遵循与 `rand` 相同的生成原理，但现在它只返回从 **标准正态分布** 中生成的随机数。
+标准正态分布是平均值为 0 和标准差为 1 的正态分布。
+其默认类型为 `Float64`，并且只接受 `AbstractFloat` 或 `Complex` 的子类型：
 
 ```jl
 scob("randn()")
 ```
 
-We can only specify the size:
+可以仅指定大小：
 
 ```jl
 sco("randn((2, 2))")
@@ -2284,13 +2269,14 @@ sco("randn((2, 2))")
 
 #### `seed!` {#sec:random_seed}
 
-To finish off the `Random` overview, let's talk about **reproducibility**.
-Often, we want to make something **replicable**.
-Meaning that, we want the random number generator to generate the **same random sequence of numbers**.
-We can do so with the `seed!` function:
+在 `Random` 概述的结尾部分， 我们接下来讨论 **重现性**。
+我们经常需要让某些事能够 **可复现**。
+这意味着，随机数生成器要每次 **生成相同的随机数序列**。
+这可以通过 `seed!` 函数实现：
 
 ```jl
 s = """
+    # comment to distinguish this block from the next # hide
     seed!(123)
     rand(3)
     """
@@ -2305,7 +2291,8 @@ s = """
 sco(s)
 ```
 
-In order to avoid tedious and inefficient repetition of `seed!` all over the place, we can instead define an instance of a `seed!` and pass it as a first argument of **either `rand` or `randn`**.
+在一些例子中，在脚本开头调用 `seed!` 是不够好的。
+为了避免 `rand` 或 `randn` 依赖全局变量，那么可以转而定义一个 `seed!` 的实例，然后将它传递给 `rand` 或 `randn` 的第一个参数。
 
 ```jl
 sco("my_seed = seed!(123)")
@@ -2313,38 +2300,38 @@ sco("my_seed = seed!(123)")
 
 
 ```jl
+# some comment to distinguish this block from the next # hide
 sco("rand(my_seed, 3)")
 ```
 
 ```jl
-sco("rand(my_seed, 3)")
+sco("randn(my_seed, 3)")
 ```
 
 > **_NOTE:_**
-> If you want your code to be reproducible you can just call `seed!` in the beginning of your script.
-> This will take care of reproducibility in sequential `Random` operations.
-> No need to use it all `rand` and `randn` usage.
+> 请注意，对于不同的版本，这些数字可能会有所不同。
+> 若要在不同的版本获得稳定的随机数流，请使用 `StableRNGs.jl` 库。
 
 ### Downloads {#sec:downloads}
 
-One last thing from Julia's standard library for us to cover is the **`Download` module**.
-It will be really brief because we will only be covering a single function named `download`.
+最后一个要讨论的 Julia 标准库是 **`Downloads` 模块**。
+这部分相当简短，因为只关注单个函数 `download`。
 
-Suppose you want to **download a file from the internet to your local storage**.
-You can accomplish this with the `download` function.
-The first and only required argument is the file's url.
-You can also specify as a second argument the desired output path for the downloaded file (don't forget the filesystem best practices!).
-If you don't specify a second argument, Julia will, by default, create a temporary file with the `tempfile` function.
+假设想要 **从互联网上下载文件到本地**。
+这可以用通过 `download` 函数实现。
+最简单情况下，仅仅需要一个参数，那就是文件的 url。
+还可以指定第二个参数作为下载文件的输出路径 (不要忘记文件系统的最佳实践!)。
+如果不指定第二个参数，默认情况下，Julia 将使用 `tempfile` 函数创建一个临时文件。
 
-Let's load the `download` method:
+首先导入 `Downloads` 模块：
 
 ```julia
-using Download: download
+using Downloads
 ```
 
-For example, let's download our [`JuliaDataScience` GitHub repository](https://github.com/JuliaDataScience/JuliaDataScience) `Project.toml` file.
-Note that `download` function is not exported by `Downloads` module, so we have to use the `Module.function` syntax.
-By default, it returns a string that holds the file path for the downloaded file:
+例如，下载 [`JuliaDataScience` GitHub 仓库](https://github.com/JuliaDataScience/JuliaDataScience) 的 `Project.toml` 文件。
+注意，`Downloads` 模块并没有导出 `download` 函数，因此需要使用语法 `Module.function` 。
+默认情况下， 它返回一个包含下载文件本地路径的字符串：
 
 ```jl
 s = """
@@ -2355,7 +2342,7 @@ s = """
 scob(s)
 ```
 
-With `readlines`, we can look at the first 4 lines of our downloaded file:
+可以使用 `readlines` 查看下载文件的前四行：
 
 ```jl
 s = """
@@ -2365,4 +2352,4 @@ sco(s; process=catch_show)
 ```
 
 > **_NOTE:_**
-> For more complex HTTP interactions such as interacting with web APIs, see the [`HTTP.jl` package](https://github.com/JuliaWeb/HTTP.jl) package.
+> 对于更复杂的 HTTP 交互过程，例如与 web API 交互，请使用 [`HTTP.jl`](https://github.com/JuliaWeb/HTTP.jl) 包。
