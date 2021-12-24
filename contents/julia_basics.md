@@ -1432,7 +1432,7 @@ sco(s)
 通过指定只有 1 维的维度元组，你可以将其变回向量：
 
 ```jl
-sco("reshape(tree_two_matrix, (6, ))")
+sco("reshape(three_two_matrix, (6, ))")
 ```
 
 第三种操作数组的方式是 **按元素应用函数**。
