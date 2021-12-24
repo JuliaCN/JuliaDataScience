@@ -260,7 +260,7 @@ scob("(6 isa Int64) && (6 isa Real)")
 
 关于数值比较，Julia有三种主要的比较类型：
 
-1. **相等**：两者的关系为 **相等** 或 **不等** 
+1. **相等**：两者的关系为 **相等** 或 **不等**
     * == "相等"
     * != 或 ≠ "不等"
 1. **小于**: 两者的关系为 **小于** 或 **小于等于**
@@ -396,7 +396,7 @@ scob(s)
 > **_NOTE:_**
 > 可以使用 `supertypes` 和 `subtypes` 函数查看类型间的关系。
 
-接下来回到之前定义的 `Language` `struct`。 
+接下来回到之前定义的 `Language` `struct`。
 这就是一个多重派发的例子。
 下面将扩展 `Base.show` 函数，该函数打印实例的类型和 `struct` 的内容。
 
@@ -629,7 +629,7 @@ Julia 有多种原生数据结构。
 Julia 中方法和函数的区别如下。
 如前面讨论的那样，每一个函数对应多种方法。
 因此值得将 `methodswith` 函数收藏到你的技巧包里。
-例如，让我们看看当对 `String` 应用该函数时会发生什么： 
+例如，让我们看看当对 `String` 应用该函数时会发生什么：
 
 ```jl
 s = "first(methodswith(String), 5)"
@@ -735,7 +735,7 @@ s = \"\"\"
 假设你想通过连接两个或多个字符串来创建一个新的字符串。
 这在 Julia 中可以通过 `*` 运算符或 `join` 函数实现。
 这个符号看起来是一个令人费解的选择，事实上也确实费解。
-现在，许多 Julia 基础库都在使用该符号，因此它也被保留在 Julia 语言中。 
+现在，许多 Julia 基础库都在使用该符号，因此它也被保留在 Julia 语言中。
 如果你感兴趣，可以阅读 2015 年 GitHub 上关于它的讨论：
 <https://github.com/JuliaLang/julia/issues/11030>.
 
@@ -1070,7 +1070,7 @@ sco("myarray = [\"text\", 1, :symbol]"; process=output_block)
 本节稍后讨论这些更简便的方法。
 
 用于 Julia 数组的低级构造器是 **默认构造器**。
-它接手元素类型作为 `{}` 括号内的类型参数，并将元素类型传递到构造器里，构造器后跟需要的维度。 
+它接手元素类型作为 `{}` 括号内的类型参数，并将元素类型传递到构造器里，构造器后跟需要的维度。
 通常使用未定义元素初始化向量和矩阵，即将 `undef` 参数作为传递到构造器里的类型。
 如下构造一个含 10 个 `undef` `Float64`元素的向量：
 
@@ -1772,7 +1772,7 @@ sco("sym = Symbol(s)")
 ```
 
 使用 `Symbol` 的好处是会少键入一个字符，即 `:some_text` 相对于 `"some text"` 。
-`DataFrames.jl` (@sec:dataframes) 中的数据操作和 `Makie.jl` (@sec:DataVisualizationMakie) 中的数据可视化将会多次用到 `Symbol`。 
+`DataFrames.jl` (@sec:dataframes) 中的数据操作和 `Makie.jl` (@sec:DataVisualizationMakie) 中的数据可视化将会多次用到 `Symbol`。
 
 ### Splat 运算符 {#sec:splat}
 
@@ -1837,7 +1837,7 @@ Julia 中内置了 **处理不同操作系统差异** 的功能。
 这可以通过 `joinpath`， `@__FILE__` 和 `pkgdir` 函数轻松实现。
 
 当在包中开发代码时，可以使用 `pkgdir` 获取包的根目录。
-例如，对于用来生成本书的 Julia Data Science (JDS) 包： 
+例如，对于用来生成本书的 Julia Data Science (JDS) 包：
 
 ```jl
 root = pkgdir(JDS)
@@ -2213,7 +2213,7 @@ scob("rand(1.0:10.0)")
 ```
 
 也可以给区间指定步长，甚至可以在不同的类型间抽样。
-这里使用不带点 `.` 的数字，所以 Julia 会将它们解释为 `Int64` 而不是  `Float64`： 
+这里使用不带点 `.` 的数字，所以 Julia 会将它们解释为 `Int64` 而不是  `Float64`：
 
 ```jl
 scob("rand(2:2:20)")
