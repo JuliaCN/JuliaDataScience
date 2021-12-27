@@ -4,18 +4,18 @@
 This file is only included on the website.
 ```
 
-Welcome! This is an open source and open access book on how to do **Data Science using [Julia](https://julialang.org)**.
-Our target audience are researchers from all fields of applied sciences.
-Of course, we hope to be useful for industry too.
-You can navigate through the pages of the ebook by using the arrow keys (left/right) on your keyboard.
+Welcome! 这是一本关于 **[Julia](https://julialang.org) 数据科学** 的开放获取书籍，同时源代码开源。
+我们的目标读者是来自应用科学各个领域的研究人员。
+当然，我们也希望能对工业界有用。
+你可以使用键盘上的箭头键（左/右）浏览电子书。
 
 > 此译本将在未来发布 **PDF** 版本。
 
-The source code for this translated version of the book is available at [GitHub](https://github.com/JuliaCN/JuliaDataScience){target="_blank"}.
+本书的源码公开在 [GitHub](https://github.com/JuliaDataScience/JuliaDataScience){target="_blank"}。
 
-This book is also published at [Amazon.com](https://www.amazon.com/dp/B09KMRKQ96/).
+本书同时发布在 [Amazon.com](https://www.amazon.com/dp/B09KMRKQ96/)。
 
-If you want to be notified about updates, please consider **signing up for updates**:
+如果你想得到有关更新的通知，请考虑**注册更新**：
 
 ```{=html}
 <form style="margin: 0 auto;" action="https://api.staticforms.xyz/submit" method="post">
@@ -26,15 +26,15 @@ If you want to be notified about updates, please consider **signing up for updat
 </form>
 ```
 
-### Citation Info {-}
+### 引用信息 {-}
 
-To cite the content, please use:
+可使用如下条目引用本书的内容：
 
 ```plaintext
 Storopoli, Huijzer and Alonso (2021). Julia Data Science. https://juliadatascience.io. ISBN: 9798489859165.
 ```
 
-Or in BibTeX format:
+或以 BibTeX 格式：
 
 ```plaintext
 @book{storopolihuijzeralonso2021juliadatascience,
@@ -46,7 +46,7 @@ Or in BibTeX format:
 }
 ```
 
-### Front Cover {-}
+### 封面 {-}
 
 ```jl
 let

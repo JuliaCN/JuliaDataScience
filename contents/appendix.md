@@ -1,8 +1,8 @@
-# Appendix {#sec:appendix}
+# 附录 {#sec:appendix}
 
-## Packages Versions {#sec:appendix_pkg}
+## 库的版本 {#sec:appendix_pkg}
 
-This book is built with Julia `jl string(VERSION)` and the following packages:
+本书由 Julia `jl string(VERSION)` 及以下库构建：
 
 ```jl
 JDS.pkg_deps()

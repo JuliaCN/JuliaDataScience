@@ -1,53 +1,53 @@
-## Notation {#sec:notation}
+## 符号 {#sec:notation}
 
-In this book, we try to keep notation as consistent as possible.
-This makes reading and writing code easier.
-We can define the notation into three parts.
+我们尽量保持本书符号的一致性。
+这会使阅读和编写代码更容易。
+我们可以将符号定义为三个部分。
 
-### Julia Style Guide
+### Julia 风格指南 {#sec:julia_style_guide}
 
-Firstly, we attempt to stick to the conventions from the [Julia Style Guide](https://docs.julialang.org/en/v1/manual/style-guide/).
-Most importantly, we write functions not scripts (see also @sec:engineering).
-Furthermore, we use naming conventions consistent with Julia `base/`, meaning:
+首先，我们尝试遵循 [Julia 风格指南](https://docs.julialang.org/en/v1/manual/style-guide/) 中的约定惯例。
+更重要的是，要编写函数而不是脚本（也可查阅 @sec:engineering）。
+另外，我们使用与 Julia `base/` 模块一致的命名约定，即：
 
-- Use camelcase for modules: `module JuliaDataScience`, `struct MyPoint`.
-  (Note that camelcase is so called because the capitalization of words, as in "iPad" or "CamelCase", makes the word look like a camel.)
-- Write function names in lowercase letters and separate the words by underscores.
-  It is also allowed to omit the separator when naming functions.
-  For example, these function names are all in line with the conventions: `my_function`, `myfunction` and `string2int`.
+- 模块采用驼峰命名法： `module JuliaDataScience`， `struct MyPoint`。
+  (之所叫驼峰命名法，是因为单词的首字母大写，如 "iPad" 或 "CamelCase"， 这使得单词看起来像驼峰。）
+- 函数名全部小写，并用下划线分隔单词。
+  不过也允许在命名函数时省略分隔符。
+  例如，这些函数名都符合约定： `my_function`， `myfunction`  和 `string2int`。
 
-Also, we avoid brackets in conditionals, that is, we write `if a == b` instead of `if (a == b)` and use 4 spaces per indentation level.
+同时，避免在条件语句中使用括号，即写为 `if a == b` 而不是 `if (a == b)`，并且每级缩进使用 4 个空格。
 
-### BlueStyle
+### Blue 风格指南 {#sec:blue_style_guide}
 
-The [Blue Style Guide](https://github.com/invenia/BlueStyle) adds multiple conventions on top of the default Julia Style Guide.
-Some of these rules might sound pedantic, but we found that they make the code more readable.
+[Blue 风格指南](https://github.com/invenia/BlueStyle) 在默认的 Julia 风格指南基础上增加了更多的约定。
+一些规则可能听起来有点古板，但我们发现这样能提高代码的可读性。
 
-From the style guide, we attempt to adhere specifically to:
+根据风格指南，我们具体坚持：
 
-- At most 92 characters per line in code (in Markdown files, longer lines are allowed).
-- When loading code via `using`, load at most one module per line.
-- No trailing whitespace.
-  Trailing whitespace makes inspecting changes in code more difficult since they do not change the behavior of the code but do show up as changes.
-- Avoid extraneous spaces inside brackets.
-  So, write `string(1, 2)` instead of `string( 1 , 2 )`.
-- Global variables should be avoided.
-- Try to limit function names to one or two words.
-- Use the semicolon to clarify whether an argument is a keyword argument or not.
-  For example, `func(x; y=3)` instead of `func(x, y=3)`.
-- Avoid using multiple spaces to align things.
-  So, write
+- 每行代码最多 92 字符（Markdown 文件允许更长的行）。
+- 使用 `using` 加载模块，且每行最多加载一个。
+- 行尾无空格。
+  行尾的空格会使代码更改检查更加困难，因为虽然它们不会修改代码行为，但会显示为更改。
+- 避免括号内的多余空格。
+  因此，要写为 `string(1, 2)` 而不是 `string( 1 , 2 )`。
+- 应避免全局变量。
+- 尝试将函数名压缩至一到两个词。
+- 使用分号 `;` 来说明参数是否为关键字参数。
+  例如，使用 `func(x; y=3)` 而不是 `func(x, y=3)`。
+- 避免使用多个空格来对齐对象。
+  所以，应该写
   ```
   a = 1
   lorem = 2
   ```
-  instead of
+  而不是
   ```
   a     = 1
   lorem = 2
   ```
-- Whenever appropriate, surround binary operators with a space, for example, `1 == 2` or `y = x + 1`.
-- Indent triple-quotes and triple-backticks:
+- 当合适时，我们应在双目运算符两侧增加空格，例如， `1 == 2` 或 `y = x + 1`。
+- 缩进三引号和三反引号：
   ```
   s = """
       my long text:
@@ -55,41 +55,41 @@ From the style guide, we attempt to adhere specifically to:
       the end.
       """
   ```
-- Do not omit zeros in floats (even though Julia allows it).
-  Hence, write `1.0` instead of `1.` and write `0.1` instead of `.1`.
-- Use `in` in for loops and not = or ∈ (even though Julia allows it).
+- 不要省略浮点数中的零（即使 Julia 允许这样做）。
+  因此，写为 `1.0` 而不是 `1.` ，写为 `0.1` 而不是 `.1`。
+- 在 for 循环中使用 `in`，而不是 `=` 或 `∈` （即使 Julia 允许这样做）。
 
-### Our additions
+### 我们的补充
 
-- In text, we reference the function call `M.foo(3, 4)` as `M.foo` and not `M.foo(...)` or `M.foo()`.
-- When talking about packages, like the DataFrames package, we explicitly write `DataFrames.jl` each time.
-  This makes it easier to recognize that we are talking about a package.
-- For filenames, we stick to "file.txt" and not `file.txt` or file.txt, because it is consistent with the code.
-- For column names in tables, like the column `x`, we stick to column `:x`, because it is consistent with the code.
-- Do not use Unicode symbols in inline code.
-  This is simply a bug in the PDF generation that we have to workaround for now.
-- The line before each code block ends with a colon (:) to indicate that the line belongs to the code block.
+- 在行文时，我们将使用 `M.foo` 引用 `M.foo(3, 4)`，而不是使用 `M.foo(...)` 或 `M.foo()`。
+- 当讨论软件包时，如 DataFrames 包，我们每次都会明确地写为 `DataFrames.jl`。
+  这使得可以非常容易地定位正在讨论的包。
+- 对于文件名， 我们坚持使用 "file.txt"，而不是 `file.txt` 或 file.txt，因为这种形式与代码保持一致。
+- 对于表中的列，如列 `x`，我们坚持使用 `:x`，因为这种形式与代码保持一致。
+- 不要在行内代码使用 Unicode 符号。
+  这只是一个 PDF 生成中的 bug，但现在我们必须解决它。
+- 每个代码块前面的行以冒号 (:) 结尾，表示此行属于该代码块。
 
-#### Loading of symbols
+#### 加载符号
 
-Prefer to load symbols explicitly, that is, prefer `using A: foo` over `using A` when not using the REPL [see also, @jump2021using].
-In this context, a symbol means an identifier to an object.
-For example, even if it doesn't look like it normally, internally `DataFrame`, `π` and `CSV` are all symbols.
-We notice this when we use an introspective method from Julia such as `isdefined`:
+在不使用 REPL 时，我们更喜欢显式加载符号，即更喜欢使用 `using A: foo` 而不是 `using A`（另请查阅 @jump2021using）。
+在此上下文中，符号表示对象的标识符。
+例如，即使看起来不正常， 但本质上 `DataFrame`、`π` 和 `CSV` 都是符号。
+在使用诸如 `isdefined` 这样的 Julia 内省方法时，我们发现了这一点：
 
 ```jl
 scob("isdefined(Main, :π)")
 ```
 
-Next to being explicit when using `using`, also prefer `using A: foo` over `import A: foo` because the latter makes it easy to accidentally extend `foo`.
-Note that this isn't just advice for Julia:
-implicit loading of symbols via `from <module> import *` is also discouraged in Python [@pep8].
+接下来使用 `using` 时会变得显式，另外更喜欢使用 `using A: foo` 而不是 `import A: foo` ，因为后者更容易意外地扩展 `foo`。
+注意这不仅仅是针对 Julia 的建议：
+Python 也不鼓励通过 `from <module> import *` 隐式加载符号 [@pep8]。
 
-The reason why being explicit is important is related to semantic versioning.
-With semantic versioning (<http://semver.org>), the version number is related to whether a package is so-called _breaking_ or not.
-For example, a non-breaking update for package `A` is when the package goes from version `0.2.2` to `0.2.3`.
-With such a non-breaking version update, you don't need to worry that your package will break, that is, throw an error or change behavior.
-If package `A` goes from `0.2` to `1.0`, then that's a breaking update and you can expect that you need some changes in your package to make `A` work again.
-**However**, exporting extra symbols is considered a non-breaking change.
-So, with implicit loading of symbols, **non-breaking changes can break your package**.
-That's why it's good practice to explicitly load symbols.
+显式加载的重要性与语义版本控制有关。
+结合语义版本控制 (<http://semver.org>) 后，版本号将关系到包是否存在 **破坏性** 更改。
+例如，当包 `A` 的版本号从 `0.2.2` 变化到 `0.2.3`，其进行的是非破坏性更新。
+在这种非破坏性更新下，你不用担心你的包会产生破坏，即抛出错误或改变行为。
+如果包 `A` 从 `0.2` 变化到 `1.0`, 这意味着破坏性更新，然后你预计需要对你的包做一些修改，然后才能使包 `A` 再次正常运行。
+**然而**，导出额外符号视为非破坏性更改。
+所以，在隐式加载符号时， **非破坏性更改会破坏你的包**。
+这就是为什么显式加载符号是一种很好的风格实践。
