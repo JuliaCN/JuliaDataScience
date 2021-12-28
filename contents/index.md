@@ -11,11 +11,11 @@ Welcome! 这是一本关于 **[Julia](https://julialang.org) 数据科学** 的�
 
 > 此译本将在未来发布 **PDF** 版本。
 
-本书的源码公开在 [GitHub](https://github.com/JuliaDataScience/JuliaDataScience){target="_blank"}。
+此译本的源码公开在 [GitHub](https://github.com/JuliaCN/JuliaDataScience){target="_blank"}。
 
-本书同时发布在 [Amazon.com](https://www.amazon.com/dp/B09KMRKQ96/)。
+本书的英文版同时发布在 [Amazon.com](https://www.amazon.com/dp/B09KMRKQ96/)。
 
-如果你想得到有关更新的通知，请考虑**注册更新**：
+如果你想得到有关英文版的更新通知，请考虑**注册更新**：
 
 ```{=html}
 <form style="margin: 0 auto;" action="https://api.staticforms.xyz/submit" method="post">
