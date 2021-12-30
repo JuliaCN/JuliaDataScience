@@ -1,10 +1,10 @@
 # DataFrames.jl {#sec:dataframes}
 
-Data comes mostly in a tabular format.
-By tabular, we mean that the data consists of a table containing rows and columns.
-Columns are usually of the same data type, whereas rows have different types.
-The rows, in practice, denote observations while columns denote variables.
-For example, we can have a table of TV shows containing the country in which each was produced and our personal rating, see @tbl:TV_shows.
+数据通常以表格格式存储。
+在表格格式中，数据由包含行和列的表组成。
+每列通常具有相同的数据类型，而每行数据类型不同。
+实际上，行表示观测量，而列表示变量。
+例如，我们有一个电视节目表，其中包含每个节目的制作国家和大众个人评分，如 @tbl:TV_shows 所示。
 
 ```{=comment}
 Using a different example from the rest in the chapter to make the text a bit more interesting.
@@ -20,17 +20,17 @@ tv_shows = DataFrame(
 Options(tv_shows; label="TV_shows")
 ```
 
-Here, the dots mean that this could be a very long table and we only show a few rows.
-While analyzing data, often we come up with interesting questions about the data, also known as _data queries_.
-For large tables, computers would be able to answer these kinds of questions much quicker than you could do it by hand.
-Some examples of these so-called _queries_ for this data could be:
+此处的省略号表示这是一张非常长的表，但只显示了少数行。
+在分析数据时，我们经常会提出一些关于数据的有趣问题，这也称为 **数据查询**。
+对于大型表格，计算机能够比手工查询更快地回答此类问题。
+一些 **数据查询** 问题的例子如下：
 
-- Which TV show has the highest rating?
-- Which TV shows were produced in the United States?
-- Which TV shows were produced in the same country?
+- 哪个电视节目评分最高？
+- 哪些电视节目由美国制作？
+- 哪些电视节目由相同的国家制作?
 
-But, as a researcher, real science often starts with having multiple tables or data sources.
-For example, if we also have data from someone else's ratings for the TV shows (@tbl:ratings):
+但是，作为研究人员，实际的科学往往从多张表格或多个数据源开始。
+例如，如果我们也有其他人的电视节目评分数据 (@tbl:ratings)：
 
 ```jl
 ratings = DataFrame(
@@ -39,15 +39,15 @@ ratings = DataFrame(
 Options(ratings; label="ratings")
 ```
 
-Now, questions that we could ask ourselves could be:
+现在则能够提出以下问题：
 
-- What is Game of Thrones' average rating?
-- Who gave the highest rating for Friends?
-- What TV shows were rated by you but not by the other person?
+- 节目 Game of Thrones 的平均评分是多少？
+- 谁对 Friends 给出了最高的评分？
+- 哪些节目你评分了，但其他人没有？
 
-In the rest of this chapter, we will show you how you can easily answer these questions in Julia.
-To do so, we first show why we need a Julia package called `DataFrames.jl`.
-In the next sections, we show how you can use this package and, finally, we show how to write fast data transformations (@sec:df_performance).
+在本章的其余部分中，我们将展示如何借助 Julia 来轻松地回答这些问题。
+因此此，首先说明为什么需要 Julia 包 `DataFrames.jl`。
+下节将展示如何使用此包，最后将展示如何编写快速数据变换的代码 (@sec:df_performance)。
 
 ```{=comment}
 TODO: Add a comparison with Excel to see where Julia is better.
@@ -55,29 +55,29 @@ In summary, because it is much easier to structure and reproduce the logic.
 (Jose approves)
 ```
 
-Let's look at a table of grades like the one in @tbl:grades_for_2020:
+首先查看如下的成绩表 @tbl:grades_for_2020 ：
 
 ```jl
 JDS.grades_for_2020()
 ```
 
-Here, the column name has type `string`, age has type `integer`, and grade has type `float`.
+其中 name 列的类型为 `string`, age 列的类型为 `integer`，而 grade 列的类型为 `float`。
 
-So far, this book has only handled Julia's basics.
-These basics are great for many things, but not for tables.
-To show that we need more, lets try to store the tabular data in arrays:
+截至目前，本书只介绍了 Julia 的基础知识。
+这些基础能够处理很多东西，但不能处理表。
+因此，为了说明我们需要更多类型，让我们尝试将表格数据存储在数组中：
 
 ```jl
 @sc JDS.grades_array()
 ```
 
-Now, the data is stored in so-called column-major form, which is cumbersome when we want to get data from a row:
+现在，数据以列优先形式存储，当想从行获取数据时，这种形式很麻烦：
 
 ```jl
 @sco JDS.second_row()
 ```
 
-Or, if you want to have the grade for Alice, you first need to figure out in what row Alice is:
+或者，如果想获得 Alice 的成绩，首先需要弄清楚 Alice 所在的行：
 
 ```jl
 scob("""
@@ -89,7 +89,7 @@ row_alice()
 """)
 ```
 
-and then we can get the value:
+然后才能得到成绩：
 
 ```jl
 scob("""
@@ -102,14 +102,14 @@ value_alice()
 """)
 ```
 
-`DataFrames.jl` can easily solve these kinds of issues.
-You can start by loading `DataFrames.jl` with `using`:
+`DataFrames.jl` 可以很容易地处理此类问题。
+首先使用 `using` 加载 `DataFrames.jl` ：
 
 ```
 using DataFrames
 ```
 
-With `DataFrames.jl`, we can define a `DataFrame` to hold our tabular data:
+通过 `DataFrames.jl`，我们可以定义 `DataFrame` 来存储表格数据：
 
 ```jl
 sco("""
@@ -120,7 +120,7 @@ without_caption_label(df) # hide
 """)
 ```
 
-which gives us a variable `df` containing our data in table format.
+即此处返回的变量 `df` 以表格格式存储数据。
 
 ```{=comment}
 Although this section is a duplicate of earlier chapters, I do think it might be a good idea to keep the duplicate.
@@ -129,27 +129,27 @@ With this section, people who already understand it, understand it a bit better 
 ```
 
 > **_NOTE:_**
-> This works, but there is one thing that we need to change straight away.
-> In this example, we defined the variables `name`, `grade_2020` and `df` in global scope.
-> This means that these variables can be accessed and edited from anywhere.
-> If we would continue writing the book like this, we would have a few hundred variables at the end of the book even though the data that we put into the variable `name` should only be accessed via `DataFrame`!
-> The variables `name` and `grade_2020` where never meant to be kept for long!
-> Now, imagine that we would change the contents of `grade_2020` a few times in this book.
-> Given only the book as PDF, it would be near impossible to figure out the contents of the variable by the end.
+> 这是可行的，但我们需要立即改变一件事。
+> 在本例中，我们在全局作用域定义了变量 `name`、 `grade_2020` 和 `df`。
+> 这意味着可以从任何位置访问和修改这些变量。
+> 如果我们继续像这样写这本书，那么我们会在书结尾时拥有上百个变量，即使变量 `name` 中的数据本应只能通过 `DataFrame` 访问！
+> 变量 `name` 和 `grade_2020` 不应该持久地保存！
+> 现在，想象一下，我们将会在本书中多次修改 `grade_2020`。
+> 如果本书只有 PDF 格式， 那么几乎不可能在最后指出变量的内容。
 >
-> We can solve this very easily by using functions.
+> 可以使用函数轻松地解决此类问题。
 
-Let's do the same thing as before but now in a function:
+让我们使用函数完成同样的操作：
 
 ```jl
 @sco grades_2020()
 ```
 
-Note that `name` and `grade_2020` are destroyed after the function returns, that is, they are only available in the function.
-There are two other benefits of doing this.
-First, it is now clear to the reader where `name` and `grade_2020` belong to: they belong to the grades of 2020.
-Second, it is easy to determine what the output of `grades_2020()` would be at any point in the book.
-For example, we can now assign the data to a variable `df`:
+注意， `name` 和 `grade_2020` 会在函数返回后销毁，即它们仅在函数中可用。
+这样做还有两个好处。
+首先，读者可以清晰地看到 `name` 和 `grade_2020` 由谁所有：它们属于 2020 成绩表。
+其次，很容易在书中的任何地方确定 `grades_2020()` 的输出。
+例如，可以将数据赋给变量 `df`：
 
 ```jl
 sco("""
@@ -157,7 +157,7 @@ df = grades_2020()
 """; process=without_caption_label)
 ```
 
-Change the contents of `df`:
+改变 `df` 的内容：
 
 ```jl
 sco("""
@@ -165,7 +165,7 @@ df = DataFrame(name = ["Malice"], grade_2020 = ["10"])
 """; process=without_caption_label)
 ```
 
-And still recover the original data back without any problem:
+而且仍然能够无损恢复数据：
 
 ```jl
 sco("""
@@ -173,14 +173,14 @@ df = grades_2020()
 """; process=without_caption_label)
 ```
 
-Of course, this assumes that the function is not re-defined.
-We promise to not do that in this book, because it is a bad idea exactly for this reason.
-Instead of "changing" a function, we will make a new one and give it a clear name.
+当然，此处假设没有重新定义函数。
+我们在本书中保证不会这样做，因为这是非常糟糕的做法。
+我们不会 “改变” 函数，而是创建一个具有明确名称的新函数。
 
-So, back to the `DataFrames` constructor.
-As you might have seen, the way to create one is simply to pass vectors as arguments into the `DataFrame` constructor.
-You can come up with any valid Julia vector and it will work **as long as the vectors have the same length**.
-Duplicates, Unicode symbols and any sort of numbers are fine:
+因此，回到 `DataFrames`构造器。
+如你所见，创建方法是将向量作为参数传递给 `DataFrame` 构造器。
+你可以给定任何合法的 Julia 向量，并且 **只要向量长度相同**，就能成功构造 `DataFrame`。
+重复的向量、Unicode 符号和任何类型的数字都可以：
 
 ```jl
 sco("""
@@ -188,17 +188,17 @@ DataFrame(σ = ["a", "a", "a"], δ = [π, π/2, π/3])
 """; process=without_caption_label)
 ```
 
-Typically, in your code, you would create a function which wraps around one or more `DataFrame`s' functions.
-For example, we can make a function to get the grades for one or more `names`:
+通常，您在代码中会创建函数来包装一个或多个作用于 `DataFrame` 的函数。
+例如，可以创建函数来获取一个或多个 `names` 的成绩：
 
 ```jl
 @sco process=without_caption_label JDS.grades_2020([3, 4])
 ```
 
-This way of using functions to wrap around basic functionality in programming languages and packages is quite common.
-Basically, you can think of Julia and `DataFrames.jl` as providers of building blocks.
-They provide very **generic** building blocks which allow you to build things for your **specific** use case like this grades example.
-By using the blocks, you can make a data analysis script, control a robot or whatever you like to build.
+这种在编程语言和包中使用函数来包装基本功能的方法非常常见。
+基本上，你可以把 Julia 和 `DataFrames.jl` 看作构造块的提供者。
+它们提供了相当 **通用的** 构造块，这允许你在 **特例** 中进一步构造，比如这个成绩例子。
+通过使用这些构造块，你可以编写数据分析脚本，控制机器人或任何你想要构造的东西。
 
-So far, the examples were quite cumbersome, because we had to use indexes.
-In the next sections, we will show how to load and save data, and many powerful building blocks provided by `DataFrames.jl`.
+截至目前，由于必须使用索引，这些例子都非常麻烦。
+下节将介绍如何加载和保存数据，以及一些具有强大功能的 `DataFrames.jl` 构造块。
