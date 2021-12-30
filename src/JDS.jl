@@ -22,6 +22,7 @@ using Reexport: @reexport
         serve,
         without_caption_label,
         html,
+        pdf,
         write_extra_html_files
     using CSV
     using CairoMakie

@@ -5,6 +5,8 @@ author:
   - Jose Storopoli
   - Rik Huijzer
   - Lazaro Alonso
+  - 刘贵欣 (中文翻译)
+  - 田俊 （中文审校）
 html-license: '<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>'
 pdf-footer: ""
 tex-license: Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
@@ -12,11 +14,15 @@ lang: en-US
 tags: [JuliaLang, Data Science, Data Visualization, Data Manipulation, Data Analysis]
 repo: https://github.com/JuliaDataScience/JuliaDataScience
 secPrefix: Section
-figPrefix: Figure
-tblPrefix: Table
+figPrefix: 图
+tblPrefix: 表
 titlepage: true
 bibliography: pandoc/references.bib
 allow-subsubsections: true
+
+# This font appears to not support ZH characters.
+mainfont: DejaVu Sans
+CJKmainfont: Noto Serif CJK SC
 
 # Only used in PDF.
 titlepage-top: >
