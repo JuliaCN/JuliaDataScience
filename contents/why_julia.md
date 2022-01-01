@@ -348,7 +348,7 @@ scob("combined_weight(big_bird, marty)")
 第一个例子是，@storopoli2021bayesianjulia 关于 [ one-hot 向量的快速而优雅的实现](https://storopoli.io/Bayesian-Julia/pages/1_why_Julia/#example_one-hot_vector) 。
 第二个例子是，[Tanmay Bakshi YouTube 频道](https://youtu.be/moyPIhvw4Nk?t=2107) 对 [Christopher Rackauckas](https://www.chrisrackauckas.com/) 的采访 （查看时间 35:07 ） [@tanmaybakshiBakingKnowledgeMachine2021]。
 Chris 提到， 在他开发和维护 [`DifferentialEquations.jl`](https://diffeq.sciml.ai/dev/) 包时，一名用户报告问题说：他基于 GPU 构造的 ODE 求解器并不能正常工作。
-Chris 对这个请求感到非常惊讶，因为他从来没有期望能够将 GPU 计算与求解 ODE 结合起来。
+Chris 对这个请求感到非常惊讶，因为他从来没有期望能够将 GPU 计算与求解边界值问题结合起来。
 他甚至更惊讶地发现，用户犯了一个小错误，但一切正常。
 这些大多数优点都来自于多重派发和高可用的代码 / 类型共享。
 
