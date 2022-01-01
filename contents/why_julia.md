@@ -83,7 +83,7 @@ Julia 编程语言 [@bezanson2017julia] 是一门较新的语言，第一版发�
 它是为科学计算设计的，能够处理 **大规模的数据与计算** 。但仍可以相当 **容易地创建和操作原型代码**。
 
 Julia 的创始人在一篇[2012 年的博客](https://julialang.org/blog/2012/02/why-we-created-julia/) 中解释了为什么要创造 Julia。
-他们说：
+他们说^[译者注：这段话的翻译参考了 [再见 Python，你好 Julia!](https://www.infoq.cn/article/D596hfLDwaRFKkhWpjxA)]：
 
 > 我们很贪婪：我们想要更多。
 > 我们想要一门采用自由许可证的开源语言。
@@ -92,6 +92,7 @@ Julia 的创始人在一篇[2012 年的博客](https://julialang.org/blog/2012/0
 > 我们希望这门语言可以像 Python 一样用于常规编程，像 R 一样容易地用于统计领域，像 Perl 一样自然地处理字符串，像 Matlab 一样拥有强大的线性代数系统，像 Shell 一样能够擅长组合程序。
 > 这门语言要简单易学，但又能打动最认真的极客。
 > 我们希望它可交互，同时希望它是编译的。
+
 
 大多数用户都被 Julia 的 **优越速度** 所吸引。
 毕竟，Julia 可是著名独家俱乐部 petaflop 的成员。
