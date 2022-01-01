@@ -72,7 +72,7 @@ using TestImages
 ### `arrows` 和 `streamplot`
 
 当想要知道给定变量的方向时，`arrows` 和 `streamplot` 会变得非常有用。
-参见如下的示例^[此处使用 Julia 标准库中的 `LinearAlgebra`]：
+参见如下的示例^[此处使用 Julia 标准库中的 `LinearAlgebra`。]：
 
 ```
 using LinearAlgebra

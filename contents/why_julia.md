@@ -46,10 +46,10 @@
 **假设你正在使用 Python 或 R：**
 
 1. 编写的代码未能达到需要的性能?
-实际上， **若使用 Julia， Python 或 R 的分钟级运行时间可能会缩短为秒级**^[有时是毫秒级]。
+实际上， **若使用 Julia， Python 或 R 的分钟级运行时间可能会缩短为秒级**^[有时是毫秒级。]。
 我们将在 @sec:julia_wild 展示 Julia 在学术界和工业界的成功应用案例。
 
-2. 尝试做些不符合 `numpy`/`dplyr` 惯例的操作，但发现代码很慢，然后不得不学习黑魔法^[`numba`、甚至 `Rcpp` 或 `cython`] 来加速代码？
+2. 尝试做些不符合 `numpy`/`dplyr` 惯例的操作，但发现代码很慢，然后不得不学习黑魔法^[`numba`、甚至 `Rcpp` 或 `cython`？] 来加速代码？
 **在 Julia 中，你可以自定义各种各样的代码，而且不会有任何性能损失**。
 
 3. 不得不调试代码以及有时需要阅读 Fortran 或 C/C++ 源码，但却又不明白实现的原理？
@@ -152,7 +152,7 @@ Julia 在背后优化代码。
 
 编译器接着做它最擅长的事情：优化机器码^[如果你想了解更多关于 Julia 如何设计的内容，你绝对需要看 @bezanson2017julia 。]。
 你可以在 Julia 网站上找到 Julia 和其他语言的 [benchmarks](https://julialang.org/benchmarks/) 。
-@fig:benchmarks 取自于 [Julia 网站的 benchmarks 节^[请注意上述的 Julia 结果不包含编译时间]](https://julialang.org/benchmarks/)。
+@fig:benchmarks 取自于 [Julia 网站的 benchmarks 节^[请注意上述的 Julia 结果不包含编译时间。]](https://julialang.org/benchmarks/)。
 如你所见， Julia 是**相当** 快的。
 
 ![Julia VS 其他编程语言。](images/benchmarks.png){#fig:benchmarks}
