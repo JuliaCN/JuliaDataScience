@@ -17,7 +17,7 @@
 <div class="language-switcher">
 <a href="https://juliadatascience.io"><button>🇺🇸</button></a>
 <a href="https://juliadatascience.io/pt"><button>🇧🇷</button></a>
-<a href="/"><button>🇨🇳</botton></a>
+<a href="https://cn.julialang.org/JuliaDataScience/"><button>🇨🇳</botton></a>
 </di
 
 ```{=comment}
