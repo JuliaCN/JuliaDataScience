@@ -18,7 +18,8 @@
 <a href="https://juliadatascience.io"><button>🇺🇸</button></a>
 <a href="https://juliadatascience.io/pt"><button>🇧🇷</button></a>
 <a href="https://cn.julialang.org/JuliaDataScience/"><button>🇨🇳</botton></a>
-</di
+</div>
+```
 
 ```{=comment}
 This file is only included on the website.
