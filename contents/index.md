@@ -34,16 +34,6 @@ Welcome! 这是一本关于 **[Julia](https://julialang.org) 数据科学** 的�
 
 本书的英文版可以在其官网[在线阅读](https://juliadatascience.io/)或者获取[英文PDF版](https://juliadatascience.io/juliadatascience.pdf)离线阅读。此外，本书也同时发布在 [Amazon.com](https://www.amazon.com/dp/B09KMRKQ96/)。
 
-如果你想得到有关英文版的更新通知，请考虑**注册更新**：
-
-```{=html}
-<form style="margin: 0 auto;" action="https://api.staticforms.xyz/submit" method="post">
-    <input type="hidden" name="accessKey" value="2b78f325-fb4e-44e1-ad2f-4dc714ac402f">
-    <input type="email" name="email">
-    <input type="hidden" name="redirectTo" value="https://juliadatascience.io/thanks">
-    <input type="submit" value="Submit" />
-</form>
-```
 
 ### 引用信息 {-}
 
