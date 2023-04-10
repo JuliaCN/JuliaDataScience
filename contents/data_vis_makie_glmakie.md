@@ -31,7 +31,7 @@ GLMakie.activate!()
 
 在 3D 图中绘制 `surface`， `wireframe` 和 `contour` 是一项容易的工作。
 
-### 表面，`wireframe`，`contour`，`contourf` 和 `contour3d`
+### `surface`，`wireframe`，`contour`，`contourf` 和 `contour3d`
 
 将使用如下的 `peaks` 函数展示这些例子：
 
