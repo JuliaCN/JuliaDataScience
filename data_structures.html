@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Jose Storopoli" />
+  <meta name="author" content="Rik Huijzer" />
+  <meta name="author" content="Lazaro Alonso" />
+  <meta name="author" content="刘贵欣 (中文翻译)" />
+  <meta name="author" content="田俊 （中文审校）" />
+  <title>原生数据结构 - Julia Data Science</title>
+  <link rel="shortcut icon" type="image/png" href="/JuliaDataScience/favicon.png"/>
+  <link rel="stylesheet" href="/JuliaDataScience/style.css"/>
+    <script src="/JuliaDataScience/mousetrap.min.js"></script>
+    <style>
+  @font-face {
+    font-family: JuliaMono-Regular;
+    src: url("/JuliaDataScience/JuliaMono-Regular.woff2");
+  }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="/JuliaDataScience/github.min.css">
+<script src="/JuliaDataScience/highlight.min.js"></script>
+<script src="/JuliaDataScience/julia.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', (event) => {
+    document.querySelectorAll('pre').forEach((el) => {
+        hljs.highlightElement(el);
+    });
+});
+</script>
+ 
+</head>
+<body>
+<script>
+function click_next() {
+  var next = document.getElementById('nav-next');
+  next.firstElementChild.nextElementSibling.click();
+}
+function click_prev() {
+  var prev = document.getElementById('nav-prev');
+  prev.firstElementChild.click();
+}
+Mousetrap.bind('right', click_next);
+Mousetrap.bind('h', click_prev);
+Mousetrap.bind('left', click_prev);
+Mousetrap.bind('l', click_next);
+</script>
+
+<div class="books-container">
+<aside class="books-menu">
+<input type="checkbox" id="menu">
+<label for="menu">☰</label>
+<div class="books-title">
+<a href="/JuliaDataScience/">Julia Data Science</a>
+</div><br />
+<span class="books-subtitle">
+
+</span>
+<div class="books-menu-content">
+<li><a class="menu-level-1" href="/JuliaDataScience/preface"><b>1</b> 前言</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/why_data_science"><b>1.1</b> 什么是数据科学？</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/engineering"><b>1.2</b> 软件工程</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/acknowledgements"><b>1.3</b> 致谢</a></li>
+<li><a class="menu-level-1" href="/JuliaDataScience/why_julia"><b>2</b> 为什么选择 Julia ?</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/non-programmers"><b>2.1</b> 从未编过程</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/programmers"><b>2.2</b> 有编程经验</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/julia_accomplish"><b>2.3</b> Julia 想实现什么?</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/julia_wild"><b>2.4</b> Julia 应用案例</a></li>
+<li><a class="menu-level-1" href="/JuliaDataScience/julia_basics"><b>3</b> Julia 基础</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/ide"><b>3.1</b> 开发环境</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/syntax"><b>3.2</b> 语法</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/data_structures"><b>3.3</b> 原生数据结构</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/filesystem"><b>3.4</b> 文件系统</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/standardlibrary"><b>3.5</b> Julia 标准库</a></li>
+<li><a class="menu-level-1" href="/JuliaDataScience/dataframes"><b>4</b> DataFrames.jl</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/load_save"><b>4.1</b> 加载和保存文件</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/index_summarize"><b>4.2</b> Index 和 Summarize</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/filter_subset"><b>4.3</b> Filter 和 Subset</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/select"><b>4.4</b> Select</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/missing_data"><b>4.5</b> 类型和缺失值</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/join"><b>4.6</b> Join</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/df_transform"><b>4.7</b> 变量变换</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/groupby_combine"><b>4.8</b> Groupby 和 Combine</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/df_performance"><b>4.9</b> 性能</a></li>
+<li><a class="menu-level-1" href="/JuliaDataScience/DataVisualizationMakie"><b>5</b> 使用 Makie.jl 做数据可视化</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/cairomakie"><b>5.1</b> CairoMakie.jl</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/datavisMakie_attributes"><b>5.2</b> 属性</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/themes"><b>5.3</b> 主题</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/using_latex"><b>5.4</b> 使用 LaTeXStrings.jl</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/makie_colors"><b>5.5</b> 颜色和颜色图（Colormap）</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/makie_layouts"><b>5.6</b> 布局</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/glmakie"><b>5.7</b> GLMakie.jl</a></li>
+<li><a class="menu-level-1" href="/JuliaDataScience/appendix"><b>6</b> 附录</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/appendix_pkg"><b>6.1</b> 库的版本</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/notation"><b>6.2</b> 符号</a></li>
+<li><a class="menu-level-1" href="/JuliaDataScience/references"><b></b> 参考文献</a></li>
+</div>
+</aside>
+
+<div class="books-content">
+<h2 data-number="3.3" id="sec:data_structures"><span class="header-section-number">3.3</span> 原生数据结构</h2>
+<p>Julia 有多种原生数据结构。 它们都是某种结构化数据形式的抽象。 本书将讨论最常用的数据结构。 它们都能够保存同类型或异构的数据。 因为它们都是集合， 所以都能通过 <code>for</code> 循环进行 <strong>遍历</strong> 。 接下来的讨论包括 <code>String</code>， <code>Tuple</code>， <code>NamedTuple</code>， <code>UnitRange</code>， <code>Arrays</code>， <code>Pair</code>， <code>Dict</code>, <code>Symbol</code>。</p>
+<p>当在 Julia 中偶然发现某种数据结构时，可以使用 <code>methodswith</code> 函数查看能接收该数据结构作为参数的方法。 Julia 中方法和函数的区别如下。 如前面讨论的那样，每一个函数对应多种方法。 因此值得将 <code>methodswith</code> 函数收藏到你的技巧包里。 例如，让我们看看当对 <code>String</code> 应用该函数时会发生什么：</p>
+<pre class="language-julia"><code>first(methodswith(String), 5)</code></pre>
+<pre class="output"><code>[1] write(fp::FilePathsBase.SystemPath, x::Union{String, Vector{UInt8}}) in FilePathsBase at /home/runner/.julia/packages/FilePathsBase/4RrDh/src/system.jl:380
+[2] write(fp::FilePathsBase.SystemPath, x::Union{String, Vector{UInt8}}, mode) in FilePathsBase at /home/runner/.julia/packages/FilePathsBase/4RrDh/src/system.jl:380
+[3] write(iod::HTTP.DebugRequest.IODebug, x::String) in HTTP.DebugRequest at /home/runner/.julia/packages/HTTP/aTjcj/src/IODebug.jl:38
+[4] write(buffer::FilePathsBase.FileBuffer, x::String) in FilePathsBase at /home/runner/.julia/packages/FilePathsBase/4RrDh/src/buffer.jl:85
+[5] write(io::IO, s::Union{SubString{String}, String}) in Base at strings/io.jl:244</code></pre>
+<h3 data-number="3.3.1" id="sec:broadcasting"><span class="header-section-number">3.3.1</span> 对运算符和函数进行广播</h3>
+<p>在深入研究数据结构前，我们需要先讨论广播（也被称为 <strong>向量化</strong>）和 <code>.</code> 点运算符。</p>
+<p>可以使用点运算符广播像 <code>*</code> （乘）或 <code>+</code>（加）这样的数学运算。 例如，添加广播只需将 <code>+</code> 改为 <code>.+</code>：</p>
+<pre class="language-julia"><code>[1, 2, 3] .+ 1</code></pre>
+<pre class="output"><code>[2, 3, 4]</code></pre>
+<p>函数也能通过这种操作实现广播。 （技术上讲，数学运算或中缀运算符也是函数，但这不重要。） 还记得 <code>logarithm</code> 函数吗？</p>
+<pre class="language-julia"><code>logarithm.([1, 2, 3])</code></pre>
+<pre class="output"><code>[0.0, 0.6931471805599569, 1.0986122886681282]</code></pre>
+<h3 data-number="3.3.2" id="sec:function_bang"><span class="header-section-number">3.3.2</span> 带感叹号 <code>!</code> 的函数</h3>
+<p>当函数改变了一个或多个它们的参数时， 按照 Julia 惯例，应该在函数名后追加 <code>!</code> 。 这个惯例警告用户该函数 <strong>并不单纯</strong>，它具有 <strong>副作用</strong>。 当想要更新大型数据结构或变量容器时，具有 <strong>副作用</strong> 的 Julia 函数非常有用，因为它不存在创建新实例的所有开销。</p>
+<p>例如，可以定义一个函数，它将向量 <code>V</code> 的每个元素加1：</p>
+<pre class="language-julia"><code>function add_one!(V)
+    for i in 1:length(V)
+        V[i] += 1
+    end
+    return nothing
+end</code></pre>
+<pre class="language-julia"><code>my_data = [1, 2, 3]
+
+add_one!(my_data)
+
+my_data</code></pre>
+<pre class="output"><code>[2, 3, 4]</code></pre>
+<h3 data-number="3.3.3" id="sec:string"><span class="header-section-number">3.3.3</span> 字符串</h3>
+<p>Julia 中使用双引号分隔符表示 <strong>字符串</strong> :</p>
+<pre class="language-julia"><code>typeof(&quot;This is a string&quot;)</code></pre>
+<pre class="output"><code>String</code></pre>
+<p>也可以定义一个多行字符串：</p>
+<pre class="language-julia"><code>text = &quot;
+This is a big multiline string.
+As you can see.
+It is still a String to Julia.
+&quot;</code></pre>
+<pre class="output"><code>
+This is a big multiline string.
+As you can see.
+It is still a String to Julia.
+</code></pre>
+<p>但使用三引号通常更清晰：</p>
+<pre class="language-julia"><code>s = &quot;&quot;&quot;
+    This is a big multiline string with a nested &quot;quotation&quot;.
+    As you can see.
+    It is still a String to Julia.
+    &quot;&quot;&quot;</code></pre>
+<pre class="output"><code>This is a big multiline string with a nested &quot;quotation&quot;.
+As you can see.
+It is still a String to Julia.
+</code></pre>
+<p>当使用三引号时，Julia 会忽略开头的缩进和换行。 这提升了代码可读性，因为你需要缩进代码，但这些空格不能截断字符串。</p>
+<h4 data-number="3.3.3.1" id="sec:string_concatenation"><span class="header-section-number">3.3.3.1</span> 字符串连接</h4>
+<p>一个常见的字符串操作就是 <strong>字符串连接</strong>。 假设你想通过连接两个或多个字符串来创建一个新的字符串。 这在 Julia 中可以通过 <code>*</code> 运算符或 <code>join</code> 函数实现。 这个符号看起来是一个令人费解的选择，事实上也确实费解。 现在，许多 Julia 基础库都在使用该符号，因此它也被保留在 Julia 语言中。 如果你感兴趣，可以阅读 2015 年 GitHub 上关于它的讨论： <a href="https://github.com/JuliaLang/julia/issues/11030" class="uri">https://github.com/JuliaLang/julia/issues/11030</a>.</p>
+<pre class="language-julia"><code>hello = &quot;Hello&quot;
+goodbye = &quot;Goodbye&quot;
+
+hello * goodbye</code></pre>
+<pre class="output"><code>HelloGoodbye</code></pre>
+<p>如上所示，代码将会自动忽略 <code>hello</code> 和 <code>goodbye</code> 之间的空格。 可以使用 <code>*</code> 连接额外的字符串 <code>" "</code>以添加空格，但当连接两个以上字符串时会变得很笨重。 此时就是 <code>join</code> 的用武之地。 仅仅需要将 <code>[]</code> 中的字符串和分隔符作为参数传递：</p>
+<pre class="language-julia"><code>join([hello, goodbye], &quot; &quot;)</code></pre>
+<pre class="output"><code>Hello Goodbye</code></pre>
+<h4 data-number="3.3.3.2" id="sec:string_interpolation"><span class="header-section-number">3.3.3.2</span> 字符串插值</h4>
+<p>连接字符串可能会变得很复杂。 我们也可以使用 <strong>字符串插值</strong> 更直观地实现某些功能。 它看来就是：使用美元符号 <code>$</code> 在字符串中插入你想包含的内容。 以下是之前的例子，改为使用字符串插值:</p>
+<pre class="language-julia"><code>&quot;$hello $goodbye&quot;</code></pre>
+<pre class="output"><code>Hello Goodbye</code></pre>
+<p>甚至也支持在函数中进行字符串插值。 回到 Section <a href="/JuliaDataScience/syntax#sec:conditionals">3.2.5</a> 中的 <code>test</code> 函数，并用插值重新实现：</p>
+<pre class="language-julia"><code>function test_interpolated(a, b)
+    if a &lt; b
+        &quot;$a is less than $b&quot;
+    elseif a &gt; b
+        &quot;$a is greater than $b&quot;
+    else
+        &quot;$a is equal to $b&quot;
+    end
+end
+
+test_interpolated(3.14, 3.14)</code></pre>
+<pre class="output"><code>3.14 is equal to 3.14</code></pre>
+<h4 data-number="3.3.3.3" id="sec:string_manipulations"><span class="header-section-number">3.3.3.3</span> 字符串处理</h4>
+<p>Julia 中有多个函数处理字符串。 接下来将讨论那些最常用的函数。 另外注意，这些函数大多数都支持 <a href="https://docs.julialang.org/en/v1/manual/strings/#Regular-Expressions">正则表达式 (RegEx)</a> 作为参数。 本书不包含 RegEx，但可以自主学习，尤其是如果你的大多数工作都需要处理文本数据。</p>
+<p>首先，定义一个供后续使用的字符串：</p>
+<pre class="language-julia"><code>julia_string = &quot;Julia is an amazing open source programming language&quot;</code></pre>
+<pre class="output"><code>Julia is an amazing open source programming language</code></pre>
+<ol type="1">
+<li><p><code>contains</code>， <code>startswith</code> 和 <code>endswith</code>： 条件函数 （返回 <code>true</code> 或 <code>false</code>） 如果第二个参数是：</p>
+<ul>
+<li><p>第一个参数的 <strong>子串</strong></p>
+<pre class="language-julia"><code>contains(julia_string, &quot;Julia&quot;)</code></pre>
+<pre class="output"><code>true</code></pre></li>
+<li><p>第一个参数的 <strong>前缀</strong></p>
+<pre class="language-julia"><code>startswith(julia_string, &quot;Julia&quot;)</code></pre>
+<pre class="output"><code>true</code></pre></li>
+<li><p>第一个参数的 <strong>后缀</strong></p>
+<pre class="language-julia"><code>endswith(julia_string, &quot;Julia&quot;)</code></pre>
+<pre class="output"><code>false</code></pre></li>
+</ul></li>
+<li><p><code>lowercase</code>， <code>uppercase</code>， <code>titlecase</code> 和 <code>lowercasefirst</code>：</p>
+<pre class="language-julia"><code>lowercase(julia_string)</code></pre>
+<pre class="output"><code>julia is an amazing open source programming language</code></pre>
+<pre class="language-julia"><code>uppercase(julia_string)</code></pre>
+<pre class="output"><code>JULIA IS AN AMAZING OPEN SOURCE PROGRAMMING LANGUAGE</code></pre>
+<pre class="language-julia"><code>titlecase(julia_string)</code></pre>
+<pre class="output"><code>Julia Is An Amazing Open Source Programming Language</code></pre>
+<pre class="language-julia"><code>lowercasefirst(julia_string)</code></pre>
+<pre class="output"><code>julia is an amazing open source programming language</code></pre></li>
+<li><p><code>replace</code>：介绍一种称为 <code>Pair</code> 的新语法：</p>
+<pre class="language-julia"><code>replace(julia_string, &quot;amazing&quot; =&gt; &quot;awesome&quot;)</code></pre>
+<pre class="output"><code>Julia is an awesome open source programming language</code></pre></li>
+<li><p><code>split</code>：使用分隔符分隔字符串：</p>
+<pre class="language-julia"><code>split(julia_string, &quot; &quot;)</code></pre>
+<pre class="output"><code>SubString{String}[&quot;Julia&quot;, &quot;is&quot;, &quot;an&quot;, &quot;amazing&quot;, &quot;open&quot;, &quot;source&quot;, &quot;programming&quot;, &quot;language&quot;]</code></pre></li>
+</ol>
+<h4 data-number="3.3.3.4" id="sec:string_conversions"><span class="header-section-number">3.3.3.4</span> 字符串转换</h4>
+<p>我们经常需要在 Julia 中 <strong>转换</strong> 类型。 可以使用 <code>string</code> 函数将数字转为字符串：</p>
+<pre class="language-julia"><code>my_number = 123
+typeof(string(my_number))</code></pre>
+<pre class="output"><code>String</code></pre>
+<p>有时需要逆向操作：将字符串转为数字。 Julia 中有个方便的函数 <code>parse</code>。</p>
+<pre class="language-julia"><code>typeof(parse(Int64, &quot;123&quot;))</code></pre>
+<pre class="output"><code>Int64</code></pre>
+<p>时常希望能够安全地进行这些转换。 此时就需要介绍 <code>tryparse</code> 函数。 它具有与 <code>parse</code> 相同的功能，但只会返回请求类型的值或者<code>nothing</code>。 当我们想要避免错误时 <code>tryparse</code> 会变得很有用。 当然，你需要之后手动处理这些 <code>nothing</code> 值。</p>
+<pre class="language-julia"><code>tryparse(Int64, &quot;A very non-numeric string&quot;)</code></pre>
+<pre class="output"><code>nothing</code></pre>
+<h3 data-number="3.3.4" id="sec:tuple"><span class="header-section-number">3.3.4</span> 元组（Tuple）</h3>
+<p>Julia 中有一类名为 <strong>元组</strong> 的<strong>特殊</strong>数据类型。 它们经常用在函数中，而函数又是 Julia 的重要组成部分，因此每一个 Julia 用户都应该了解元组的基础。</p>
+<p>元组是<strong>包含多种不同类型的固定长度容器</strong>. 同时元组是 <strong>不可变对象</strong>，这意味着实例化后不能更改。 创建元组的方法是：使用 <code>()</code> 作为开头和结尾，并使用 <code>,</code> 作为值间的分隔符：</p>
+<pre class="language-julia"><code>my_tuple = (1, 3.14, &quot;Julia&quot;)</code></pre>
+<pre class="output"><code>(1, 3.14, &quot;Julia&quot;)</code></pre>
+<p>这里创建了包含三个值的元组。 每一个值都是不同的类型。 可以使用索引访问每一个元素。 如下所示：</p>
+<pre class="language-julia"><code>my_tuple[2]</code></pre>
+<pre class="output"><code>3.14</code></pre>
+<p>也可以使用 <code>for</code> 关键字遍历元组。 还将函数作用于元组。 但 <strong>永远不能改变元组的每一个值</strong> ， 因为它们是 <strong>不可变的</strong>。</p>
+<p>还记得 Section <a href="/JuliaDataScience/syntax#sec:function_multiple">3.2.4.2</a> 中返回多个值的函数吗？ 查看 <code>add_multiply</code> 函数返回值的类型：</p>
+<pre class="language-julia"><code>return_multiple = add_multiply(1, 2)
+typeof(return_multiple)</code></pre>
+<pre class="output"><code>Tuple{Int64, Int64}</code></pre>
+<p>这是因为 <code>return a, b</code> 与 <code>return (a, b)</code> 等价：</p>
+<pre class="language-julia"><code>1, 2</code></pre>
+<pre class="output"><code>(1, 2)</code></pre>
+<p>现在就可以发现它们之间的联系了。</p>
+<p>关于元组还有一种用法。 <strong>当想给匿名函数传递多个变量时，猜猜你需要用什么？ 当然还是元组！</strong></p>
+<pre class="language-julia"><code>map((x, y) -&gt; x^y, 2, 3)</code></pre>
+<pre class="output"><code>8</code></pre>
+<p>或两个以上参数：</p>
+<pre class="language-julia"><code>map((x, y, z) -&gt; x^y + z, 2, 3, 1)</code></pre>
+<pre class="output"><code>9</code></pre>
+<h3 data-number="3.3.5" id="sec:namedtuple"><span class="header-section-number">3.3.5</span> 命名元组</h3>
+<p>有时需要给元组中的值命名。 这就是需要用 <strong>命名元组 (named tuple)</strong> 的地方。 它的功能基本与元组一致： 它是 <strong>不可变的</strong>，并且能够接收 <strong>任意类型的值</strong>。</p>
+<p>命名元组的构造与元组的构造稍有不同。 你已经熟悉使用括号 <code>()</code> 和逗号 <code>,</code> 分隔符。 但现在你需要 <strong>给值命名</strong>：</p>
+<pre class="language-julia"><code>my_namedtuple = (i=1, f=3.14, s=&quot;Julia&quot;)</code></pre>
+<pre class="output"><code>(i = 1, f = 3.14, s = &quot;Julia&quot;)</code></pre>
+<p>可以向元组那样通过索引访问命名元组的元素。另外，还可以使用 <code>.</code> <strong>结合名称访问</strong>。</p>
+<pre class="language-julia"><code>my_namedtuple.s</code></pre>
+<pre class="output"><code>Julia</code></pre>
+<p>为了完成命名元组的讨论，下面介绍一种 Julia 代码中常见的 <strong>快捷</strong> 语法。 Julia 用户通常使用括号 <code>()</code> 和逗号 <code>,</code> 创建命名元组，但并没有命名值。 为了给值命名，<strong>在命名元组的构造开始时，首先在值之前添加 <code>;</code></strong>。 当组成命名元组的值已经在变量中定义，或者你想避免过长的行时，这一语法非常有用：</p>
+<pre class="language-julia"><code>i = 1
+f = 3.14
+s = &quot;Julia&quot;
+
+my_quick_namedtuple = (; i, f, s)</code></pre>
+<pre class="output"><code>(i = 1, f = 3.14, s = &quot;Julia&quot;)</code></pre>
+<h3 data-number="3.3.6" id="sec:ranges"><span class="header-section-number">3.3.6</span> Ranges</h3>
+<p>Julia 中的 <strong>range</strong> 表示一段开始和结束边界之间的序列。 语法是 <code>start:stop</code>：</p>
+<pre class="language-julia"><code>1:10</code></pre>
+<pre class="output"><code>1:10</code></pre>
+<p>如下所示， range 实例的类型是 <code>UnitRange{T}</code> ，其中 <code>T</code> 是 <code>UnitRange</code> 中元素的类型：</p>
+<pre class="language-julia"><code>typeof(1:10)</code></pre>
+<pre class="output"><code>UnitRange{Int64}</code></pre>
+<p>如果收集所有值将得到：</p>
+<pre class="language-julia"><code>[x for x in 1:10]</code></pre>
+<pre class="output"><code>[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]</code></pre>
+<p>也可以构造其它类型的 range：</p>
+<pre class="language-julia"><code>typeof(1.0:10.0)</code></pre>
+<pre class="output"><code>StepRangeLen{Float64, Base.TwicePrecision{Float64}, Base.TwicePrecision{Float64}, Int64}</code></pre>
+<p>有时希望改变序列默认的步长。 这可以通过在 range 语法中添加步长实现，即 <code>start:step:stop</code>。 例如，假设想要得到从 0 到 1，步长为 0.2 的 <code>Float64</code> range ：</p>
+<pre class="language-julia"><code>0.0:0.2:1.0</code></pre>
+<pre class="output"><code>0.0:0.2:1.0</code></pre>
+<p>如果要将 range “实例化” 到集合中， 可以使用函数 <code>collect</code>：</p>
+<pre class="language-julia"><code>collect(1:10)</code></pre>
+<pre class="output"><code>[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]</code></pre>
+<p>这将得到一个边界范围内的指定类型数组。 既然提到数组，那接下来就讨论它。</p>
+<h3 data-number="3.3.7" id="sec:array"><span class="header-section-number">3.3.7</span> 数组</h3>
+<p>在最基本的形式中， <strong>数组</strong>能够包含多种对象。 例如，一维数组可以包含多个数。</p>
+<pre class="language-julia"><code>myarray = [1, 2, 3]</code></pre>
+<pre class="output"><code>[1, 2, 3]</code></pre>
+<p>大多数情况下，<strong>由于性能原因需要构造单一类型的数组</strong>，但请注意它们也可以包含不同类型的对象：</p>
+<pre class="language-julia"><code>myarray = [&quot;text&quot;, 1, :symbol]</code></pre>
+<pre class="output"><code>Any[&quot;text&quot;, 1, :symbol]</code></pre>
+<p>数组是数据科学家的生计之道，因为它们是大多数 <strong>数据操作</strong> 和 <strong>数据可视化</strong> 工作流的基础。</p>
+<p>因此，<strong>数组是非常重要的数据结构</strong>。</p>
+<h4 data-number="3.3.7.1" id="sec:array_types"><span class="header-section-number">3.3.7.1</span> 数组类型</h4>
+<p>首先以 <strong>数组类型</strong> 开始。 这里有很多中类型，但本节主要关注数据科学中两种最常用的类型：</p>
+<ul>
+<li><code>Vector{T}</code>: <strong>一维</strong> 数组。 <code>Array{T, 1}</code> 的别名。</li>
+<li><code>Matrix{T}</code>: <strong>二维</strong> 数组。 <code>Array{T, 2}</code> 的别名。</li>
+</ul>
+<p>注意这里的 <code>T</code> 是数组元素的类型。 例如， <code>Vector{Int64}</code> 表示所有元素的类型都是 <code>Int64</code> 的 <code>Vector</code>。另外 <code>Matrix{AbstractFloat}</code> 表示一个<code>Matrix</code>，其中所有元素的类型都是 <code>AbstractFloat</code> 的子类型。</p>
+<p>大多数情况下，特别是在处理表格数据时，我们使用的是一维或二维数组。 它们都是 Julia 中的 <code>Array</code> 类型。 但是，可以使用简洁清晰的语法操作 <code>Vector</code> 和 <code>Matrix</code>。</p>
+<h4 data-number="3.3.7.2" id="sec:array_construction"><span class="header-section-number">3.3.7.2</span> 数组构造</h4>
+<p>如何 <strong>构造</strong> 数组呢？ 本节的开始，我们使用低级的方式构造数组。 在某些情况下，编写高性能代码就需要这样的做法。 然而，在大多数情况下，这不是必需的。同时可以安全地使用更简便的方法创建数组。 本节稍后讨论这些更简便的方法。</p>
+<p>用于 Julia 数组的低级构造器是 <strong>默认构造器</strong>。 它接手元素类型作为 <code>{}</code> 括号内的类型参数，并将元素类型传递到构造器里，构造器后跟需要的维度。 通常使用未定义元素初始化向量和矩阵，即将 <code>undef</code> 参数作为传递到构造器里的类型。 如下构造一个含 10 个 <code>undef</code> <code>Float64</code>元素的向量：</p>
+<pre class="language-julia"><code>my_vector = Vector{Float64}(undef, 10)</code></pre>
+<pre class="output"><code>[0.0, 6.9091356657574e-310, 6.9091356581029e-310, 0.0, 6.9091356657574e-310, 6.90913565711005e-310, 0.0, 6.9091356657574e-310, 6.90913565711005e-310, 0.0]</code></pre>
+<p>矩阵的构造方式是，向构造器传递两个维度参数：一个用于 <strong>行</strong> ，另一个用于 <strong>列</strong>。 例如，具有 10 行 2列 <code>undef</code> 元素的矩阵以如下方式实例化：</p>
+<pre class="language-julia"><code>my_matrix = Matrix{Float64}(undef, 10, 2)</code></pre>
+<pre class="output"><code>10×2 Matrix{Float64}:
+ 6.90914e-310  6.90914e-310
+ 6.90914e-310  6.90914e-310
+ 6.90914e-310  6.90914e-310
+ 6.90914e-310  6.90914e-310
+ 6.90914e-310  6.90914e-310
+ 6.90914e-310  6.90914e-310
+ 6.90914e-310  6.90914e-310
+ 6.90914e-310  6.90907e-310
+ 6.90914e-310  6.90907e-310
+ 6.90914e-310  6.90914e-310</code></pre>
+<p>对于构造最常见元素类型的数组，Julia 中有一些<strong>语法别名</strong> ：</p>
+<ul>
+<li><p><code>zeros</code> 将所有元素初始化为 0。 注意默认类型为 <code>Float64</code>，如果需要可以更改类型：</p>
+<pre class="language-julia"><code>my_vector_zeros = zeros(10)</code></pre>
+<pre class="output"><code>[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]</code></pre>
+<pre class="language-julia"><code>my_matrix_zeros = zeros(Int64, 10, 2)</code></pre>
+<pre class="output"><code>10×2 Matrix{Int64}:
+ 0  0
+ 0  0
+ 0  0
+ 0  0
+ 0  0
+ 0  0
+ 0  0
+ 0  0
+ 0  0
+ 0  0</code></pre></li>
+<li><p><code>ones</code> 将所有元素初始化为 1。</p>
+<pre class="language-julia"><code>my_vector_ones = ones(Int64, 10)</code></pre>
+<pre class="output"><code>[1, 1, 1, 1, 1, 1, 1, 1, 1, 1]</code></pre>
+<pre class="language-julia"><code>my_matrix_ones = ones(10, 2)</code></pre>
+<pre class="output"><code>10×2 Matrix{Float64}:
+ 1.0  1.0
+ 1.0  1.0
+ 1.0  1.0
+ 1.0  1.0
+ 1.0  1.0
+ 1.0  1.0
+ 1.0  1.0
+ 1.0  1.0
+ 1.0  1.0
+ 1.0  1.0</code></pre></li>
+</ul>
+<p>对于其他的元素，可以先创建全为 <code>undef</code> 元素的数组，然后使用 <code>fill!</code> 函数将想要的元素填充到数组的每一个元素上。 下面是一个关于 <code>3.14</code>（<span class="math inline">\(\pi\)</span>） 的例子：</p>
+<pre class="language-julia"><code>my_matrix_π = Matrix{Float64}(undef, 2, 2)
+fill!(my_matrix_π, 3.14)</code></pre>
+<pre class="output"><code>2×2 Matrix{Float64}:
+ 3.14  3.14
+ 3.14  3.14</code></pre>
+<p>也可以使用 <strong>数组字面量</strong> 创建数组： 例如，这是 2x2 的整数数组：</p>
+<pre class="language-julia"><code>[[1 2]
+ [3 4]]</code></pre>
+<pre class="output"><code>2×2 Matrix{Int64}:
+ 1  2
+ 3  4</code></pre>
+<p>数组字面量能在 <code>[]</code> 括号前接收指定的类型。 所以，如果想得到与之前相同的数组，但类型应是浮点数，那么应按如下定义：</p>
+<pre class="language-julia"><code>Float64[[1 2]
+        [3 4]]</code></pre>
+<pre class="output"><code>2×2 Matrix{Float64}:
+ 1.0  2.0
+ 3.0  4.0</code></pre>
+<p>这也能够用于向量：</p>
+<pre class="language-julia"><code>Bool[0, 1, 0, 1]</code></pre>
+<pre class="output"><code>Bool[0, 1, 0, 1]</code></pre>
+<p>甚至可以使用数组构造器 <strong>组合和匹配</strong> 数组字面量：</p>
+<pre class="language-julia"><code>[ones(Int, 2, 2) zeros(Int, 2, 2)]</code></pre>
+<pre class="output"><code>2×4 Matrix{Int64}:
+ 1  1  0  0
+ 1  1  0  0</code></pre>
+<pre class="language-julia"><code>[zeros(Int, 2, 2)
+ ones(Int, 2, 2)]</code></pre>
+<pre class="output"><code>4×2 Matrix{Int64}:
+ 0  0
+ 0  0
+ 1  1
+ 1  1</code></pre>
+<pre class="language-julia"><code>[ones(Int, 2, 2) [1; 2]
+ [3 4]            5]</code></pre>
+<pre class="output"><code>3×3 Matrix{Int64}:
+ 1  1  1
+ 1  1  2
+ 3  4  5</code></pre>
+<p>另一种创建数组的强大方法是 <strong>数组推断</strong>（<strong>array comprehension</strong>）。 这种创建数组的方式在大多数情况下更好：因为它能够避免循环，索引以及其他容易出错的操作。 你可以在 <code>[]</code> 括号内编写要执行的语句。 例如，你想创建一个包含 1 到 10 的平方的向量：</p>
+<pre class="language-julia"><code>[x^2 for x in 1:10]</code></pre>
+<pre class="output"><code>[1, 4, 9, 16, 25, 36, 49, 64, 81, 100]</code></pre>
+<p>它也支持多个输入：</p>
+<pre class="language-julia"><code>[x*y for x in 1:10 for y in 1:2]</code></pre>
+<pre class="output"><code>[1, 2, 2, 4, 3, 6, 4, 8, 5, 10, 6, 12, 7, 14, 8, 16, 9, 18, 10, 20]</code></pre>
+<p>另外还能使用条件语句：</p>
+<pre class="language-julia"><code>[x^2 for x in 1:10 if isodd(x)]</code></pre>
+<pre class="output"><code>[1, 9, 25, 49, 81]</code></pre>
+<p>结合数组字面量，你还可以在 <code>[]</code> 括号前指定需要的类型：</p>
+<pre class="language-julia"><code>Float64[x^2 for x in 1:10 if isodd(x)]</code></pre>
+<pre class="output"><code>[1.0, 9.0, 25.0, 49.0, 81.0]</code></pre>
+<p>最后，还可以使用 <strong>串联函数</strong> 创建数组。 串联是计算机编程中的标准术语，意为 “连接在一起”。 例如， 将字符串 <code>"aa"</code> 和 <code>"bb"</code> 串联并得到 <code>"aabb"</code>：</p>
+<pre class="language-julia"><code>&quot;aa&quot; * &quot;bb&quot;</code></pre>
+<p>aabb</p>
+<p>因此，也可以通过串联数组来创建数组：</p>
+<ul>
+<li><p><code>cat</code>：沿着指定的 <code>dims</code> 串联输入的数组</p>
+<pre class="language-julia"><code>cat(ones(2), zeros(2), dims=1)</code></pre>
+<pre class="output"><code>[1.0, 1.0, 0.0, 0.0]</code></pre>
+<pre class="language-julia"><code>cat(ones(2), zeros(2), dims=2)</code></pre>
+<pre class="output"><code>2×2 Matrix{Float64}:
+ 1.0  0.0
+ 1.0  0.0</code></pre></li>
+<li><p><code>vcat</code>: 垂直串联， <code>cat(...; dims=1)</code> 的缩写</p>
+<pre class="language-julia"><code>vcat(ones(2), zeros(2))</code></pre>
+<pre class="output"><code>[1.0, 1.0, 0.0, 0.0]</code></pre></li>
+<li><p><code>hcat</code>: 水平串联， <code>cat(...; dims=2)</code> 的缩写</p>
+<pre class="language-julia"><code>hcat(ones(2), zeros(2))</code></pre>
+<pre class="output"><code>2×2 Matrix{Float64}:
+ 1.0  0.0
+ 1.0  0.0</code></pre></li>
+</ul>
+<h4 data-number="3.3.7.3" id="sec:array_inspection"><span class="header-section-number">3.3.7.3</span> 数组检测</h4>
+<p>当拥有一些数组时，下一步应是对它们进行 <strong>检测</strong> 。 Julia 中提供了许多方便的函数，这使得用户能够检测任何数组。</p>
+<p>知道数组中的 <strong>元素类型</strong> 是非常有用的。 这会用到 <code>eltype</code> 函数：</p>
+<pre class="language-julia"><code>eltype(my_matrix_π)</code></pre>
+<pre class="output"><code>Float64</code></pre>
+<p>了解到类型后，可能还会对 <strong>数组的维度</strong> 感兴趣。 Julia 中有多个用于检测数组维度的函数：</p>
+<ul>
+<li><p><code>length</code>: 元素的总数</p>
+<pre class="language-julia"><code>length(my_matrix_π)</code></pre>
+<pre class="output"><code>4</code></pre></li>
+<li><p><code>ndims</code>: 维度的个数</p>
+<pre class="language-julia"><code>ndims(my_matrix_π)</code></pre>
+<pre class="output"><code>2</code></pre></li>
+<li><p><code>size</code>: 此例有一些复杂。 默认情况下将返回包含所有数组维度的元组。</p>
+<pre class="language-julia"><code>size(my_matrix_π)</code></pre>
+<pre class="output"><code>(2, 2)</code></pre>
+<p>你可以在<code>size</code>的第二个参数指定想要的维度。 如下，第二个轴为列：</p>
+<pre class="language-julia"><code>size(my_matrix_π, 2)</code></pre>
+<pre class="output"><code>2</code></pre></li>
+</ul>
+<h4 data-number="3.3.7.4" id="sec:array_indexing"><span class="header-section-number">3.3.7.4</span> 数组索引和切片</h4>
+<p>有时希望仅仅检测数组的一部分。 这就需要 <strong>索引</strong> 和 <strong>切片</strong>。 如果想要考察向量的某一部分，或者矩阵的某一行或某一列，那么你可能需要 <strong>索引数组</strong>。</p>
+<p>首先创建一个向量和矩阵作为示例：</p>
+<pre class="language-julia"><code>my_example_vector = [1, 2, 3, 4, 5]
+
+my_example_matrix = [[1 2 3]
+                     [4 5 6]
+                     [7 8 9]]</code></pre>
+<p>首先考虑向量。 假设要访问向量的第二个元素。 你只需要在 <code>[]</code> 括号内添加对应<strong>索引</strong>：</p>
+<pre class="language-julia"><code>my_example_vector[2]</code></pre>
+<pre class="output"><code>2</code></pre>
+<p>关于矩阵的语法也是如此。 但因为矩阵是二维数组，需要 <strong>同时</strong> 指定行和列。 接下来检索位于第二行（第一维）、第一列（第二维）的元素：</p>
+<pre class="language-julia"><code>my_example_matrix[2, 1]</code></pre>
+<pre class="output"><code>4</code></pre>
+<p>Julia 也为数组的 <strong>第一个</strong> 和 <strong>最后一个</strong> 元素定义了特殊的关键字： <code>begin</code> 和 <code>end</code>。 例如，可以如下方式检索向量的倒数第二个元素：</p>
+<pre class="language-julia"><code>my_example_vector[end-1]</code></pre>
+<pre class="output"><code>4</code></pre>
+<p>这也适用于矩阵。 可以如下方式检索位于最后一行、第二列的元素。</p>
+<pre class="language-julia"><code>my_example_matrix[end, begin+1]</code></pre>
+<pre class="output"><code>8</code></pre>
+<p>通常我们不仅对单个数组元素感兴趣，还想获得 <strong>数组的子集</strong>。 这可以通过数组 <strong>切片</strong> 实现。 它使用与索引相同的语法，但需要添加冒号 <code>:</code> 来表示数组切片的边界。 例如，假设想要获得向量的第二个到第四个元素：</p>
+<pre class="language-julia"><code>my_example_vector[2:4]</code></pre>
+<pre class="output"><code>[2, 3, 4]</code></pre>
+<p>可以对矩阵作同样的事。 特别地，对于矩阵，仅使用冒号 <code>:</code> 就可以获得指定维度的所有元素。 例如，想要获得第二行的所有元素。</p>
+<pre class="language-julia"><code>my_example_matrix[2, :]</code></pre>
+<pre class="output"><code>[4, 5, 6]</code></pre>
+<p>上面这段代码可被解释为 “获取第二行的所有列”。</p>
+<p>矩阵同样支持 <code>begin</code> 和 <code>end</code>：</p>
+<pre class="language-julia"><code>my_example_matrix[begin+1:end, end]</code></pre>
+<pre class="output"><code>[6, 9]</code></pre>
+<h4 data-number="3.3.7.5" id="sec:array_manipulation"><span class="header-section-number">3.3.7.5</span> 数组操作</h4>
+<p>我们有多种 <strong>操作</strong> 数组的方式。 第一种操作数组的方式是 <strong>数组的单个元素</strong>。 只需索引数组的单个元素，则使用等号 <code>=</code> 赋值：</p>
+<pre class="language-julia"><code>my_example_matrix[2, 2] = 42
+my_example_matrix</code></pre>
+<pre class="output"><code>3×3 Matrix{Int64}:
+ 1   2  3
+ 4  42  6
+ 7   8  9</code></pre>
+<p>另外，也可以操作<strong>数组的子集</strong>。 在此例中，对数组进行切片并使用 <code>=</code> 赋值：</p>
+<pre class="language-julia"><code>my_example_matrix[3, :] = [17, 16, 15]
+my_example_matrix</code></pre>
+<pre class="output"><code>3×3 Matrix{Int64}:
+  1   2   3
+  4  42   6
+ 17  16  15</code></pre>
+<p>注意，此处使用向量赋值，这是因为数组切片的类型就是 <code>Vector</code>：</p>
+<pre class="language-julia"><code>typeof(my_example_matrix[3, :])</code></pre>
+<pre class="output"><code>Vector{Int64} (alias for Array{Int64, 1})</code></pre>
+<p>第二种操作数组的方式是 <strong>改变形状</strong>。 假设你有 6 个元素的向量，但想将其变成 3x2 的矩阵。 这可以通过 <code>reshape</code> 实现，具体操作是将数组传递给第一个参数，并将维度构成的元组传递给第二个参数。</p>
+<pre class="language-julia"><code>six_vector = [1, 2, 3, 4, 5, 6]
+three_two_matrix = reshape(six_vector, (3, 2))
+three_two_matrix</code></pre>
+<pre class="output"><code>3×2 Matrix{Int64}:
+ 1  4
+ 2  5
+ 3  6</code></pre>
+<p>通过指定只有 1 维的维度元组，你可以将其变回向量：</p>
+<pre class="language-julia"><code>reshape(three_two_matrix, (6, ))</code></pre>
+<pre class="output"><code>[1, 2, 3, 4, 5, 6]</code></pre>
+<p>第三种操作数组的方式是 <strong>按元素应用函数</strong>。 这会用到点运算符 <code>.</code>，其也被称为 <strong>广播</strong>。</p>
+<pre class="language-julia"><code>logarithm.(my_example_matrix)</code></pre>
+<pre class="output"><code>3×3 Matrix{Float64}:
+ 0.0      0.693147  1.09861
+ 1.38629  3.73767   1.79176
+ 2.83321  2.77259   2.70805</code></pre>
+<p>Julia中的点运算符非常通用。 可以使用它广播中缀运算符：</p>
+<pre class="language-julia"><code>my_example_matrix .+ 100</code></pre>
+<pre class="output"><code>3×3 Matrix{Int64}:
+ 101  102  103
+ 104  142  106
+ 117  116  115</code></pre>
+<p>另一种在向量中广播函数的方法是使用 <code>map</code>：</p>
+<pre class="language-julia"><code>map(logarithm, my_example_matrix)</code></pre>
+<pre class="output"><code>3×3 Matrix{Float64}:
+ 0.0      0.693147  1.09861
+ 1.38629  3.73767   1.79176
+ 2.83321  2.77259   2.70805</code></pre>
+<p>对于匿名函数， <code>map</code> 通常可读性更好。 例如，</p>
+<pre class="language-julia"><code>map(x -&gt; 3x, my_example_matrix)</code></pre>
+<pre class="output"><code>3×3 Matrix{Int64}:
+  3    6   9
+ 12  126  18
+ 51   48  45</code></pre>
+<p>上面的例子看起来相当清晰。 不过，如下的广播代码也能实现相同功能：</p>
+<pre class="language-julia"><code>(x -&gt; 3x).(my_example_matrix)</code></pre>
+<pre class="output"><code>3×3 Matrix{Int64}:
+  3    6   9
+ 12  126  18
+ 51   48  45</code></pre>
+<p>其次，<code>map</code> 也适用于数组切片：</p>
+<pre class="language-julia"><code>map(x -&gt; x + 100, my_example_matrix[:, 3])</code></pre>
+<pre class="output"><code>[103, 106, 115]</code></pre>
+<p>最后，在某些情况下，特别是处理表格数据时，我们想要 <strong>沿着特定的数组维度应用函数</strong>。 这可以通过 <code>mapslices</code> 函数实现。 与 <code>map</code> 类似，第一个元素是函数而第二个元素是数组。 唯一的变化是，需要传入 <code>dims</code> 参数指定操作数组元素的维度。</p>
+<p>例如，将 <code>sum</code> 函数传给 <code>mapslices</code>，维度参数分别指定为行（<code>dims=1</code>）和列（<code>dims=2</code>）：</p>
+<pre class="language-julia"><code># rows
+mapslices(sum, my_example_matrix; dims=1)</code></pre>
+<pre class="output"><code>1×3 Matrix{Int64}:
+ 22  60  24</code></pre>
+<pre class="language-julia"><code># columns
+mapslices(sum, my_example_matrix; dims=2)</code></pre>
+<pre class="output"><code>3×1 Matrix{Int64}:
+  6
+ 52
+ 48</code></pre>
+<h4 data-number="3.3.7.6" id="sec:array_iteration"><span class="header-section-number">3.3.7.6</span> 数组迭代</h4>
+<p>常见的操作是 <strong>使用 <code>for</code> 循环迭代数组</strong>。 <strong>应用于数组的 <code>for</code> 循环会逐个返回元素</strong>。</p>
+<p>最简单的例子是迭代向量。</p>
+<pre class="language-julia"><code>simple_vector = [1, 2, 3]
+
+empty_vector = Int64[]
+
+for i in simple_vector
+    push!(empty_vector, i + 1)
+end
+
+empty_vector</code></pre>
+<pre class="output"><code>[2, 3, 4]</code></pre>
+<p>有时，你不想要迭代数组的每个元素，而是迭代每个数组索引。 <strong>可以使用 <code>eachindex</code> 函数结合 <code>for</code> 循环来迭代每个数组索引</strong>。</p>
+<p>然后，此处也展示一个向量的例子：</p>
+<pre class="language-julia"><code>forty_twos = [42, 42, 42]
+
+empty_vector = Int64[]
+
+for i in eachindex(forty_twos)
+    push!(empty_vector, i)
+end
+
+empty_vector</code></pre>
+<pre class="output"><code>[1, 2, 3]</code></pre>
+<p>在上例中，<code>eachindex(forty_twos)</code> 函数返回的是 <code>forty_twos</code>的索引，即 <code>[1, 2, 3]</code>。</p>
+<p>类似地，也可以迭代矩阵。 标准 <code>for</code> 循环的迭代顺序是先列后行。 它首先遍历第 1 列的所有元素，从第一行和最后一行，然后对第2列进行同样的遍历，直到循环完所有列。</p>
+<p>对于熟悉其他编程语言的用户： 与大多数科学计算编程语言一样，Julia 是“列优先存储”。 列优先存储意味着每一列的元素在内存中的存储位置是相邻的<a href="/JuliaDataScience#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a>。 这也意味着，沿列遍历会比沿行遍历更快。</p>
+<p>所以，查看如下的例子：</p>
+<pre class="language-julia"><code>column_major = [[1 3]
+                [2 4]]
+
+row_major = [[1 2]
+             [3 4]]</code></pre>
+<p>如果遍历的是以列优先方式存储的向量，那么结果将是有序的：</p>
+<pre class="language-julia"><code>indexes = Int64[]
+
+for i in column_major
+    push!(indexes, i)
+end
+
+indexes</code></pre>
+<pre class="output"><code>[1, 2, 3, 4]</code></pre>
+<p>然而，如果遍历的是以其他方式存储的向量，那么结果将不是有序的：</p>
+<pre class="language-julia"><code>indexes = Int64[]
+
+for i in row_major
+    push!(indexes, i)
+end
+
+indexes</code></pre>
+<pre class="output"><code>[1, 3, 2, 4]</code></pre>
+<p>通常更好的做法是，在进行这些循环时使用特定的函数：</p>
+<ul>
+<li><p><code>eachcol</code>: 先沿着列方向迭代</p>
+<pre class="language-julia"><code>first(eachcol(column_major))</code></pre>
+<pre class="output"><code>[1, 2]</code></pre></li>
+<li><p><code>eachrow</code>: 先沿着行方向迭代</p>
+<pre class="language-julia"><code>first(eachrow(column_major))</code></pre>
+<pre class="output"><code>[1, 3]</code></pre></li>
+</ul>
+<h3 data-number="3.3.8" id="sec:pair"><span class="header-section-number">3.3.8</span> Pair</h3>
+<p>与有关数组的超长章节相比，关于 Pair 的章节将是简短的。 <strong><code>Pair</code> 是一种包含两个对象的数据结构</strong> （一般属于彼此）。 在 Julia 中，可以使用如下的语法构造 <code>Pair</code>：</p>
+<pre class="language-julia"><code>my_pair = &quot;Julia&quot; =&gt; 42</code></pre>
+<pre class="output"><code>&quot;Julia&quot; =&gt; 42</code></pre>
+<p>这两个元素分别存储在字段 <code>first</code> 和 <code>second</code>。</p>
+<pre class="language-julia"><code>my_pair.first</code></pre>
+<pre class="output"><code>Julia</code></pre>
+<pre class="language-julia"><code>my_pair.second</code></pre>
+<pre class="output"><code>42</code></pre>
+<p>但，在大多数情况下，使用 <code>first</code> 和 <code>last</code> 更简单<a href="/JuliaDataScience#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a>：</p>
+<pre class="language-julia"><code>first(my_pair)</code></pre>
+<pre class="output"><code>Julia</code></pre>
+<pre class="language-julia"><code>last(my_pair)</code></pre>
+<pre class="output"><code>42</code></pre>
+<p><code>Pair</code> 广泛应用于数组操作和数据可视化。本书的 <code>DataFrames.jl</code> (Section <a href="/JuliaDataScience/dataframes#sec:dataframes">4</a>) 和 <code>Makie.jl</code> (Section <a href="/JuliaDataScience/DataVisualizationMakie#sec:DataVisualizationMakie">5</a>) 章节将会在主要程序函数中用到由各种对象构成的 <code>Pair</code>。 例如，在 <code>DataFrames.jl</code> 这一章，可以看到 <code>:a =&gt; :b</code> 的用途是将 <code>:a</code> 重命名为 <code>:b</code>。</p>
+<h3 data-number="3.3.9" id="sec:dict"><span class="header-section-number">3.3.9</span> 字典</h3>
+<p>如何你理解什么是 <code>Pair</code>， 那么理解 <code>Dict</code> 也不会成为问题。 实际上，<strong><code>Dict</code>是从键 (key) 到值 (values) 的映射</strong>。 映射的意思是说，如果你向 <code>Dict</code> 提供一些键，然后 <code>Dict</code> 能够告诉你哪些值属于这些键。 <code>key</code> 和 <code>value</code> 可以是任何类型，但 <code>key</code> 通常是字符串。</p>
+<p>Julia 中有两种构造 <code>Dict</code> 的方法。 第一种是向 <code>Dict</code> 构造器传递由 <code>(key, value)</code> 元组构成的向量：</p>
+<pre class="language-julia"><code>name2number_map = Dict([(&quot;one&quot;, 1), (&quot;two&quot;, 2)])</code></pre>
+<pre class="output"><code>Dict{String, Int64} with 2 entries:
+  &quot;two&quot; =&gt; 2
+  &quot;one&quot; =&gt; 1</code></pre>
+<p>还有一种可读性更高的写法，其基于上节中提到的 <code>Pair</code> 类型。 即也可以向 <code>Dict</code> 构造器传递多组 <code>key =&gt; value</code> 这样的 <code>Pair</code>：</p>
+<pre class="language-julia"><code>name2number_map = Dict(&quot;one&quot; =&gt; 1, &quot;two&quot; =&gt; 2)</code></pre>
+<pre class="output"><code>Dict{String, Int64} with 2 entries:
+  &quot;two&quot; =&gt; 2
+  &quot;one&quot; =&gt; 1</code></pre>
+<p>使用相应的 <code>key</code> 作为索引即可检索到 <code>Dict</code> 的 <code>value</code>：</p>
+<pre class="language-julia"><code>name2number_map[&quot;one&quot;]</code></pre>
+<pre class="output"><code>1</code></pre>
+<p>如果要增加新的条目，可使用所需的 <code>key</code> 作为 <code>Dict</code> 的索引，并使用赋值运算符为其赋值 <code>value</code> ：</p>
+<pre class="language-julia"><code>name2number_map[&quot;three&quot;] = 3</code></pre>
+<pre class="output"><code>3</code></pre>
+<p>可以使用 <code>keys</code> 和 <code>in</code> 检查一个 <code>Dict</code> 是否有特定的 <code>key</code>：</p>
+<pre class="language-julia"><code>&quot;two&quot; in keys(name2number_map)</code></pre>
+<pre class="output"><code>true</code></pre>
+<p>可以使用 <code>delete!</code> 函数删除 <code>key</code>：</p>
+<pre class="language-julia"><code>delete!(name2number_map, &quot;three&quot;)</code></pre>
+<pre class="output"><code>Dict{String, Int64} with 2 entries:
+  &quot;two&quot; =&gt; 2
+  &quot;one&quot; =&gt; 1</code></pre>
+<p>或者，可以使用 <code>pop!</code> 函数在返回值时删除键:</p>
+<pre class="language-julia"><code>popped_value = pop!(name2number_map, &quot;two&quot;)</code></pre>
+<pre class="output"><code>2</code></pre>
+<p>现在， <code>name2number_map</code> 仅有一个 <code>key</code>：</p>
+<pre class="language-julia"><code>name2number_map</code></pre>
+<pre class="output"><code>Dict{String, Int64} with 1 entry:
+  &quot;one&quot; =&gt; 1</code></pre>
+<p><code>DataFrames.jl</code> (Section <a href="/JuliaDataScience/dataframes#sec:dataframes">4</a>) 中的数据操作和 <code>Makie.jl</code> (Section <a href="/JuliaDataScience/DataVisualizationMakie#sec:DataVisualizationMakie">5</a>) 中的数据可视化也用到了很多 <code>Dict</code>。 因此，了解它们的基本功能十分重要。</p>
+<p>另外还有一种非常有用的 <code>Dict</code> 构造方法。 假设有两个向量，然后想用它们要构造一个 <code>Dict</code>，即其中一个作为 <code>key</code>，另一个作为 <code>value</code>。 那么可以使用 <code>zip</code> 函数将两个对象 “粘合” 起来（就像拉链那样）：</p>
+<pre class="language-julia"><code>A = [&quot;one&quot;, &quot;two&quot;, &quot;three&quot;]
+B = [1, 2, 3]
+
+name2number_map = Dict(zip(A, B))</code></pre>
+<pre class="output"><code>Dict{String, Int64} with 3 entries:
+  &quot;two&quot; =&gt; 2
+  &quot;one&quot; =&gt; 1
+  &quot;three&quot; =&gt; 3</code></pre>
+<p>例如，获得数字 3 的方式为：</p>
+<pre class="language-julia"><code>name2number_map[&quot;three&quot;]</code></pre>
+<pre class="output"><code>3</code></pre>
+<h3 data-number="3.3.10" id="sec:symbol"><span class="header-section-number">3.3.10</span> Symbol</h3>
+<p><code>Symbol</code> 实际上 <strong>并不是</strong> 一种数据结构。 它是一种类型，并且其行为类似于字符串。 与引号包围文本的字符串不同，<code>Symbol</code> 以冒号 (:) 开始并且可以包含下划线：</p>
+<pre class="language-julia"><code>sym = :some_text</code></pre>
+<pre class="output"><code>:some_text</code></pre>
+<p>可以轻松地将 <code>Symbol</code> 转换为字符串，反之亦然：</p>
+<pre class="language-julia"><code>s = string(sym)</code></pre>
+<pre class="output"><code>some_text</code></pre>
+<pre class="language-julia"><code>sym = Symbol(s)</code></pre>
+<pre class="output"><code>:some_text</code></pre>
+<p>使用 <code>Symbol</code> 的好处是会少键入一个字符，即 <code>:some_text</code> 相对于 <code>"some text"</code> 。 <code>DataFrames.jl</code> (Section <a href="/JuliaDataScience/dataframes#sec:dataframes">4</a>) 中的数据操作和 <code>Makie.jl</code> (Section <a href="/JuliaDataScience/DataVisualizationMakie#sec:DataVisualizationMakie">5</a>) 中的数据可视化将会多次用到 <code>Symbol</code>。</p>
+<h3 data-number="3.3.11" id="sec:splat"><span class="header-section-number">3.3.11</span> Splat 运算符</h3>
+<p>Julia 中有一种 <code>splatting</code> 运算符 <code>...</code>，它被用于在函数调用时转换 <strong>参数序列</strong>。 在 <strong>数据操作</strong> 和 <strong>数据可视化</strong> 章节中，我们偶尔会在调用某些函数时使用 <code>splatting</code> 。</p>
+<p>结合例子学习 <code>splatting</code>是最直观的方法。 如下的 <code>add_elements</code> 函数将传入的三个参数相加：</p>
+<pre class="language-julia"><code>add_elements(a, b, c) = a + b + c</code></pre>
+<pre class="output"><code>add_elements (generic function with 1 method)</code></pre>
+<p>现在，假设有一个三个元素构成的集合。 一种普通的方法是，将集合的三个元素逐个传递为函数参数，如下所示：</p>
+<pre class="language-julia"><code>my_collection = [1, 2, 3]
+
+add_elements(my_collection[1], my_collection[2], my_collection[3])</code></pre>
+<pre class="output"><code>6</code></pre>
+<p>接下来使用展开运算符 <code>...</code>，它将接收一个集合（通常是数组，向量，元组，或 <code>range</code>）并将其转化为参数序列：</p>
+<pre class="language-julia"><code>add_elements(my_collection...)</code></pre>
+<pre class="output"><code>6</code></pre>
+<p>集合后的 <code>...</code> 用于将集合转化为参数序列。 对于上述例子，两种传入参数的方式等价：</p>
+<pre class="language-julia"><code>add_elements(my_collection...) == add_elements(my_collection[1], my_collection[2], my_collection[3])</code></pre>
+<pre class="output"><code>true</code></pre>
+<p>任何时候，若 Julia 在函数调用中发现了展开运算符，那么它会将运算符前的集合转化为一组逗号分隔的参数序列。</p>
+<p>这也适用于 range 类型：</p>
+<pre class="language-julia"><code>add_elements(1:3...)</code></pre>
+<pre class="output"><code>6</code></pre>
+
+
+<div class="bottom-nav">
+    <p id="nav-prev" style="text-align: left;">
+        <a class="menu-level-2" href="/JuliaDataScience/syntax"><b>3.2</b> 语法</a> <kbd>←</kbd>
+        <span id="nav-next" style="float: right;">
+            <kbd>→</kbd> <a class="menu-level-2" href="/JuliaDataScience/filesystem"><b>3.4</b> 文件系统</a>
+        </span>
+    </p>
+</div>
+<section class="footnotes" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn13" role="doc-endnote"><p> 13. 或者说，指向每一列元素的内存地址指针相邻存储。<a href="/JuliaDataScience#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn14" role="doc-endnote"><p> 14. 更简单的原因是 <code>first</code> 和 <code>last</code> 也适用于其他集合，所以需要记住的就更少。<a href="/JuliaDataScience#fnref14" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+
+<div class="license">
+    <br/>
+  <br/>
+  <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
+    Jose Storopoli, Rik Huijzer, Lazaro Alonso, 刘贵欣 (中文翻译), 田俊 （中文审校）
+</div>
+</div>
+</div>
+</body>
+</html>

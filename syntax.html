@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Jose Storopoli" />
+  <meta name="author" content="Rik Huijzer" />
+  <meta name="author" content="Lazaro Alonso" />
+  <meta name="author" content="刘贵欣 (中文翻译)" />
+  <meta name="author" content="田俊 （中文审校）" />
+  <title>语法 - Julia Data Science</title>
+  <link rel="shortcut icon" type="image/png" href="/JuliaDataScience/favicon.png"/>
+  <link rel="stylesheet" href="/JuliaDataScience/style.css"/>
+    <script src="/JuliaDataScience/mousetrap.min.js"></script>
+    <style>
+  @font-face {
+    font-family: JuliaMono-Regular;
+    src: url("/JuliaDataScience/JuliaMono-Regular.woff2");
+  }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="/JuliaDataScience/github.min.css">
+<script src="/JuliaDataScience/highlight.min.js"></script>
+<script src="/JuliaDataScience/julia.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', (event) => {
+    document.querySelectorAll('pre').forEach((el) => {
+        hljs.highlightElement(el);
+    });
+});
+</script>
+ 
+</head>
+<body>
+<script>
+function click_next() {
+  var next = document.getElementById('nav-next');
+  next.firstElementChild.nextElementSibling.click();
+}
+function click_prev() {
+  var prev = document.getElementById('nav-prev');
+  prev.firstElementChild.click();
+}
+Mousetrap.bind('right', click_next);
+Mousetrap.bind('h', click_prev);
+Mousetrap.bind('left', click_prev);
+Mousetrap.bind('l', click_next);
+</script>
+
+<div class="books-container">
+<aside class="books-menu">
+<input type="checkbox" id="menu">
+<label for="menu">☰</label>
+<div class="books-title">
+<a href="/JuliaDataScience/">Julia Data Science</a>
+</div><br />
+<span class="books-subtitle">
+
+</span>
+<div class="books-menu-content">
+<li><a class="menu-level-1" href="/JuliaDataScience/preface"><b>1</b> 前言</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/why_data_science"><b>1.1</b> 什么是数据科学？</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/engineering"><b>1.2</b> 软件工程</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/acknowledgements"><b>1.3</b> 致谢</a></li>
+<li><a class="menu-level-1" href="/JuliaDataScience/why_julia"><b>2</b> 为什么选择 Julia ?</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/non-programmers"><b>2.1</b> 从未编过程</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/programmers"><b>2.2</b> 有编程经验</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/julia_accomplish"><b>2.3</b> Julia 想实现什么?</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/julia_wild"><b>2.4</b> Julia 应用案例</a></li>
+<li><a class="menu-level-1" href="/JuliaDataScience/julia_basics"><b>3</b> Julia 基础</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/ide"><b>3.1</b> 开发环境</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/syntax"><b>3.2</b> 语法</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/data_structures"><b>3.3</b> 原生数据结构</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/filesystem"><b>3.4</b> 文件系统</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/standardlibrary"><b>3.5</b> Julia 标准库</a></li>
+<li><a class="menu-level-1" href="/JuliaDataScience/dataframes"><b>4</b> DataFrames.jl</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/load_save"><b>4.1</b> 加载和保存文件</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/index_summarize"><b>4.2</b> Index 和 Summarize</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/filter_subset"><b>4.3</b> Filter 和 Subset</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/select"><b>4.4</b> Select</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/missing_data"><b>4.5</b> 类型和缺失值</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/join"><b>4.6</b> Join</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/df_transform"><b>4.7</b> 变量变换</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/groupby_combine"><b>4.8</b> Groupby 和 Combine</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/df_performance"><b>4.9</b> 性能</a></li>
+<li><a class="menu-level-1" href="/JuliaDataScience/DataVisualizationMakie"><b>5</b> 使用 Makie.jl 做数据可视化</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/cairomakie"><b>5.1</b> CairoMakie.jl</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/datavisMakie_attributes"><b>5.2</b> 属性</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/themes"><b>5.3</b> 主题</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/using_latex"><b>5.4</b> 使用 LaTeXStrings.jl</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/makie_colors"><b>5.5</b> 颜色和颜色图（Colormap）</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/makie_layouts"><b>5.6</b> 布局</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/glmakie"><b>5.7</b> GLMakie.jl</a></li>
+<li><a class="menu-level-1" href="/JuliaDataScience/appendix"><b>6</b> 附录</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/appendix_pkg"><b>6.1</b> 库的版本</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/notation"><b>6.2</b> 符号</a></li>
+<li><a class="menu-level-1" href="/JuliaDataScience/references"><b></b> 参考文献</a></li>
+</div>
+</aside>
+
+<div class="books-content">
+<h2 data-number="3.2" id="sec:syntax"><span class="header-section-number">3.2</span> 语法</h2>
+<p>Julia 是一种即时编译的<strong>动态类型语言</strong>。 这意味着不像 C++ 或 FORTRAN 那样，需要在运行之前编译程序。 相反，Julia 会读取你的代码，并在运行前编译部分程序。 同时，你不需要为每一处代码显式地指定类型，Julia会在运行时推断类型。</p>
+<p>Julia 与其他动态语言（如 R 和 Python）之间的主要区别如下。 首先，Julia <strong>允许用户进行类型声明</strong> 。你应该在 <strong>为什么选择 Julia?</strong> (Section <a href="/JuliaDataScience/why_julia#sec:why_julia">2</a>): 一节已经见过类型声明，就是一些跟在变量后的双冒号 <code>::</code> 。 但是，如果你不想指定变量或函数的类型，Julia 将会很乐意推断（猜测）它们。</p>
+<p>其次，Julia 允许用户通过多重派发定义不同参数类型组合的函数行为。 本书将会在 Section <a href="/JuliaDataScience/julia_accomplish#sec:julia_accomplish">2.3</a> 讨论多重派发。 定义不同函数行为的方法是使用相同的函数名称定义新的函数，但将这些函数用于不同的参数类型。</p>
+<h3 data-number="3.2.1" id="sec:variable"><span class="header-section-number">3.2.1</span> 变量</h3>
+<p>变量是在计算机中以特定名称存储的值，以便后面读取或更改此值。 Julia 有很多数据类型，但在数据科学中主要使用:</p>
+<ul>
+<li>整数： <code>Int64</code></li>
+<li>实数： <code>Float64</code></li>
+<li>布尔型： <code>Bool</code></li>
+<li>字符串： <code>String</code></li>
+</ul>
+<p>整数和实数默认使用 64 位存储，这就是为什么它们的类型名称带有“64”后缀。 如果需要更高或更低的精度，Julia 还有 <code>Int8</code> 类型和 <code>Int128</code> 类型，其中 <code>Int8</code> 类型用于低精度，<code>Int128</code> 类型用于高精度。 多数情况下，用户不需要关心精度问题，使用默认值即可。</p>
+<p>创建新变量的方法是在左侧写变量名并在右侧写其值，并在中间插入<code>=</code> 赋值运算符。 例如：</p>
+<pre class="language-julia"><code>name = &quot;Julia&quot;
+age = 9</code></pre>
+<pre class="output"><code>9</code></pre>
+<p>请注意，最后一行代码 (<code>age</code>) 的值已打印到控制台。 上面的代码定义了两个变量 <code>name</code> 和 <code>age</code>。 将变量名称输入可重新得到变量的值：</p>
+<pre class="language-julia"><code>name</code></pre>
+<pre class="output"><code>Julia</code></pre>
+<p>如果要为现有变量定义新值，可以重复赋值中的步骤。 请注意，Julia 现在将使用新值覆盖旧值。 假设 Julia 已经过了生日，现在是 10 岁：</p>
+<pre class="language-julia"><code>age = 10</code></pre>
+<pre class="output"><code>10</code></pre>
+<p>我们可以对 <code>name</code> 进行同样的操作。假设 Julia 因为惊人的速度获得了一些头衔。那么，我们可以更改 <code>name</code> 的值：</p>
+<pre class="language-julia"><code>name = &quot;Julia Rapidus&quot;</code></pre>
+<pre class="output"><code>Julia Rapidus</code></pre>
+<p>也可以对变量进行乘除法等运算。 将 <code>age</code> 乘以 12，可以得到 Julia 以月为单位的年龄：</p>
+<pre class="language-julia"><code>12 * age</code></pre>
+<pre class="output"><code>120</code></pre>
+<p>使用 <code>typeof</code> 函数可以查看变量的类型：</p>
+<pre class="language-julia"><code>typeof(age)</code></pre>
+<pre class="output"><code>Int64</code></pre>
+<p>接下来的问题是：“我还能对整数做什么？” Julia 中 有一个非常好用的函数 <code>methodswith</code> ，它可以为输出所有可用于指定类型的函数。 此处限制代码只显示前五行：</p>
+<pre class="language-julia"><code>first(methodswith(Int64), 5)</code></pre>
+<pre class="output"><code>[1] logmvbeta(p::Int64, a::T, b::T) where T&lt;:Real in StatsFuns at /home/runner/.julia/packages/StatsFuns/mQJB7/src/misc.jl:22
+[2] logmvbeta(p::Int64, a::Real, b::Real) in StatsFuns at /home/runner/.julia/packages/StatsFuns/mQJB7/src/misc.jl:23
+[3] logmvgamma(p::Int64, a::Real) in StatsFuns at /home/runner/.julia/packages/StatsFuns/mQJB7/src/misc.jl:8
+[4] read(t::HTTP.ConnectionPool.Transaction, nb::Int64) in HTTP.ConnectionPool at /home/runner/.julia/packages/HTTP/aTjcj/src/ConnectionPool.jl:232
+[5] write(ctx::MbedTLS.MD, i::Union{Float16, Float32, Float64, Int128, Int16, Int32, Int64, UInt128, UInt16, UInt32, UInt64}) in MbedTLS at /home/runner/.julia/packages/MbedTLS/Vaaz8/src/md.jl:140</code></pre>
+<h3 data-number="3.2.2" id="sec:struct"><span class="header-section-number">3.2.2</span> 用户定义类型</h3>
+<p>不凭借任何依赖关系或层次结构来组织多个变量是不现实的。 在 Julia 中，我们可以使用 <code>struct</code>（也称为复合类型）来定义结构化数据。 在每个 <code>struct</code> 中都可以定义一组字段。 它们不同于 Julia 语言内核中已经默认定义的原始类型（例如 <code>Integer</code> 和 <code>Float</code>）。 由于大多数 <code>struct</code> 都是用户定义的，因此它们也被称为用户定义类型。</p>
+<p>例如，创建 <code>struct</code> 表示用于科学计算的开源编程语言。 在 <code>struct</code> 中定义一组相应类型的字段：</p>
+<pre class="language-julia"><code>struct Language
+    name::String
+    title::String
+    year_of_birth::Int64
+    fast::Bool
+end</code></pre>
+<p>可以通过将 <code>struct</code> 作为参数传递给 <code>fieldnames</code>检查字段名称列表：</p>
+<pre class="language-julia"><code>fieldnames(Language)</code></pre>
+<pre class="output"><code>(:name, :title, :year_of_birth, :fast)</code></pre>
+<p>要使用 <code>struct</code>，必须创建单个实例（或“对象”），每个<code>struct</code>实例的字段值都是特定的。 如下所示，创建两个实例 Julia 和 Python：</p>
+<pre class="language-julia"><code>julia = Language(&quot;Julia&quot;, &quot;Rapidus&quot;, 2012, true)
+python = Language(&quot;Python&quot;, &quot;Letargicus&quot;, 1991, false)</code></pre>
+<pre class="output"><code>Language(&quot;Python&quot;, &quot;Letargicus&quot;, 1991, false)</code></pre>
+<p><code>struct</code> 实例的值在构造后无法修改。 如果需要，可以创建 <code>mutable struct</code>。 但请注意，可变对象一般来说更慢且更容易出现错误。 因此，尽可能确保所有类型都是 <strong>不可变的</strong>。 接下来创建一个 <code>mutable struct</code>：</p>
+<pre class="language-julia"><code>mutable struct MutableLanguage
+    name::String
+    title::String
+    year_of_birth::Int64
+    fast::Bool
+end
+
+julia_mutable = MutableLanguage(&quot;Julia&quot;, &quot;Rapidus&quot;, 2012, true)</code></pre>
+<pre class="output"><code>MutableLanguage(&quot;Julia&quot;, &quot;Rapidus&quot;, 2012, true)</code></pre>
+<p>假设想要改变 <code>julia_mutable</code> 的标题。 因为 <code>julia_mutable</code> 是 <code>mutable struct</code> 的实例，所以该操作可行：</p>
+<pre class="language-julia"><code>julia_mutable.title = &quot;Python Obliteratus&quot;
+
+julia_mutable</code></pre>
+<pre class="output"><code>MutableLanguage(&quot;Julia&quot;, &quot;Python Obliteratus&quot;, 2012, true)</code></pre>
+<h3 data-number="3.2.3" id="布尔运算和数值比较"><span class="header-section-number">3.2.3</span> 布尔运算和数值比较</h3>
+<p>上节讨论了类型，本节讨论布尔运算和数值比较。</p>
+<p>Julia 中有三种布尔运算符：</p>
+<ul>
+<li><code>!</code>  ： <strong>NOT</strong></li>
+<li><code>&amp;&amp;</code>： <strong>AND</strong></li>
+<li><code>||</code>： <strong>OR</strong></li>
+</ul>
+<p>一些例子如下：</p>
+<pre class="language-julia"><code>!true</code></pre>
+<pre class="output"><code>false</code></pre>
+<pre class="language-julia"><code>(false &amp;&amp; true) || (!false)</code></pre>
+<pre class="output"><code>true</code></pre>
+<pre class="language-julia"><code>(6 isa Int64) &amp;&amp; (6 isa Real)</code></pre>
+<pre class="output"><code>true</code></pre>
+<p>关于数值比较，Julia有三种主要的比较类型：</p>
+<ol type="1">
+<li><strong>相等</strong>：两者的关系为 <strong>相等</strong> 或 <strong>不等</strong>
+<ul>
+<li>== “相等”</li>
+<li>!= 或 ≠ “不等”</li>
+</ul></li>
+<li><strong>小于</strong>: 两者的关系为 <strong>小于</strong> 或 <strong>小于等于</strong>
+<ul>
+<li>&lt; “小于”</li>
+<li>&lt;= 或 ≤ “小于等于”</li>
+</ul></li>
+<li><strong>大于</strong>: 两者的关系为 <strong>大于</strong> 或 <strong>大于等于</strong>
+<ul>
+<li>&gt; “大于”</li>
+<li>&gt;= 或 ≥ “大于等于”</li>
+</ul></li>
+</ol>
+<p>下面是一些例子：</p>
+<pre class="language-julia"><code>1 == 1</code></pre>
+<pre class="output"><code>true</code></pre>
+<pre class="language-julia"><code>1 &gt;= 10</code></pre>
+<pre class="output"><code>false</code></pre>
+<p>甚至可以比较不同类型：</p>
+<pre class="language-julia"><code>1 == 1.0</code></pre>
+<pre class="output"><code>true</code></pre>
+<p>还可以将布尔运算与数值比较：</p>
+<pre class="language-julia"><code>(1 != 10) || (3.14 &lt;= 2.71)</code></pre>
+<pre class="output"><code>true</code></pre>
+<h3 data-number="3.2.4" id="sec:function"><span class="header-section-number">3.2.4</span> 函数</h3>
+<p>上节学习了如何定义变量和自定义类型 <code>struct</code>，本节讨论 <strong>函数</strong>。 在 Julia 里，函数是 <strong>一组参数值到一个或多个返回值的映射</strong>。 基础语法如下所示：</p>
+<pre class="julia"><code>function function_name(arg1, arg2)
+    result = stuff with the arg1 and arg2
+    return result
+end</code></pre>
+<p>函数声明以关键字 <code>function</code> 开始，后接函数名称。 然后在 <code>()</code> 里定义参数， 这些参数由 <code>,</code> 分隔。 接着在函数体内部定义我们希望 Julia 对传入参数执行的操作。 函数里定义的所有变量都会在函数返回后删除。这很不错，因为有点像自动垃圾回收。 在函数体内的所有操作完成后，Julia 使用 <code>return</code> 关键字返回最终结果。 最后，Julia 以 <code>end</code> 关键字结束函数定义。</p>
+<p>还有一种紧凑的 <strong>赋值形式</strong>：</p>
+<pre class="julia"><code>f_name(arg1, arg2) = stuff with the arg1 and arg2</code></pre>
+<p>这种形式更加紧凑，但 <strong>等效于</strong> 前面的同名函数。 根据经验，当代码符合一行最多只有92字符时，紧凑形式更加合适。 否则，只需使用带 <code>function</code> 关键字的较长形式。 接下来深入讨论一些例子。</p>
+<h4 data-number="3.2.4.1" id="sec:function_example"><span class="header-section-number">3.2.4.1</span> 创建函数</h4>
+<p>下面是一个将传入数字相加的函数：</p>
+<pre class="language-julia"><code>function add_numbers(x, y)
+    return x + y
+end</code></pre>
+<pre class="output"><code>add_numbers (generic function with 1 method)</code></pre>
+<p>接下来调用 <code>add_numbers</code> 函数：</p>
+<pre class="language-julia"><code>add_numbers(17, 29)</code></pre>
+<pre class="output"><code>46</code></pre>
+<p>它也适用于浮点数：</p>
+<pre class="language-julia"><code>add_numbers(3.14, 2.72)</code></pre>
+<pre class="output"><code>5.86</code></pre>
+<p>另外，还可以通过制定类型声明来创建自定义函数行为。 假设创建一个 <code>round_number</code> 函数， 它在传入参数类型是 <code>Float64</code> 或 <code>Int64</code> 时进行不同的操作：</p>
+<pre class="language-julia"><code>function round_number(x::Float64)
+    return round(x)
+end
+
+function round_number(x::Int64)
+    return x
+end</code></pre>
+<pre class="output"><code>round_number (generic function with 2 methods)</code></pre>
+<p>可以看到，它是具有多种方法的函数：</p>
+<pre class="language-julia"><code>methods(round_number)</code></pre>
+<pre class="output"><code>round_number(x::Float64) in Main at none:1</code></pre>
+<pre class="output"><code>round_number(x::Int64) in Main at none:5</code></pre>
+<p>但问题是：如果想对 32 位浮点数 <code>Float32</code> 或者 8 位整数 <code>Int8</code> 作四舍五入，该怎么办？</p>
+<p>如果想定义关于所有浮点数和整数类型的函数，那么需要使用 <strong>abstract type</strong> 作为函数签名， 例如 <code>AbstractFloat</code> 或 <code>Integer</code>：</p>
+<pre class="language-julia"><code>function round_number(x::AbstractFloat)
+    return round(x)
+end</code></pre>
+<pre class="output"><code>round_number (generic function with 3 methods)</code></pre>
+<p>现在该函数适用于任何的浮点数类型：</p>
+<pre class="language-julia"><code>x_32 = Float32(1.1)
+round_number(x_32)</code></pre>
+<pre class="output"><code>1.0f0</code></pre>
+<blockquote>
+<p><strong><em>NOTE:</em></strong> 可以使用 <code>supertypes</code> 和 <code>subtypes</code> 函数查看类型间的关系。</p>
+</blockquote>
+<p>接下来回到之前定义的 <code>Language</code> <code>struct</code>。 这就是一个多重派发的例子。 下面将扩展 <code>Base.show</code> 函数，该函数打印实例的类型和 <code>struct</code> 的内容。</p>
+<p>默认情况下， <code>struct</code> 有基本的输出样式，正如在 <code>python</code> 例子中看到的那样。 可以为 <code>Language</code> 类型定义新的 <code>Base.show</code> 方法， 以便为编程语言实例提供更漂亮的输出。 该方法将更清晰地打印编程语言的姓名，称号和年龄。 函数 <code>Base.show</code> 接收两个参数，第一个是 <code>IO</code> 类型的 <code>io</code> ，另一个是 <code>Language</code> 类型的 <code>l</code>：</p>
+<pre class="language-julia"><code>Base.show(io::IO, l::Language) = print(
+    io, l.name, &quot;, &quot;,
+    2021 - l.year_of_birth, &quot; years old, &quot;,
+    &quot;has the following titles: &quot;, l.title
+)</code></pre>
+<p>现在查看 <code>python</code> 如何输出：</p>
+<pre class="language-julia"><code>python</code></pre>
+<pre class="output"><code>Python, 30 years old, has the following titles: Letargicus</code></pre>
+<h4 data-number="3.2.4.2" id="sec:function_multiple"><span class="header-section-number">3.2.4.2</span> 多返回值</h4>
+<p>一个函数可以返回两个以上的值。 下面看一个新函数 <code>add_multiply</code>：</p>
+<pre class="language-julia"><code>function add_multiply(x, y)
+    addition = x + y
+    multiplication = x * y
+    return addition, multiplication
+end</code></pre>
+<pre class="output"><code>add_multiply (generic function with 1 method)</code></pre>
+<p>再接收返回值时，有两种写法：</p>
+<ol type="1">
+<li><p>与返回值的形式类似，依次为每个返回值定义一个变量，在本例中则需要两个变量：</p>
+<pre class="language-julia"><code>return_1, return_2 = add_multiply(1, 2)
+return_2</code></pre>
+<pre class="output"><code>2</code></pre></li>
+<li><p>也可以定义一个变量来接受所有的返回值，然后通过 <code>first</code> 或 <code>last</code> 访问每个返回值：</p>
+<pre class="language-julia"><code>all_returns = add_multiply(1, 2)
+last(all_returns)</code></pre>
+<pre class="output"><code>2</code></pre></li>
+</ol>
+<h4 data-number="3.2.4.3" id="sec:function_keyword_arguments"><span class="header-section-number">3.2.4.3</span> 关键字参数</h4>
+<p>某些函数可以接受关键字参数而不是位置参数。 这些参数与常规参数类似，只是定义在常规函数参数之后且使用分号 <code>;</code> 分隔。 例如，定义 <code>logarithm</code> 函数，该函数默认使用基 <span class="math inline">\(e\)</span> (2.718281828459045)作为关键字参数。 注意，此处使用抽象类型 <code>Real</code>，以便于覆盖从 <code>Integer</code> 和 <code>AbstractFloat</code> 派生的所有类型，这两种类型本身也都是 <code>Real</code> 的子类型：</p>
+<pre class="language-julia"><code>AbstractFloat &lt;: Real &amp;&amp; Integer &lt;: Real</code></pre>
+<pre class="output"><code>true</code></pre>
+<pre class="language-julia"><code>function logarithm(x::Real; base::Real=2.7182818284590)
+    return log(base, x)
+end</code></pre>
+<pre class="output"><code>logarithm (generic function with 1 method)</code></pre>
+<p>当未指定 <code>base</code> 参数时函数正常运行，这是因为函数声明中提供了 <strong>默认参数</strong> ：</p>
+<pre class="language-julia"><code>logarithm(10)</code></pre>
+<pre class="output"><code>2.3025850929940845</code></pre>
+<p>同时也可以指定与默认值不同的 <code>base</code> 值：</p>
+<pre class="language-julia"><code>logarithm(10; base=2)</code></pre>
+<pre class="output"><code>3.3219280948873626</code></pre>
+<h4 data-number="3.2.4.4" id="sec:function_anonymous"><span class="header-section-number">3.2.4.4</span> 匿名函数</h4>
+<p>很多情况下，我们不关心函数名称，只想快速创建函数。 因此我们需要 <strong>匿名函数</strong> 。 Julia 数据科学工作流中经常会用到它。 例如，在使用 <code>DataFrames.jl</code> (Section <a href="/JuliaDataScience/dataframes#sec:dataframes">4</a>) 或 <code>Makie.jl</code> (Section <a href="/JuliaDataScience/DataVisualizationMakie#sec:DataVisualizationMakie">5</a>) 时，时常需要一个临时函数来筛选数据或者格式化图标签。 这就是使用匿名函数的时机。 当我们不想创建函数时它特别有用，因为一个简单的 in-place 语句就够用了。</p>
+<p>它的语法特别简单， 只需使用 <code>-&gt;</code> 。 <code>-&gt;</code> 的左侧定义参数名称。 <code>-&gt;</code> 的右侧定义了想对左侧参数进行的操作。 考虑这样一个例子， 假设想通过指数函数来抵消对数运算：</p>
+<pre class="language-julia"><code>map(x -&gt; 2.7182818284590^x, logarithm(2))</code></pre>
+<pre class="output"><code>2.0</code></pre>
+<p>这里使用 <code>map</code> 函数方便地将匿名函数（第一个参数）映射到了 <code>logarithm(2)</code> （第二个参数）。 因此，我们得到了相同的数字，因为指数运算和对数运算是互逆的（在选择相同的基 – 2.7182818284590 时）。</p>
+<h3 data-number="3.2.5" id="sec:conditionals"><span class="header-section-number">3.2.5</span> 条件表达式 If-Elseif-Else</h3>
+<p>在大多数语言中，用户可以控制程序的执行流。 我们可依据情况使计算机做这一件或另外一件事。 Julia 使用 <code>if</code>，<code>elseif</code> 和 <code>else</code> 关键字进行流程控制。 它们也被称为条件语句。</p>
+<p><code>if</code> 关键字执行一个表达式，,然后根据表达式的结果为 <code>true</code> 还是 <code>false</code> 执行相应分支的代码。 在复杂的控制流中，可以使用 <code>elseif</code> 组合多个 <code>if</code> 条件。 最后，如果 <code>if</code> 或 <code>elseif</code> 分支的语句都被执行为 <code>true</code>，那么我们可以定义另外的分支。 这就是 <code>else</code> 关键字的作用。 与之前见到的关键字运算符一样，我们必须告诉 Julia 条件语句以 <code>end</code> 关键字结束。</p>
+<p>下面是一个包含所有 <code>if</code>-<code>elseif</code>-<code>else</code> 关键字的例子：</p>
+<pre class="language-julia"><code>a = 1
+b = 2
+
+if a &lt; b
+    &quot;a is less than b&quot;
+elseif a &gt; b
+    &quot;a is greater than b&quot;
+else
+    &quot;a is equal to b&quot;
+end</code></pre>
+<pre class="output"><code>a is less than b</code></pre>
+<p>我们甚至可将其包装成函数 <code>compare</code>:</p>
+<pre class="language-julia"><code>function compare(a, b)
+    if a &lt; b
+        &quot;a is less than b&quot;
+    elseif a &gt; b
+        &quot;a is greater than b&quot;
+    else
+        &quot;a is equal to b&quot;
+    end
+end
+
+compare(3.14, 3.14)</code></pre>
+<p>a is equal to b</p>
+<h3 data-number="3.2.6" id="sec:for"><span class="header-section-number">3.2.6</span> For 循环</h3>
+<p>Julia 中的经典 for 循环遵循与条件语句类似的语法。 它以 <code>for</code> 关键字开始。 然后，向 Julia 指定一组要 “循环” 的语句。 另外，与其他一样，它也以 <code>end</code> 关键字结束。</p>
+<p>比如使用如下的 for 循环使 Julia 打印 1-10 的数字：</p>
+<pre class="language-julia"><code>for i in 1:10
+    println(i)
+end</code></pre>
+<h3 data-number="3.2.7" id="sec:while"><span class="header-section-number">3.2.7</span> while 循环</h3>
+<p>while 循环是前面的条件语句和 for 循环的结合体。 在 while 循环中，当条件为 <code>true</code> 时将一直执行循环体。 语法与之前的语句相同。 以 <code>while</code> 开始，紧跟计算结果为 <code>true</code> 或 <code>false</code> 的条件表达式。 它仍以 <code>end</code> 关键字结束。</p>
+<p>例子如下：</p>
+<pre class="language-julia"><code>n = 0
+
+while n &lt; 3
+    global n += 1
+end
+
+n</code></pre>
+<pre class="output"><code>3</code></pre>
+<p>可以看到，我们不得不使用 <code>global</code> 关键字。 这是因为， 在条件语句中，循环和函数内定义的变量仅存在于其内部。 这就是变量的 <strong>作用域</strong> 。 我们需要通过 <code>global</code> 关键字告诉 Julia <code>while</code> 循环中的 <code>n</code> 是全局作用域中的 <code>n</code>。 最后，循环体使用的 <code>+=</code> 运算符是 <code>n = n + 1</code> 的缩写。</p>
+
+
+<div class="bottom-nav">
+    <p id="nav-prev" style="text-align: left;">
+        <a class="menu-level-2" href="/JuliaDataScience/ide"><b>3.1</b> 开发环境</a> <kbd>←</kbd>
+        <span id="nav-next" style="float: right;">
+            <kbd>→</kbd> <a class="menu-level-2" href="/JuliaDataScience/data_structures"><b>3.3</b> 原生数据结构</a>
+        </span>
+    </p>
+</div>
+
+
+<div class="license">
+    <br/>
+  <br/>
+  <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
+    Jose Storopoli, Rik Huijzer, Lazaro Alonso, 刘贵欣 (中文翻译), 田俊 （中文审校）
+</div>
+</div>
+</div>
+</body>
+</html>

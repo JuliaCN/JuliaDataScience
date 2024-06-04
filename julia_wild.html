@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Jose Storopoli" />
+  <meta name="author" content="Rik Huijzer" />
+  <meta name="author" content="Lazaro Alonso" />
+  <meta name="author" content="刘贵欣 (中文翻译)" />
+  <meta name="author" content="田俊 （中文审校）" />
+  <title>Julia 应用案例 - Julia Data Science</title>
+  <link rel="shortcut icon" type="image/png" href="/JuliaDataScience/favicon.png"/>
+  <link rel="stylesheet" href="/JuliaDataScience/style.css"/>
+    <script src="/JuliaDataScience/mousetrap.min.js"></script>
+    <style>
+  @font-face {
+    font-family: JuliaMono-Regular;
+    src: url("/JuliaDataScience/JuliaMono-Regular.woff2");
+  }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="/JuliaDataScience/github.min.css">
+<script src="/JuliaDataScience/highlight.min.js"></script>
+<script src="/JuliaDataScience/julia.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', (event) => {
+    document.querySelectorAll('pre').forEach((el) => {
+        hljs.highlightElement(el);
+    });
+});
+</script>
+ 
+</head>
+<body>
+<script>
+function click_next() {
+  var next = document.getElementById('nav-next');
+  next.firstElementChild.nextElementSibling.click();
+}
+function click_prev() {
+  var prev = document.getElementById('nav-prev');
+  prev.firstElementChild.click();
+}
+Mousetrap.bind('right', click_next);
+Mousetrap.bind('h', click_prev);
+Mousetrap.bind('left', click_prev);
+Mousetrap.bind('l', click_next);
+</script>
+
+<div class="books-container">
+<aside class="books-menu">
+<input type="checkbox" id="menu">
+<label for="menu">☰</label>
+<div class="books-title">
+<a href="/JuliaDataScience/">Julia Data Science</a>
+</div><br />
+<span class="books-subtitle">
+
+</span>
+<div class="books-menu-content">
+<li><a class="menu-level-1" href="/JuliaDataScience/preface"><b>1</b> 前言</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/why_data_science"><b>1.1</b> 什么是数据科学？</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/engineering"><b>1.2</b> 软件工程</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/acknowledgements"><b>1.3</b> 致谢</a></li>
+<li><a class="menu-level-1" href="/JuliaDataScience/why_julia"><b>2</b> 为什么选择 Julia ?</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/non-programmers"><b>2.1</b> 从未编过程</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/programmers"><b>2.2</b> 有编程经验</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/julia_accomplish"><b>2.3</b> Julia 想实现什么?</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/julia_wild"><b>2.4</b> Julia 应用案例</a></li>
+<li><a class="menu-level-1" href="/JuliaDataScience/julia_basics"><b>3</b> Julia 基础</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/ide"><b>3.1</b> 开发环境</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/syntax"><b>3.2</b> 语法</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/data_structures"><b>3.3</b> 原生数据结构</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/filesystem"><b>3.4</b> 文件系统</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/standardlibrary"><b>3.5</b> Julia 标准库</a></li>
+<li><a class="menu-level-1" href="/JuliaDataScience/dataframes"><b>4</b> DataFrames.jl</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/load_save"><b>4.1</b> 加载和保存文件</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/index_summarize"><b>4.2</b> Index 和 Summarize</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/filter_subset"><b>4.3</b> Filter 和 Subset</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/select"><b>4.4</b> Select</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/missing_data"><b>4.5</b> 类型和缺失值</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/join"><b>4.6</b> Join</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/df_transform"><b>4.7</b> 变量变换</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/groupby_combine"><b>4.8</b> Groupby 和 Combine</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/df_performance"><b>4.9</b> 性能</a></li>
+<li><a class="menu-level-1" href="/JuliaDataScience/DataVisualizationMakie"><b>5</b> 使用 Makie.jl 做数据可视化</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/cairomakie"><b>5.1</b> CairoMakie.jl</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/datavisMakie_attributes"><b>5.2</b> 属性</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/themes"><b>5.3</b> 主题</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/using_latex"><b>5.4</b> 使用 LaTeXStrings.jl</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/makie_colors"><b>5.5</b> 颜色和颜色图（Colormap）</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/makie_layouts"><b>5.6</b> 布局</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/glmakie"><b>5.7</b> GLMakie.jl</a></li>
+<li><a class="menu-level-1" href="/JuliaDataScience/appendix"><b>6</b> 附录</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/appendix_pkg"><b>6.1</b> 库的版本</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/notation"><b>6.2</b> 符号</a></li>
+<li><a class="menu-level-1" href="/JuliaDataScience/references"><b></b> 参考文献</a></li>
+</div>
+</aside>
+
+<div class="books-content">
+<h2 data-number="2.4" id="sec:julia_wild"><span class="header-section-number">2.4</span> Julia 应用案例</h2>
+<p>Section <a href="/JuliaDataScience/julia_accomplish#sec:julia_accomplish">2.3</a> 解释了为什么我们认为 Julia 是门如此独一无二的编程语言。 我们在上节展示了一些 Julia 特性的简单例子。 如果想要深入了解 Julia 的使用， 下面介绍一些 <strong>有趣的案例</strong>：</p>
+<ol type="1">
+<li>NASA 使用 Julia 在超级计算机上分析了 <a href="https://exoplanets.nasa.gov/news/1669/seven-rocky-trappist-1-planets-may-be-made-of-similar-stuff/">“迄今为止发现的最大一批地球尺寸的行星”</a> ，并且实现了惊人的 <strong>1,000 倍加速</strong>，在 15 分钟内分类了1.88 亿个天体。</li>
+<li><a href="https://clima.caltech.edu/">气候建模联盟(Climate Modeling Alliance，CliMa)</a> <strong>在 GPU 和 CPU 上模拟天气</strong>。 该项目启动于 2018 年，与加州理工大学、 NASA 喷气推进实验室以及海军研究生院的研究人员合作，CliMa 项目组采用最近的计算科学进展来开发一个地球系统模型，该模型能够以前所未有的精度和速度预测干旱、热浪和降雨。</li>
+<li><a href="https://youtu.be/19zm1Fn0S9M">美国联邦航空管理局 (FAA) 正在使用 Julia 开发一种 <strong>空中防碰撞系统 (ACAS-X)</strong></a>。 这也是一个“两语言问题” 的好例子（查看 Section <a href="/JuliaDataScience/julia_accomplish#sec:julia_accomplish">2.3</a>）。 之前的方案是使用 Matlab 开发算法 并使用 C++ 编写高性能实现。 现在，FAA 使用 Julia 语言完成所有的事。</li>
+<li><a href="https://juliacomputing.com/case-studies/pfizer/">使用 Julia 在 GPU 上 <strong>175 倍加速</strong> 辉瑞的药理学模型</a>。 这是一份第11届美国定量药理学会议的<a href="https://chrisrackauckas.com/assets/Posters/ACoP11_Poster_Abstracts_2020.pdf">海报</a>，它还获得了 <a href="https://web.archive.org/web/20210121164011/https://www.go-acop.org/abstract-awards">quality award</a>。</li>
+<li><a href="https://discourse.julialang.org/t/julia-and-the-satellite-amazonia-1/57541">巴西卫星亚马逊 1 号的姿态和轨道控制子系统 (AOCS) <strong>100% 使用 Julia 编写</strong></a> ，它的作者是 Ronan Arraes Jardim Chagas (<a href="https://ronanarraes.com/" class="uri">https://ronanarraes.com/</a>)。</li>
+<li><a href="https://youtu.be/NY0HcGqHj3g">巴西国家发展银行 (BNDES) 放弃了付费解决方案，转而选择开源 Julia 模型并获得 <strong>10 倍加速</strong>。</a></li>
+</ol>
+<p>如果觉得这些仍不够，<a href="https://juliacomputing.com/case-studies/">Julia 计算网站</a> 上还有更多的例子。</p>
+
+
+<div class="bottom-nav">
+    <p id="nav-prev" style="text-align: left;">
+        <a class="menu-level-2" href="/JuliaDataScience/julia_accomplish"><b>2.3</b> Julia 想实现什么?</a> <kbd>←</kbd>
+        <span id="nav-next" style="float: right;">
+            <kbd>→</kbd> <a class="menu-level-1" href="/JuliaDataScience/julia_basics"><b>3</b> Julia 基础</a>
+        </span>
+    </p>
+</div>
+
+
+<div class="license">
+    <br/>
+  <br/>
+  <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
+    Jose Storopoli, Rik Huijzer, Lazaro Alonso, 刘贵欣 (中文翻译), 田俊 （中文审校）
+</div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Jose Storopoli" />
+  <meta name="author" content="Rik Huijzer" />
+  <meta name="author" content="Lazaro Alonso" />
+  <meta name="author" content="刘贵欣 (中文翻译)" />
+  <meta name="author" content="田俊 （中文审校）" />
+  <title>Filter 和 Subset - Julia Data Science</title>
+  <link rel="shortcut icon" type="image/png" href="/JuliaDataScience/favicon.png"/>
+  <link rel="stylesheet" href="/JuliaDataScience/style.css"/>
+    <script src="/JuliaDataScience/mousetrap.min.js"></script>
+    <style>
+  @font-face {
+    font-family: JuliaMono-Regular;
+    src: url("/JuliaDataScience/JuliaMono-Regular.woff2");
+  }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="/JuliaDataScience/github.min.css">
+<script src="/JuliaDataScience/highlight.min.js"></script>
+<script src="/JuliaDataScience/julia.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', (event) => {
+    document.querySelectorAll('pre').forEach((el) => {
+        hljs.highlightElement(el);
+    });
+});
+</script>
+ 
+</head>
+<body>
+<script>
+function click_next() {
+  var next = document.getElementById('nav-next');
+  next.firstElementChild.nextElementSibling.click();
+}
+function click_prev() {
+  var prev = document.getElementById('nav-prev');
+  prev.firstElementChild.click();
+}
+Mousetrap.bind('right', click_next);
+Mousetrap.bind('h', click_prev);
+Mousetrap.bind('left', click_prev);
+Mousetrap.bind('l', click_next);
+</script>
+
+<div class="books-container">
+<aside class="books-menu">
+<input type="checkbox" id="menu">
+<label for="menu">☰</label>
+<div class="books-title">
+<a href="/JuliaDataScience/">Julia Data Science</a>
+</div><br />
+<span class="books-subtitle">
+
+</span>
+<div class="books-menu-content">
+<li><a class="menu-level-1" href="/JuliaDataScience/preface"><b>1</b> 前言</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/why_data_science"><b>1.1</b> 什么是数据科学？</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/engineering"><b>1.2</b> 软件工程</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/acknowledgements"><b>1.3</b> 致谢</a></li>
+<li><a class="menu-level-1" href="/JuliaDataScience/why_julia"><b>2</b> 为什么选择 Julia ?</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/non-programmers"><b>2.1</b> 从未编过程</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/programmers"><b>2.2</b> 有编程经验</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/julia_accomplish"><b>2.3</b> Julia 想实现什么?</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/julia_wild"><b>2.4</b> Julia 应用案例</a></li>
+<li><a class="menu-level-1" href="/JuliaDataScience/julia_basics"><b>3</b> Julia 基础</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/ide"><b>3.1</b> 开发环境</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/syntax"><b>3.2</b> 语法</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/data_structures"><b>3.3</b> 原生数据结构</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/filesystem"><b>3.4</b> 文件系统</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/standardlibrary"><b>3.5</b> Julia 标准库</a></li>
+<li><a class="menu-level-1" href="/JuliaDataScience/dataframes"><b>4</b> DataFrames.jl</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/load_save"><b>4.1</b> 加载和保存文件</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/index_summarize"><b>4.2</b> Index 和 Summarize</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/filter_subset"><b>4.3</b> Filter 和 Subset</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/select"><b>4.4</b> Select</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/missing_data"><b>4.5</b> 类型和缺失值</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/join"><b>4.6</b> Join</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/df_transform"><b>4.7</b> 变量变换</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/groupby_combine"><b>4.8</b> Groupby 和 Combine</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/df_performance"><b>4.9</b> 性能</a></li>
+<li><a class="menu-level-1" href="/JuliaDataScience/DataVisualizationMakie"><b>5</b> 使用 Makie.jl 做数据可视化</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/cairomakie"><b>5.1</b> CairoMakie.jl</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/datavisMakie_attributes"><b>5.2</b> 属性</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/themes"><b>5.3</b> 主题</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/using_latex"><b>5.4</b> 使用 LaTeXStrings.jl</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/makie_colors"><b>5.5</b> 颜色和颜色图（Colormap）</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/makie_layouts"><b>5.6</b> 布局</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/glmakie"><b>5.7</b> GLMakie.jl</a></li>
+<li><a class="menu-level-1" href="/JuliaDataScience/appendix"><b>6</b> 附录</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/appendix_pkg"><b>6.1</b> 库的版本</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/notation"><b>6.2</b> 符号</a></li>
+<li><a class="menu-level-1" href="/JuliaDataScience/references"><b></b> 参考文献</a></li>
+</div>
+</aside>
+
+<div class="books-content">
+<h2 data-number="4.3" id="sec:filter_subset"><span class="header-section-number">4.3</span> Filter 和 Subset</h2>
+<p>有两种方式可以选取 <code>DataFrame</code> 中的某些行， 一种是 <code>filter</code> (Section <a href="/JuliaDataScience/filter_subset#sec:filter">4.3.1</a>) 而另一种是 <code>subset</code> (Section <a href="/JuliaDataScience/filter_subset#sec:subset">4.3.2</a>)。</p>
+<p><code>DataFrames.jl</code> 较早地添加了 <code>filter</code> 函数, 它更强大且与 Julia <code>Base</code> 库的语法保持一致，因此我们先讨论 <code>filter</code>。 <code>subset</code> 是较新的函数，但它通常更简便。</p>
+<h3 data-number="4.3.1" id="sec:filter"><span class="header-section-number">4.3.1</span> Filter</h3>
+<p>由此开始，接下来将讨论 <code>DataFrames.jl</code> 中非常强大的特性。 在讨论伊始，首先学习一些函数，例如 <code>select</code> 和 <code>filter</code>。 但请不要担心！ 可以先松一口气，因为 <strong><code>DataFrames.jl</code> 的总体设计目标就是让用户需学习的函数保持在最低限度<a href="/JuliaDataScience#fn15" class="footnote-ref" id="fnref15" role="doc-noteref"><sup>15</sup></a></strong>。</p>
+<p>与之前一样，从 <code>grades_2020</code> 开始：</p>
+<pre class="language-julia"><code>grades_2020()</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: right;">name</th>
+<th style="text-align: right;">grade_2020</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">Sally</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">Bob</td>
+<td style="text-align: right;">5.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">Alice</td>
+<td style="text-align: right;">8.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">Hank</td>
+<td style="text-align: right;">4.0</td>
+</tr>
+</tbody>
+</table>
+<p>可以使用 <code>filter(source =&gt; f::Function, df)</code> 筛选行。 注意，这个函数与 Julia <code>Base</code> 模块中的 <code>filter(f::Function, V::Vector)</code> 函数非常相似。 这是因为 <code>DataFrames.jl</code> 使用<strong>多重派发</strong> (see Section <a href="/JuliaDataScience/julia_accomplish#sec:multiple_dispatch">2.3.3</a>) 扩展<code>filter</code>，以使其能够接收<code>DataFrame</code> 作为参数。</p>
+<p>从第一印象来看，实际中定义和使用函数 <code>f</code> 可能有些困难。 但请坚持学习，我们的努力会有超高的回报，因为 <strong>这是非常强大的数据筛选方法</strong>。 如下是一个简单的例子， 创建函数 <code>equals_alice</code> 来检查输入是否等于 “Alice”：</p>
+<pre class="language-julia"><code>equals_alice(name::String) = name == &quot;Alice&quot;
+equals_alice(&quot;Bob&quot;)</code></pre>
+<pre class="output"><code>false</code></pre>
+<pre class="language-julia"><code>equals_alice(&quot;Alice&quot;)</code></pre>
+<pre class="output"><code>true</code></pre>
+<p>结合该函数， 可以使用 <code>f</code> 筛选出所有 <code>name</code> 等于 “Alice” 的行：</p>
+<pre class="language-julia"><code>filter(:name =&gt; equals_alice, grades_2020())</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: right;">name</th>
+<th style="text-align: right;">grade_2020</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">Alice</td>
+<td style="text-align: right;">8.5</td>
+</tr>
+</tbody>
+</table>
+<p>注意这不仅适用于 <code>DataFrame</code>，也适用于向量：</p>
+<pre class="language-julia"><code>filter(equals_alice, [&quot;Alice&quot;, &quot;Bob&quot;, &quot;Dave&quot;])</code></pre>
+<pre class="output"><code>[&quot;Alice&quot;]</code></pre>
+<p>还可以使用 <strong>匿名函数</strong> 缩短代码长度 (请查阅 Section <a href="/JuliaDataScience/syntax#sec:function_anonymous">3.2.4.4</a>)：</p>
+<pre class="language-julia"><code>filter(n -&gt; n == &quot;Alice&quot;, [&quot;Alice&quot;, &quot;Bob&quot;, &quot;Dave&quot;])</code></pre>
+<pre class="output"><code>[&quot;Alice&quot;]</code></pre>
+<p>它也可用于 <code>grades_2020</code>:</p>
+<pre class="language-julia"><code>filter(:name =&gt; n -&gt; n == &quot;Alice&quot;, grades_2020())</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: right;">name</th>
+<th style="text-align: right;">grade_2020</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">Alice</td>
+<td style="text-align: right;">8.5</td>
+</tr>
+</tbody>
+</table>
+<p>简单来说，上述函数可以理解为 “遍历 <code>:name</code> 列的所有元素，对每一个元素 <code>n</code>，检查 <code>n</code> 是否等于 Alice”。 可能对于某些人来说，这样的代码些许冗长。 幸运的是，Julia 已经扩展了 <code>==</code> 的<strong>偏函数应用（partial function application）</strong> （译注：指定部分参数的函数）。 其中的细节不重要 – 只需知道能像其他函数一样使用 <code>==</code>：</p>
+<pre class="language-julia"><code>filter(:name =&gt; ==(&quot;Alice&quot;), grades_2020())</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: right;">name</th>
+<th style="text-align: right;">grade_2020</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">Alice</td>
+<td style="text-align: right;">8.5</td>
+</tr>
+</tbody>
+</table>
+<h3 data-number="4.3.2" id="sec:subset"><span class="header-section-number">4.3.2</span> Subset</h3>
+<p><code>subset</code> 函数的加入使得处理 <code>missing</code> 值 (Section <a href="/JuliaDataScience/missing_data#sec:missing_data">4.5</a>) 更加容易。 与 <code>filter</code> 相反， <code>subset</code> 对整列进行操作，而不是整行或者单个值。 如果想使用之前的函数，可以将其包装在 <code>ByRow</code> 里：</p>
+<pre class="language-julia"><code>subset(grades_2020(), :name =&gt; ByRow(equals_alice))</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: right;">name</th>
+<th style="text-align: right;">grade_2020</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">Alice</td>
+<td style="text-align: right;">8.5</td>
+</tr>
+</tbody>
+</table>
+<p>另请注意， <code>DataFrame</code> 是 <code>subset(df, args...)</code> 的第一个参数，而而对于 <code>filter</code> 来说是第二个参数，即 <code>filter(f, df)</code>。 这是因为， Julia 定义 <code>filter</code> 的方式为 <code>filter(f, V::Vector)</code>，而 <code>DataFrames.jl</code> 在使用多重派发将其扩展到 <code>DataFrame</code> 类型时，选择与现有函数形式保持一致。</p>
+<blockquote>
+<p><strong><em>NOTE:</em></strong> <code>subset</code> 所属的大多数原生 <code>DataFrames.jl</code> 函数都保持着一致的函数签名，即 <strong>将 <code>DataFrame</code> 作为第一个参数</strong>。</p>
+</blockquote>
+<p>与 <code>filter</code> 一样，可以在 <code>subset</code> 中使用匿名函数：</p>
+<pre class="language-julia"><code>subset(grades_2020(), :name =&gt; ByRow(name -&gt; name == &quot;Alice&quot;))</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: right;">name</th>
+<th style="text-align: right;">grade_2020</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">Alice</td>
+<td style="text-align: right;">8.5</td>
+</tr>
+</tbody>
+</table>
+<p>或者使用 <code>==</code> 的偏函数应用：</p>
+<pre class="language-julia"><code>subset(grades_2020(), :name =&gt; ByRow(==(&quot;Alice&quot;)))</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: right;">name</th>
+<th style="text-align: right;">grade_2020</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">Alice</td>
+<td style="text-align: right;">8.5</td>
+</tr>
+</tbody>
+</table>
+<p>最后展示 <code>subset</code> 的真正用处。 首先，创建一个含有 <code>missing</code> 值的数据集：</p>
+<pre class="language-julia"><code>function salaries()
+    names = [&quot;John&quot;, &quot;Hank&quot;, &quot;Karen&quot;, &quot;Zed&quot;]
+    salary = [1_900, 2_800, 2_800, missing]
+    DataFrame(; names, salary)
+end
+salaries()</code></pre>
+<div id="tbl:salaries">
+<table>
+<caption>Table 6: Salaries.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: right;">names</th>
+<th style="text-align: right;">salary</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">John</td>
+<td style="text-align: right;">1900</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">Hank</td>
+<td style="text-align: right;">2800</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">Karen</td>
+<td style="text-align: right;">2800</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">Zed</td>
+<td style="text-align: right;">missing</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>这是一种合理的情况：你想算出同事们的工资，但还没算 Zed 的。 尽管我们不鼓励这么做，但这是一个有趣的例子。 假设我们想知道谁的工资超过了 2000。 如果使用 <code>filter</code>, 但未考虑 <code>missing</code>值，则会失败：</p>
+<pre class="language-julia"><code>filter(:salary =&gt; &gt;(2_000), salaries())</code></pre>
+<pre class="output"><code>TypeError: non-boolean (Missing) used in boolean context
+Stacktrace:
+  [1] (::DataFrames.var&quot;#103#104&quot;{Base.Fix2{typeof(&gt;), Int64}})(x::Missing)
+    @ DataFrames ~/.julia/packages/DataFrames/58MUJ/src/abstractdataframe/abstractdataframe.jl:1216
+  ...</code></pre>
+<p><code>subset</code> 同样会失败，但幸运的是，报错指出一则简单的解决方案：</p>
+<pre class="language-julia"><code>subset(salaries(), :salary =&gt; ByRow(&gt;(2_000)))</code></pre>
+<pre class="output"><code>ArgumentError: missing was returned in condition number 1 but only true or false are allowed; pass skipmissing=true to skip missing values
+Stacktrace:
+  [1] _and(x::Missing)
+    @ DataFrames ~/.julia/packages/DataFrames/58MUJ/src/abstractdataframe/subset.jl:11
+  ...</code></pre>
+<p>所以仅需要传递关键字参数 <code>skipmissing=true</code>：</p>
+<pre class="language-julia"><code>subset(salaries(), :salary =&gt; ByRow(&gt;(2_000)); skipmissing=true)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: right;">names</th>
+<th style="text-align: right;">salary</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">Hank</td>
+<td style="text-align: right;">2800</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">Karen</td>
+<td style="text-align: right;">2800</td>
+</tr>
+</tbody>
+</table>
+
+
+<div class="bottom-nav">
+    <p id="nav-prev" style="text-align: left;">
+        <a class="menu-level-2" href="/JuliaDataScience/index_summarize"><b>4.2</b> Index 和 Summarize</a> <kbd>←</kbd>
+        <span id="nav-next" style="float: right;">
+            <kbd>→</kbd> <a class="menu-level-2" href="/JuliaDataScience/select"><b>4.4</b> Select</a>
+        </span>
+    </p>
+</div>
+<section class="footnotes" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn15" role="doc-endnote"><p> 15. 这来自于 Bogumił Kamiński （<code>DataFrames.jl</code> 的首席开发者和维护者） 在 Discourse (<a href="https://discourse.julialang.org/t/pull-dataframes-columns-to-the-front/60327/5" class="uri">https://discourse.julialang.org/t/pull-dataframes-columns-to-the-front/60327/5</a>) 论坛上的发言。<a href="/JuliaDataScience#fnref15" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+
+<div class="license">
+    <br/>
+  <br/>
+  <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
+    Jose Storopoli, Rik Huijzer, Lazaro Alonso, 刘贵欣 (中文翻译), 田俊 （中文审校）
+</div>
+</div>
+</div>
+</body>
+</html>

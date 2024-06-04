@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Jose Storopoli" />
+  <meta name="author" content="Rik Huijzer" />
+  <meta name="author" content="Lazaro Alonso" />
+  <meta name="author" content="刘贵欣 (中文翻译)" />
+  <meta name="author" content="田俊 （中文审校）" />
+  <title>DataFrames.jl - Julia Data Science</title>
+  <link rel="shortcut icon" type="image/png" href="/JuliaDataScience/favicon.png"/>
+  <link rel="stylesheet" href="/JuliaDataScience/style.css"/>
+    <script src="/JuliaDataScience/mousetrap.min.js"></script>
+    <style>
+  @font-face {
+    font-family: JuliaMono-Regular;
+    src: url("/JuliaDataScience/JuliaMono-Regular.woff2");
+  }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="/JuliaDataScience/github.min.css">
+<script src="/JuliaDataScience/highlight.min.js"></script>
+<script src="/JuliaDataScience/julia.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', (event) => {
+    document.querySelectorAll('pre').forEach((el) => {
+        hljs.highlightElement(el);
+    });
+});
+</script>
+ 
+</head>
+<body>
+<script>
+function click_next() {
+  var next = document.getElementById('nav-next');
+  next.firstElementChild.nextElementSibling.click();
+}
+function click_prev() {
+  var prev = document.getElementById('nav-prev');
+  prev.firstElementChild.click();
+}
+Mousetrap.bind('right', click_next);
+Mousetrap.bind('h', click_prev);
+Mousetrap.bind('left', click_prev);
+Mousetrap.bind('l', click_next);
+</script>
+
+<div class="books-container">
+<aside class="books-menu">
+<input type="checkbox" id="menu">
+<label for="menu">☰</label>
+<div class="books-title">
+<a href="/JuliaDataScience/">Julia Data Science</a>
+</div><br />
+<span class="books-subtitle">
+
+</span>
+<div class="books-menu-content">
+<li><a class="menu-level-1" href="/JuliaDataScience/preface"><b>1</b> 前言</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/why_data_science"><b>1.1</b> 什么是数据科学？</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/engineering"><b>1.2</b> 软件工程</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/acknowledgements"><b>1.3</b> 致谢</a></li>
+<li><a class="menu-level-1" href="/JuliaDataScience/why_julia"><b>2</b> 为什么选择 Julia ?</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/non-programmers"><b>2.1</b> 从未编过程</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/programmers"><b>2.2</b> 有编程经验</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/julia_accomplish"><b>2.3</b> Julia 想实现什么?</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/julia_wild"><b>2.4</b> Julia 应用案例</a></li>
+<li><a class="menu-level-1" href="/JuliaDataScience/julia_basics"><b>3</b> Julia 基础</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/ide"><b>3.1</b> 开发环境</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/syntax"><b>3.2</b> 语法</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/data_structures"><b>3.3</b> 原生数据结构</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/filesystem"><b>3.4</b> 文件系统</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/standardlibrary"><b>3.5</b> Julia 标准库</a></li>
+<li><a class="menu-level-1" href="/JuliaDataScience/dataframes"><b>4</b> DataFrames.jl</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/load_save"><b>4.1</b> 加载和保存文件</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/index_summarize"><b>4.2</b> Index 和 Summarize</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/filter_subset"><b>4.3</b> Filter 和 Subset</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/select"><b>4.4</b> Select</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/missing_data"><b>4.5</b> 类型和缺失值</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/join"><b>4.6</b> Join</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/df_transform"><b>4.7</b> 变量变换</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/groupby_combine"><b>4.8</b> Groupby 和 Combine</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/df_performance"><b>4.9</b> 性能</a></li>
+<li><a class="menu-level-1" href="/JuliaDataScience/DataVisualizationMakie"><b>5</b> 使用 Makie.jl 做数据可视化</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/cairomakie"><b>5.1</b> CairoMakie.jl</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/datavisMakie_attributes"><b>5.2</b> 属性</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/themes"><b>5.3</b> 主题</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/using_latex"><b>5.4</b> 使用 LaTeXStrings.jl</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/makie_colors"><b>5.5</b> 颜色和颜色图（Colormap）</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/makie_layouts"><b>5.6</b> 布局</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/glmakie"><b>5.7</b> GLMakie.jl</a></li>
+<li><a class="menu-level-1" href="/JuliaDataScience/appendix"><b>6</b> 附录</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/appendix_pkg"><b>6.1</b> 库的版本</a></li>
+<li><a class="menu-level-2" href="/JuliaDataScience/notation"><b>6.2</b> 符号</a></li>
+<li><a class="menu-level-1" href="/JuliaDataScience/references"><b></b> 参考文献</a></li>
+</div>
+</aside>
+
+<div class="books-content">
+<h1 data-number="4" id="sec:dataframes"><span class="header-section-number">4</span> DataFrames.jl</h1>
+<p>数据通常以表格格式存储。 在表格格式中，数据由包含行和列的表组成。 每列通常具有相同的数据类型，而每行数据类型不同。 实际上，行表示观测量，而列表示变量。 例如，我们有一个电视节目表，其中包含每个节目的制作国家和大众个人评分，如 表 <a href="/JuliaDataScience#tbl:TV_shows">1</a> 所示。</p>
+<div id="tbl:TV_shows">
+<table>
+<caption>Table 1: TV shows.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: right;">name</th>
+<th style="text-align: right;">country</th>
+<th style="text-align: right;">rating</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">Game of Thrones</td>
+<td style="text-align: right;">United States</td>
+<td style="text-align: right;">8.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">The Crown</td>
+<td style="text-align: right;">England</td>
+<td style="text-align: right;">7.3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">Friends</td>
+<td style="text-align: right;">United States</td>
+<td style="text-align: right;">7.8</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">…</td>
+<td style="text-align: right;">…</td>
+<td style="text-align: right;">…</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>此处的省略号表示这是一张非常长的表，但只显示了少数行。 在分析数据时，我们经常会提出一些关于数据的有趣问题，这也称为 <strong>数据查询</strong>。 对于大型表格，计算机能够比手工查询更快地回答此类问题。 一些 <strong>数据查询</strong> 问题的例子如下：</p>
+<ul>
+<li>哪个电视节目评分最高？</li>
+<li>哪些电视节目由美国制作？</li>
+<li>哪些电视节目由相同的国家制作?</li>
+</ul>
+<p>但是，作为研究人员，实际的科学往往从多张表格或多个数据源开始。 例如，如果我们也有其他人的电视节目评分数据 (表 <a href="/JuliaDataScience#tbl:ratings">2</a>)：</p>
+<div id="tbl:ratings">
+<table>
+<caption>Table 2: Ratings.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: right;">name</th>
+<th style="text-align: right;">rating</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">Game of Thrones</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">Friends</td>
+<td style="text-align: right;">6.4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">…</td>
+<td style="text-align: right;">…</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>现在则能够提出以下问题：</p>
+<ul>
+<li>节目 Game of Thrones 的平均评分是多少？</li>
+<li>谁对 Friends 给出了最高的评分？</li>
+<li>哪些节目你评分了，但其他人没有？</li>
+</ul>
+<p>在本章的其余部分中，我们将展示如何借助 Julia 来轻松地回答这些问题。 因此此，首先说明为什么需要 Julia 包 <code>DataFrames.jl</code>。 下节将展示如何使用此包，最后将展示如何编写快速数据变换的代码 (Section <a href="/JuliaDataScience/df_performance#sec:df_performance">4.9</a>)。</p>
+<p>首先查看如下的成绩表 表 <a href="/JuliaDataScience#tbl:grades_for_2020">3</a> ：</p>
+<div id="tbl:grades_for_2020">
+<table>
+<caption>Table 3: Grades for 2020.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: right;">name</th>
+<th style="text-align: right;">age</th>
+<th style="text-align: right;">grade_2020</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">Bob</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">5.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">Sally</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">Alice</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">8.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">Hank</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">4.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>其中 name 列的类型为 <code>string</code>, age 列的类型为 <code>integer</code>，而 grade 列的类型为 <code>float</code>。</p>
+<p>截至目前，本书只介绍了 Julia 的基础知识。 这些基础能够处理很多东西，但不能处理表。 因此，为了说明我们需要更多类型，让我们尝试将表格数据存储在数组中：</p>
+<pre class="language-julia"><code>function grades_array()
+    name = [&quot;Bob&quot;, &quot;Sally&quot;, &quot;Alice&quot;, &quot;Hank&quot;]
+    age = [17, 18, 20, 19]
+    grade_2020 = [5.0, 1.0, 8.5, 4.0]
+    (; name, age, grade_2020)
+end</code></pre>
+<p>现在，数据以列优先形式存储，当想从行获取数据时，这种形式很麻烦：</p>
+<pre class="language-julia"><code>function second_row()
+    name, age, grade_2020 = grades_array()
+    i = 2
+    row = (name[i], age[i], grade_2020[i])
+end
+second_row()</code></pre>
+<pre class="output"><code>(&quot;Sally&quot;, 18, 1.0)</code></pre>
+<p>或者，如果想获得 Alice 的成绩，首先需要弄清楚 Alice 所在的行：</p>
+<pre class="language-julia"><code>function row_alice()
+    names = grades_array().name
+    i = findfirst(names .== &quot;Alice&quot;)
+end
+row_alice()</code></pre>
+<pre class="output"><code>3</code></pre>
+<p>然后才能得到成绩：</p>
+<pre class="language-julia"><code>function value_alice()
+    grades = grades_array().grade_2020
+    i = row_alice()
+    grades[i]
+end
+value_alice()</code></pre>
+<pre class="output"><code>8.5</code></pre>
+<p><code>DataFrames.jl</code> 可以很容易地处理此类问题。 首先使用 <code>using</code> 加载 <code>DataFrames.jl</code> ：</p>
+<pre><code>using DataFrames</code></pre>
+<p>通过 <code>DataFrames.jl</code>，我们可以定义 <code>DataFrame</code> 来存储表格数据：</p>
+<pre class="language-julia"><code>names = [&quot;Sally&quot;, &quot;Bob&quot;, &quot;Alice&quot;, &quot;Hank&quot;]
+grades = [1, 5, 8.5, 4]
+df = DataFrame(; name=names, grade_2020=grades)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: right;">name</th>
+<th style="text-align: right;">grade_2020</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">Sally</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">Bob</td>
+<td style="text-align: right;">5.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">Alice</td>
+<td style="text-align: right;">8.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">Hank</td>
+<td style="text-align: right;">4.0</td>
+</tr>
+</tbody>
+</table>
+<p>即此处返回的变量 <code>df</code> 以表格格式存储数据。</p>
+<blockquote>
+<p><strong><em>NOTE:</em></strong> 这是可行的，但我们需要立即改变一件事。 在本例中，我们在全局作用域定义了变量 <code>name</code>、 <code>grade_2020</code> 和 <code>df</code>。 这意味着可以从任何位置访问和修改这些变量。 如果我们继续像这样写这本书，那么我们会在书结尾时拥有上百个变量，即使变量 <code>name</code> 中的数据本应只能通过 <code>DataFrame</code> 访问！ 变量 <code>name</code> 和 <code>grade_2020</code> 不应该持久地保存！ 现在，想象一下，我们将会在本书中多次修改 <code>grade_2020</code>。 如果本书只有 PDF 格式， 那么几乎不可能在最后指出变量的内容。</p>
+<p>可以使用函数轻松地解决此类问题。</p>
+</blockquote>
+<p>让我们使用函数完成同样的操作：</p>
+<pre class="language-julia"><code>function grades_2020()
+    name = [&quot;Sally&quot;, &quot;Bob&quot;, &quot;Alice&quot;, &quot;Hank&quot;]
+    grade_2020 = [1, 5, 8.5, 4]
+    DataFrame(; name, grade_2020)
+end
+grades_2020()</code></pre>
+<div id="tbl:grades_2020">
+<table>
+<caption>Table 4: Grades 2020.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: right;">name</th>
+<th style="text-align: right;">grade_2020</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">Sally</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">Bob</td>
+<td style="text-align: right;">5.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">Alice</td>
+<td style="text-align: right;">8.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">Hank</td>
+<td style="text-align: right;">4.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>注意， <code>name</code> 和 <code>grade_2020</code> 会在函数返回后销毁，即它们仅在函数中可用。 这样做还有两个好处。 首先，读者可以清晰地看到 <code>name</code> 和 <code>grade_2020</code> 由谁所有：它们属于 2020 成绩表。 其次，很容易在书中的任何地方确定 <code>grades_2020()</code> 的输出。 例如，可以将数据赋给变量 <code>df</code>：</p>
+<pre class="language-julia"><code>df = grades_2020()</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: right;">name</th>
+<th style="text-align: right;">grade_2020</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">Sally</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">Bob</td>
+<td style="text-align: right;">5.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">Alice</td>
+<td style="text-align: right;">8.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">Hank</td>
+<td style="text-align: right;">4.0</td>
+</tr>
+</tbody>
+</table>
+<p>改变 <code>df</code> 的内容：</p>
+<pre class="language-julia"><code>df = DataFrame(name = [&quot;Malice&quot;], grade_2020 = [&quot;10&quot;])</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: right;">name</th>
+<th style="text-align: right;">grade_2020</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">Malice</td>
+<td style="text-align: right;">10</td>
+</tr>
+</tbody>
+</table>
+<p>而且仍然能够无损恢复数据：</p>
+<pre class="language-julia"><code>df = grades_2020()</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: right;">name</th>
+<th style="text-align: right;">grade_2020</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">Sally</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">Bob</td>
+<td style="text-align: right;">5.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">Alice</td>
+<td style="text-align: right;">8.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">Hank</td>
+<td style="text-align: right;">4.0</td>
+</tr>
+</tbody>
+</table>
+<p>当然，此处假设没有重新定义函数。 我们在本书中保证不会这样做，因为这是非常糟糕的做法。 我们不会 “改变” 函数，而是创建一个具有明确名称的新函数。</p>
+<p>因此，回到 <code>DataFrames</code>构造器。 如你所见，创建方法是将向量作为参数传递给 <code>DataFrame</code> 构造器。 你可以给定任何合法的 Julia 向量，并且 <strong>只要向量长度相同</strong>，就能成功构造 <code>DataFrame</code>。 重复的向量、Unicode 符号和任何类型的数字都可以：</p>
+<pre class="language-julia"><code>DataFrame(σ = [&quot;a&quot;, &quot;a&quot;, &quot;a&quot;], δ = [π, π/2, π/3])</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: right;">σ</th>
+<th style="text-align: right;">δ</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">a</td>
+<td style="text-align: right;">3.141592653589793</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">a</td>
+<td style="text-align: right;">1.5707963267948966</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">a</td>
+<td style="text-align: right;">1.0471975511965976</td>
+</tr>
+</tbody>
+</table>
+<p>通常，您在代码中会创建函数来包装一个或多个作用于 <code>DataFrame</code> 的函数。 例如，可以创建函数来获取一个或多个 <code>names</code> 的成绩：</p>
+<pre class="language-julia"><code>function grades_2020(names::Vector{Int})
+    df = grades_2020()
+    df[names, :]
+end
+grades_2020([3, 4])</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: right;">name</th>
+<th style="text-align: right;">grade_2020</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">Alice</td>
+<td style="text-align: right;">8.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">Hank</td>
+<td style="text-align: right;">4.0</td>
+</tr>
+</tbody>
+</table>
+<p>使用函数来包装基本功能的这种方式，在编程语言和包中非常常见。 基本上，你可以把 Julia 和 <code>DataFrames.jl</code> 看作基本模块的提供者。 它们提供了相当 <strong>通用的</strong> 模块，从而你可以在此基础之上实现一些 <strong>特例</strong> ，比如这个成绩例子。 借助这些基本模块，你可以编写数据分析脚本，控制机器人或任何你想要构造的东西。</p>
+<p>截至目前，由于必须使用索引，这些例子都非常麻烦。 下节将介绍如何在 <code>DataFrames.jl</code> 中加载和保存数据，以及其它一些强大的基本模块。</p>
+
+
+<div class="bottom-nav">
+    <p id="nav-prev" style="text-align: left;">
+        <a class="menu-level-2" href="/JuliaDataScience/standardlibrary"><b>3.5</b> Julia 标准库</a> <kbd>←</kbd>
+        <span id="nav-next" style="float: right;">
+            <kbd>→</kbd> <a class="menu-level-2" href="/JuliaDataScience/load_save"><b>4.1</b> 加载和保存文件</a>
+        </span>
+    </p>
+</div>
+
+
+<div class="license">
+    <br/>
+  <br/>
+  <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
+    Jose Storopoli, Rik Huijzer, Lazaro Alonso, 刘贵欣 (中文翻译), 田俊 （中文审校）
+</div>
+</div>
+</div>
+</body>
+</html>
